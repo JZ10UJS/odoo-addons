@@ -15,7 +15,8 @@ from openerp import models, fields, api
 #         self.value2 = float(self.value) / 100
 
 class TodoTask(models.Model):
-    _inherit = 'todo.task'
+    _name = 'todo.task'
+    _inherit = ['todo.task', 'mail.thread']
 
     name = fields.Char(help='What needs to be done?')
     user_id = fields.Many2one('res.users', string='Responsible')
@@ -36,3 +37,4 @@ class TodoTask(models.Model):
             raise Exception('Only the responsible can do this!')
         else:
             return super(TodoTask, self).do_toggle_done()
+

@@ -80,6 +80,12 @@
               <field name="name" position="attributes">
                   <attribute name="string">I have to...</attribute>
               </field>
+              <sheet position="after">
+                  <div class="oe_chatter">
+                      <field name="message_follower_ids" widget="mail_followers"/>
+                      <field name="message_ids" widget="mail_thread"/>
+                  </div>
+              </sheet>
           </field>
       </record>
 
@@ -95,6 +101,12 @@
               </field>
           </field>
       </record>
+
+      <menuitem id="todo_app.menu_todo_task" parent="todo_app.menu_nav_todo_task" name="My To-Do"/>
+
+     <record model="ir.actions.act_window" id="todo_app.todo_task_act_window">
+         <field name="context">{'search_default_filter_my_tasks': True}</field>
+     </record>
 
   </data>
 </openerp>
