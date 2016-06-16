@@ -33,4 +33,23 @@ class TodoTask(models.Model):
         done_recs.write({'active': False})
         return True
 
+    state = fields.Selection([
+        ('draft', u'草稿'),
+        ('confirmed', u'审核中'),
+        ('done', u'完成'),
+    ], string=u'状态')
+
+
+    @api.multi
+    def action_draft(self):
+        self.state = 'draft'
+
+    @api.multi
+    def action_done(self):
+        self.state = 'done'
+
+    @api.multi
+    def action_confirm(self):
+        self.state = 'confirmed'
+
 

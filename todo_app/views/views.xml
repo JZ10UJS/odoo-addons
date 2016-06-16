@@ -55,7 +55,7 @@
     <menuitem name="Server to list" id="todo_app" parent="todo_app.menu_2"
               action="todo_app.action_server"/>
     -->
-      <act_window id="todo_task_act_window" name='To Do Task' res_model="todo.task" view_mode="tree,form,search"/>
+      <act_window id="todo_task_act_window" name='To Do Task' res_model="todo.task" view_mode="tree,form,search,kanban,graph,gantt"/>
 
       <record id="todo_task_tree_view" model="ir.ui.view">
           <field name="name">Todo Task Tree View</field>
@@ -64,6 +64,7 @@
               <tree colors="grey:is_done==True">
                   <field name="name"/>
                   <field name="is_done"/>
+                  <field name="state"/>
               </tree>
           </field>
       </record>
@@ -76,6 +77,11 @@
                   <header>
                       <button name="do_toggle_done" type="object" string="Toggle Done" class="oe_highlight"/>
                       <button name="do_clear_done" type="object" string="Clear All Done"/>
+
+                      <button name="draft" type="workflow" string='初稿' states="confirmed,done" class="oe_highlight"/>
+                      <button name="confirm" type="workflow" string='审核' states="draft" class="oe_highlight"/>
+                      <button name="done" type="workflow" string='搞完了' states="confirmed" class="oe_highlight"/>
+                      <field name="state" widget="statusbar"/>
                   </header>
                   <sheet>
                       <group name="group_top">
@@ -103,8 +109,6 @@
               </search>
           </field>
       </record>
-
-
 
       <menuitem id="menu_nav_todo_task" name="To-Do Tasks"/>
       <menuitem id="menu_todo_task" name="To-Do Tasks" parent="menu_nav_todo_task" action="todo_task_act_window"/>

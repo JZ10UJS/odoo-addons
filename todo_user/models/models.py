@@ -33,7 +33,7 @@ class TodoTask(models.Model):
 
     @api.one
     def do_toggle_done(self):
-        if self.user_id != self.env.id:
+        if self.user_id != self.env.user:
             raise Exception('Only the responsible can do this!')
         else:
             return super(TodoTask, self).do_toggle_done()

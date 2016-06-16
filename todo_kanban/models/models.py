@@ -1,0 +1,28 @@
+# -*- coding: utf-8 -*-
+
+from openerp import models, fields, api
+
+# class todo_kanban(models.Model):
+#     _name = 'todo_kanban.todo_kanban'
+
+#     name = fields.Char()
+#     value = fields.Integer()
+#     value2 = fields.Float(compute="_value_pc", store=True)
+#     description = fields.Text()
+#
+#     @api.depends('value')
+#     def _value_pc(self):
+#         self.value2 = float(self.value) / 100
+
+class TodoTask(models.Model):
+    _inherit = 'todo.task'
+    priority = fields.Selection([
+        ('0', 'Low'),
+        ('1', 'Normal'),
+        ('2', 'High'),
+    ], 'Priority', default='1')
+    kanban_state = fields.Selection([
+        ('normal', 'In Progress'),
+        ('blocked', 'Blocked'),
+        ('done', 'Ready for next stage')
+    ], "Kanban State", default='normal')

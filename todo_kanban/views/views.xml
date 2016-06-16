@@ -1,0 +1,29 @@
+<openerp>
+  <data>
+      <record id="To-do Task kanban" model="ir.ui.view">
+          <field name="name">To-do Task Kanban</field>
+          <field name="model">todo.task</field>
+          <field name="arch" type="xml">
+              <kanban>
+                  <tempaltes>
+                      <t t-name="kanban-box">
+                          <div class="oe_kanban_vignette">
+                              <img t-att-src="kanban_image('res.partner', 'image_medium', record.id.value)" class="oe_kanban_image"/>
+                              <div class="oe_kanban_details">
+                                  <h4><a type="open"><field name="name"/></a></h4>
+                                  <!--<field name="tag_ids"/>-->
+                                  <ul>
+                                      <li><field name="user_id"/></li>
+                                      <li><field name="date_deadline"/></li>
+                                  </ul>
+                                  <field name="kanban_state" widget="kanban_state_selection"/>
+                                  <field name="priority" widget="priority"/>
+                              </div>
+                          </div>
+                      </t>
+                  </tempaltes>
+              </kanban>
+          </field>
+      </record>
+  </data>
+</openerp>
