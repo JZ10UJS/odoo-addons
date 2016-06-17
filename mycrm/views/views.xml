@@ -1,7 +1,5 @@
 <openerp>
   <data>
-      <!--<record model="ir.ui.menu" id="base.module_categroy_discuss">-->
-          <!--<field name="base.group_user" eval="[(6,0,[ref('make_invisible')])]"/>-->
-      <!--</record>-->
+
   </data>
 </openerp>
