@@ -1,0 +1,61 @@
+<openerp>
+    <data>
+
+        <record model="workflow" id="qingjd_wkf">
+            <field name="name">QingJD Workflow</field>
+            <field name="osv">qingjia.qingjd</field>
+            <field name="on_create">True</field>
+        </record>
+
+
+
+        <record model="workflow.activity" id="qingjd_draft">
+            <field name="name">Draft</field>
+            <field name="wkf_id" ref="qingjd_wkf"/>
+            <field name="flow_start" eval="True"/>
+            <field name="kind">function</field>
+            <field name="action">do_draft()</field>
+        </record>
+        <record model="workflow.activity" id="qingjd_confirmed">
+            <field name="name">Confirmed</field>
+            <field name="wkf_id" ref="qingjd_wkf"/>
+            <field name="kind">function</field>
+            <field name="action">do_confirm()</field>
+        </record>
+
+        <record model="workflow.activity" id="qingjd_done">
+            <field name="name">Done</field>
+            <field name="wkf_id" ref="qingjd_wkf"/>
+            <field name="kind">function</field>
+            <field name="action">do_done()</field>
+        </record>
+        <record model="workflow.activity" id="qingjd_refuse">
+            <field name="name">Refuse</field>
+            <field name="wkf_id" ref="qingjd_wkf"/>
+            <field name="kind">function</field>
+            <field name="action">do_refuse()</field>
+        </record>
+
+
+        <record model="workflow.transition" id="qingjd_draft_to_confirmed">
+            <field name="act_from" ref="qingjd_draft"/>
+            <field name="act_to" ref="qingjd_confirmed"/>
+            <field name="signal">confirm</field>
+        </record>
+        <record model="workflow.transition" id="qingjd_confirmed_to_refuse">
+            <field name="act_from" ref="qingjd_confirmed"/>
+            <field name="act_to" ref="qingjd_refuse"/>
+            <field name="signal">refuse</field>
+        </record>
+        <record model="workflow.transition" id="qingjd_confirmed_to_done">
+            <field name="act_from" ref="qingjd_confirmed"/>
+            <field name="act_to" ref="qingjd_done"/>
+            <field name="signal">done</field>
+        </record>
+        <record model="workflow.transition" id="qingjd_refuse_to_draft">
+            <field name="act_from" ref="qingjd_refuse"/>
+            <field name="act_to" ref="qingjd_draft"/>
+            <field name="signal">draft</field>
+        </record>
+    </data>
+</openerp>

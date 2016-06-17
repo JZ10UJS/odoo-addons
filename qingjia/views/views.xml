@@ -1,0 +1,53 @@
+<openerp>
+  <data>
+      <act_window id="qingjd_act_window" res_model="qingjia.qingjd" name="QingJD" view_mode="tree,form"/>
+
+      <record id="qingjd_tree_view" model="ir.ui.view">
+          <field name="name">请假单 Tree</field>
+          <field name="model">qingjia.qingjd</field>
+          <field name="arch" type="xml">
+              <tree string="列表">
+                  <field name="name"/>
+                  <field name="days"/>
+                  <field name="state"/>
+              </tree>
+          </field>
+      </record>
+
+      <record id="qingjd_form_view" model="ir.ui.view">
+          <field name="name">请假单 Form</field>
+          <field name="model">qingjia.qingjd</field>
+          <field name="arch" type="xml">
+              <form string="表单">
+                  <header>
+                      <button name="draft" type="workflow" attrs="{'invisible':[('state','not in',['refuse'])]}" string="再次提交"/>
+                      <button name="confirm" type="workflow" states="draft" string="提交审核" class="oe_highlight"/>
+                      <button name="done" type="workflow" states='confirmed' string="审核通过" class="oe_highlight"
+                              attrs="{'invisible':[('state','not in',['confirmed']), ('group.base_user', 'not', hr.manager  ]
+
+                              }"/>
+                      <button name="refuse" type="workflow" states="confirmed" string="不通过"/>
+                      <field name="state" widget="statusbar"/>
+                  </header>
+                  <sheet>
+                      <group>
+                          <group>
+                              <field name="name"/>
+                              <field name="days"/>
+                          </group>
+                          <group>
+                              <field name="date_start"/>
+                              <field name="date_end"/>
+                          </group>
+                       </group>
+                      <label for="reason"/><field name="reason"/>
+                  </sheet>
+              </form>
+          </field>
+      </record>
+
+      <menuitem id="qingjd_menu_nav" name='请假-App'/>
+      <menuitem id="qingjd_menu_root" name="请假" parent="qingjd_menu_nav"/>
+      <menuitem id="qingjd_menu_content" name="请假单" parent="qingjd_menu_root" action="qingjd_act_window"/>
+  </data>
+</openerp>
