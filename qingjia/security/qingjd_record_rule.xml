@@ -1,0 +1,16 @@
+<openerp>
+    <data>
+        <record id='qingjd_record_rule_for_basic' model='ir.rule'>
+            <field name='name'>Qing JD record basic rule</field>
+            <field name='model_id' ref='model_qingjia_qingjd'/>
+            <field name='domain_force'>[('create_uid','=',user.id)]</field>
+            <field name='groups' eval='[(4, ref("base.group_user"))]'/>
+        </record>
+        <record id='qingjd_record_rule_for_hr' model='ir.rule'>
+            <field name='name'>Qing JD record HR rule</field>
+            <field name='model_id' ref='model_qingjia_qingjd'/>
+            <field name='domain_force'>[('state','!=','draft')]</field>
+            <field name='groups' eval='[(4, ref("base.group_hr_user"))]'/>
+        </record>
+    </data>
+</openerp>

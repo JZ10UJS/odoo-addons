@@ -24,7 +24,8 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
+        'security/qingjd_record_rule.xml',
         'views/views.xml',
         'views/templates.xml',
         'views/qingjd_workflow.xml',
