@@ -3,14 +3,14 @@
     'name': "YouYun CRM",
 
     'summary': """
-        This is basic CRM based on the """,
+        This is a customized CRM for YouYun based on the basic CRM""",
 
     'description': """
-        Long description of module's purpose
+        Dada...
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
+    'author': "Zhang Jie",
+    'website': "http://www.cloudguarding.com",
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/master/openerp/addons/base/module/module_data.xml

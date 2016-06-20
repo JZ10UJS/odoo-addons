@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <openerp>
     <data>
         <record model="ir.rule" id="qingjia.qingjd_record_rule">
@@ -12,4 +13,21 @@
             <field name="groups" eval="[(4,ref('base.group_hr_user'))]"/>
         </record>
     </data>
+=======
+<openerp>
+    <data>
+        <record id='qingjd_record_rule_for_basic' model='ir.rule'>
+            <field name='name'>Qing JD record basic rule</field>
+            <field name='model_id' ref='model_qingjia_qingjd'/>
+            <field name='domain_force'>[('create_uid','=',user.id)]</field>
+            <field name='groups' eval='[(4, ref("base.group_user"))]'/>
+        </record>
+        <record id='qingjd_record_rule_for_hr' model='ir.rule'>
+            <field name='name'>Qing JD record HR rule</field>
+            <field name='model_id' ref='model_qingjia_qingjd'/>
+            <field name='domain_force'>[('state','!=','draft')]</field>
+            <field name='groups' eval='[(4, ref("base.group_hr_user"))]'/>
+        </record>
+    </data>
+>>>>>>> 34880c80d97fa5dd17d011b8bafb6d4ce4e5c8e6
 </openerp>
