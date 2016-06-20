@@ -3,5 +3,31 @@
       <!--<record model="ir.ui.menu" id="base.module_categroy_discuss">-->
           <!--<field name="base.group_user" eval="[(6,0,[ref('make_invisible')])]"/>-->
       <!--</record>-->
+      <record id="cmp_form_res_partner_inherited" model="ir.ui.view">
+          <field name="name">Res partner Costomers</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+              <field name="company_type" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </field>
+          </field>
+      </record>
+
+
+      <act_window id="my_cus_cmp_action" res_model="res.partner" view_mode="kanban,form,tree,search" name="公司客户"
+              context="{'search_default_customer':1, 'search_default_type_company':1, 'default_company_type':'company'}"/>
+
+      <act_window id="my_cus_ind_action" res_model="res.partner" view_mode="kanban,form,tree,search" name="个人客户"
+              context="{'search_default_customer':1, 'search_default_type_person':1, 'default_company_type':'person'}"/>
+
+      <menuitem id="mycrm_customer_menu_root" name="Customer"/>
+      <menuitem id="mycrm_customer_menu" name="客户资料" parent="mycrm_customer_menu_root"/>
+      <menuitem id="mycrm_customer_individual" name="个人" parent="mycrm_customer_menu" action="my_cus_ind_action"/>
+      <menuitem id="mycrm_customer_company" name="公司" parent="mycrm_customer_menu" action="my_cus_cmp_action"/>
+
+
+      <delete id="base.menu_partner_form"  model="ir.ui.menu"/>
+
   </data>
 </openerp>

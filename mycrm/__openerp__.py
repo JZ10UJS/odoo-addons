@@ -24,6 +24,7 @@
     # always loaded
     'data': [
         # 'security/ir.model.access.csv',
+        'security/calendar_rule_for_all.xml',
         'views/views.xml',
         'views/templates.xml',
     ],

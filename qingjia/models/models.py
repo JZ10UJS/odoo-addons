@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import logging
 from openerp import models, fields, api
 from datetime import timedelta
 
@@ -32,6 +33,7 @@ class QingjiaDan(models.Model):
         ('done', u'通过'),
     ], string='State')
 
+
     @api.depends('date_start', 'days')
     def _compute_date_end(self):
         s_date = fields.Datetime.from_string(self.date_start)
@@ -60,4 +62,20 @@ class QingjiaDan(models.Model):
     @api.multi
     def do_done(self):
         self.state = 'done'
+
+    # 判断当前登录用户是否为record的创建用户
+    is_self = fields.Boolean(compute='_compute_is_self')
+
+    # 判断当前登录用户所在组是否包含  HR/Officer 或者 HR/Manager
+    is_hr = fields.Boolean(compute='_compute_is_hr')
+
+    @api.one
+    def _compute_is_self(self):
+        self.is_self = (self.create_uid == self.env.user)
+
+    @api.one
+    def _compute_is_hr(self):
+        self.is_hr = (self.env.ref('base.group_hr_user') in self.env.user.groups_id)
+
+
 
