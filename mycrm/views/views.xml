@@ -1,7 +1,18 @@
 <openerp>
   <data>
       <record id="cmp_form_res_partner_inherited" model="ir.ui.view">
-          <field name="name">Res partner Costomers</field>
+          <field name="name">Res partner form Customers</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_partner_form"/>
+          <field name="arch" type="xml">
+              <field name="company_type" position="attributes">
+                  <attribute name="invisible">1</attribute>
+              </field>
+          </field>
+      </record>
+
+      <record id="cmp_form_res_partner_inherited1" model="ir.ui.view">
+          <field name="name">Res partner form Customers 2</field>
           <field name="model">res.partner</field>
           <field name="inherit_id" ref="base.view_partner_form"/>
           <field name="arch" type="xml">
@@ -12,19 +23,46 @@
       </record>
 
 
-      <act_window id="my_cus_cmp_action" res_model="res.partner" view_mode="kanban,form,tree,search" name="公司客户"
-              context="{'search_default_customer':1, 'search_default_type_company':1, 'default_company_type':'company'}"/>
+      <record id="invisible_search_res_partner_inherited" model="ir.ui.view">
+          <field name="name">Res partner search Customers</field>
+          <field name="model">res.partner</field>
+          <field name="inherit_id" ref="base.view_res_partner_filter"/>
+          <field name="arch" type="xml">
+              <field name="name" position="attributes">
+                  <attribute name="class">oe_highlight</attribute>
+              </field>
+          </field>
+      </record>
 
-      <act_window id="my_cus_ind_action" res_model="res.partner" view_mode="kanban,form,tree,search" name="个人客户"
-              context="{'search_default_customer':1, 'search_default_type_person':1, 'default_company_type':'person'}"/>
+
+      <act_window id="my_cus_cmp_action" res_model="res.partner" view_mode="kanban,form,tree" name="客户（公司）"
+              context="{'default_company_type':'company'}" domain="[('customer','=',True), ('parent_id', '=', False),('is_company','=',True)]"/>
+
+      <act_window id="my_cus_ind_action" res_model="res.partner" view_mode="kanban,form,tree" name="客户（个人）"
+              context="{'default_company_type':'person'}"
+              domain="[('customer','=',True), ('parent_id', '=', False),('is_company','=',False)]"/>
 
       <menuitem id="mycrm_customer_menu_root" name="Customer"/>
       <menuitem id="mycrm_customer_menu" name="客户资料" parent="mycrm_customer_menu_root"/>
-      <menuitem id="mycrm_customer_individual" name="个人" parent="mycrm_customer_menu" action="my_cus_ind_action"/>
-      <menuitem id="mycrm_customer_company" name="公司" parent="mycrm_customer_menu" action="my_cus_cmp_action"/>
+      <menuitem id="mycrm_customer_individual" name="客户（个人）" parent="mycrm_customer_menu" action="my_cus_ind_action"/>
+      <menuitem id="mycrm_customer_company" name="客户（公司）" parent="mycrm_customer_menu" action="my_cus_cmp_action"/>
 
 
-      <delete id="base.menu_partner_form"  model="ir.ui.menu"/>
+      <act_window id="my_ven_cmp_action" res_model="res.partner" view_mode="kanban,form,tree" name="供应商（公司）"
+              context="{'default_company_type':'company','default_supplier':1,'default_customer':0}"
+              domain="[('supplier','=',1), ('parent_id', '=', False),('is_company','=',1)]"/>
+
+      <act_window id="my_ven_ind_action" res_model="res.partner" view_mode="kanban,form,tree" name="供应商（个人）"
+              context="{'default_company_type':'person','default_supplier':1,'default_customer':0}"
+              domain="[('is_company','=',0),('supplier','=',1), ('parent_id', '=', False)]"/>
+
+      <menuitem id="mycrm_vendors_menu" name="供应商资料" parent="mycrm_customer_menu_root"/>
+      <menuitem id="mycrm_vendors_individual" name="供应商（个人）" parent="mycrm_vendors_menu" action="my_ven_ind_action"/>
+      <menuitem id="mycrm_vendors_company" name="供应商（公司）" parent="mycrm_vendors_menu" action="my_ven_cmp_action"/>
+
+      <!--<delete id="base.menu_partner_form"  model="ir.ui.menu"/>-->
+      <!--<menuitem id="mycrm_customer_individual" name="个人" parent="base.menu_partner_form" action="my_cus_ind_action"/>-->
+      <!--<menuitem id="mycrm_customer_company" name="公司" parent="base.menu_partner_form" action="my_cus_cmp_action"/>-->
 
   </data>
 </openerp>

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from openerp import http
 
-# class Mycrm(http.Controller):
-#     @http.route('/mycrm/mycrm/', auth='public')
-#     def index(self, **kw):
-#         return "Hello, world"
+class Mycrm(http.Controller):
+    @http.route('/mycrm/mycrm/', auth='public')
+    def index(self, **kw):
+        return "Hello, world"
 
 #     @http.route('/mycrm/mycrm/objects/', auth='public')
 #     def list(self, **kw):
