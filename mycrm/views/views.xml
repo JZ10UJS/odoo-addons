@@ -6,33 +6,39 @@
           <field name="inherit_id" ref="base.view_partner_form"/>
           <field name="arch" type="xml">
               <field name="company_type" position="attributes">
+                  <attribute name="invisible">0</attribute>
+              </field>
+              <page name="sales_purchases" position="attributes">
                   <attribute name="invisible">1</attribute>
-              </field>
-          </field>
-      </record>
-
-      <record id="cmp_form_res_partner_inherited1" model="ir.ui.view">
-          <field name="name">Res partner form Customers 2</field>
-          <field name="model">res.partner</field>
-          <field name="inherit_id" ref="base.view_partner_form"/>
-          <field name="arch" type="xml">
-              <field name="company_type" position="attributes">
+              </page>
+              <page name="internal_notes" position="attributes">
                   <attribute name="invisible">1</attribute>
-              </field>
+              </page>
           </field>
       </record>
 
+      <!--<record id="cmp_form_res_partner_inherited1" model="ir.ui.view">-->
+          <!--<field name="name">Res partner form Customers 2</field>-->
+          <!--<field name="model">res.partner</field>-->
+          <!--<field name="inherit_id" ref="base.view_partner_form"/>-->
+          <!--<field name="arch" type="xml">-->
+              <!--<field name="company_type" position="attributes">-->
+                  <!--<attribute name="invisible">1</attribute>-->
+              <!--</field>-->
+          <!--</field>-->
+      <!--</record>-->
 
-      <record id="invisible_search_res_partner_inherited" model="ir.ui.view">
-          <field name="name">Res partner search Customers</field>
-          <field name="model">res.partner</field>
-          <field name="inherit_id" ref="base.view_res_partner_filter"/>
-          <field name="arch" type="xml">
-              <field name="name" position="attributes">
-                  <attribute name="class">oe_highlight</attribute>
-              </field>
-          </field>
-      </record>
+
+      <!--<record id="invisible_search_res_partner_inherited" model="ir.ui.view">-->
+          <!--<field name="name">Res partner search Customers</field>-->
+          <!--<field name="model">res.partner</field>-->
+          <!--<field name="inherit_id" ref="base.view_res_partner_filter"/>-->
+          <!--<field name="arch" type="xml">-->
+              <!--<field name="name" position="attributes">-->
+                  <!--<attribute name="class">oe_highlight</attribute>-->
+              <!--</field>-->
+          <!--</field>-->
+      <!--</record>-->
 
 
       <act_window id="my_cus_cmp_action" res_model="res.partner" view_mode="kanban,form,tree" name="客户（公司）"
@@ -42,23 +48,70 @@
               context="{'default_company_type':'person'}"
               domain="[('customer','=',True), ('parent_id', '=', False),('is_company','=',False)]"/>
 
-      <menuitem id="mycrm_customer_menu_root" name="Customer"/>
-      <menuitem id="mycrm_customer_menu" name="客户资料" parent="mycrm_customer_menu_root"/>
+
+      <menuitem id="mycrm_customer_menu" name="客户资料" parent="base.menu_partner_form"/>
       <menuitem id="mycrm_customer_individual" name="客户（个人）" parent="mycrm_customer_menu" action="my_cus_ind_action"/>
       <menuitem id="mycrm_customer_company" name="客户（公司）" parent="mycrm_customer_menu" action="my_cus_cmp_action"/>
 
 
       <act_window id="my_ven_cmp_action" res_model="res.partner" view_mode="kanban,form,tree" name="供应商（公司）"
               context="{'default_company_type':'company','default_supplier':1,'default_customer':0}"
-              domain="[('supplier','=',1), ('parent_id', '=', False),('is_company','=',1)]"/>
+              domain="[('supplier','=',1), ('parent_id', '=', False),('is_company','=',1)]" />
 
       <act_window id="my_ven_ind_action" res_model="res.partner" view_mode="kanban,form,tree" name="供应商（个人）"
               context="{'default_company_type':'person','default_supplier':1,'default_customer':0}"
               domain="[('is_company','=',0),('supplier','=',1), ('parent_id', '=', False)]"/>
 
-      <menuitem id="mycrm_vendors_menu" name="供应商资料" parent="mycrm_customer_menu_root"/>
+
+      <menuitem id="mycrm_vendors_menu" name="供应商资料" parent="base.menu_partner_form"
+              groups="mycrm_purchase_user,base.group_system"/>
+
       <menuitem id="mycrm_vendors_individual" name="供应商（个人）" parent="mycrm_vendors_menu" action="my_ven_ind_action"/>
       <menuitem id="mycrm_vendors_company" name="供应商（公司）" parent="mycrm_vendors_menu" action="my_ven_cmp_action"/>
+
+
+
+      <record model="ir.ui.menu" id="calendar.mail_menu_calendar">
+          <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+      </record>
+      <record model="ir.ui.menu" id="mail.menu_contacts">
+          <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+      </record>
+
+
+      <record model="ir.ui.view" id="mycrm_view_order_form_inherited">
+          <field name="name">MyCRM view order form inherited</field>
+          <field name="model">sale.order</field>
+          <field name="inherit_id" ref="sale.view_order_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//button[@name='action_done']" position="after">
+                  <field name="new_state" invisible="1"/>
+                  <field name="need_ask" invisible="1"/>
+
+                      <button name="ask_for_more_discount" type="object"  attrs="{'invisible':['|',('need_ask','=',False),('new_state','!=', 'draft')]}" string="申请折扣" />
+                      <button name="allow_for_more_discount" type="object" attrs="{'invisible':['|',('need_ask','=',False),('new_state','in',['draft','done'])]}" string="同意折扣申请"/>
+                      <button name="reject_for_more_discount" type="object" attrs="{'invisible':['|',('need_ask','=',False),('new_state','in',['draft','done'])]}" string="拒绝折扣申请"/>
+
+              </xpath>
+              <xpath expr="//header/button[@name='action_quotation_send'][1]" position="replace">
+                  <button name="action_quotation_send" string="Send by Email" type="object" class="btn-primary"
+                        attrs="{'invisible':['|',('new_state','!=','done'),('state','!=','draft')]}"/>
+              </xpath>
+              <xpath expr="//header/button[@name='print_quotation'][1]" position="replace">
+                  <button name="print_quotation" string="Print" type="object" class="btn-primary"
+                          attrs="{'invisible':['|',('new_state','!=','done'),('state','!=','draft')]}" />
+              </xpath>
+              <xpath expr="//header/button[@name='action_confirm'][2]" position="replace">
+                <button name="action_confirm" string="Confirm Sale" type="object" context="{'show_sale': True}"
+                        attrs="{'invisible':['|',('new_state','!=','done'),('state','!=','draft')]}"/>
+              </xpath>
+          </field>
+      </record>
+
+      <!--<menuitem id="base.menu_partner_form" parent='base.menu_sales' groups="mycrm_group_no_one"/>-->
+      <!--&lt;!&ndash;<menuitem id="base.module_category_discuss"  groups="base.group_no_one"/>&ndash;&gt;-->
+      <!--<menuitem id="calendar.mail_menu_calendar"  groups="mycrm_group_no_one"/>-->
+      <!--<menuitem id="mail.menu_contacts"  groups="mycrm_group_no_one"/>-->
 
       <!--<delete id="base.menu_partner_form"  model="ir.ui.menu"/>-->
       <!--<menuitem id="mycrm_customer_individual" name="个人" parent="base.menu_partner_form" action="my_cus_ind_action"/>-->

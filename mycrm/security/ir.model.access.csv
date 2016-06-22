@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_mycrm_mycrm,mycrm.mycrm,model_mycrm_mycrm,,1,0,0,0
+access_mycrm_lead,my_sales_user_team_crm_lead,crm.model_crm_lead,mycrm.mycrm_sale_user,1,1,1,1
+access_mycrm_lead,my_sales_manager_team_crm_lead,crm.model_crm_lead,mycrm.mycrm_sale_manager,1,1,1,1
+access_mycrm_lead,my_sales_admin_team_crm_lead,crm.model_crm_lead,mycrm.mycrm_sale_admin,1,1,0,0

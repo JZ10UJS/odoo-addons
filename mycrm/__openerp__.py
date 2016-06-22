@@ -19,17 +19,20 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['crm'],
+    'depends': ['crm','sale'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'views/sale_group.xml',
+        'security/ir.model.access.csv',
         'security/calendar_rule_for_all.xml',
         'views/views.xml',
         'views/templates.xml',
+
     ],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
     ],
+    'application':True,
 }
