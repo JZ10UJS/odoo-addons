@@ -17,32 +17,12 @@
           </field>
       </record>
 
-      <!--<record id="cmp_form_res_partner_inherited1" model="ir.ui.view">-->
-          <!--<field name="name">Res partner form Customers 2</field>-->
-          <!--<field name="model">res.partner</field>-->
-          <!--<field name="inherit_id" ref="base.view_partner_form"/>-->
-          <!--<field name="arch" type="xml">-->
-              <!--<field name="company_type" position="attributes">-->
-                  <!--<attribute name="invisible">1</attribute>-->
-              <!--</field>-->
-          <!--</field>-->
-      <!--</record>-->
-
-
-      <!--<record id="invisible_search_res_partner_inherited" model="ir.ui.view">-->
-          <!--<field name="name">Res partner search Customers</field>-->
-          <!--<field name="model">res.partner</field>-->
-          <!--<field name="inherit_id" ref="base.view_res_partner_filter"/>-->
-          <!--<field name="arch" type="xml">-->
-              <!--<field name="name" position="attributes">-->
-                  <!--<attribute name="class">oe_highlight</attribute>-->
-              <!--</field>-->
-          <!--</field>-->
-      <!--</record>-->
-
+      <act_window id="base.action_partner_form" res_model="res.partner" view_mode="kanban,form,tree" name="Customers"
+                  domain="[('customer','=',True), ('parent_id', '=', False)]"/>
 
       <act_window id="my_cus_cmp_action" res_model="res.partner" view_mode="kanban,form,tree" name="客户（公司）"
-              context="{'default_company_type':'company'}" domain="[('customer','=',True), ('parent_id', '=', False),('is_company','=',True)]"/>
+              context="{'default_company_type':'company'}"
+              domain="[('customer','=',True), ('parent_id', '=', False),('is_company','=',True)]"/>
 
       <act_window id="my_cus_ind_action" res_model="res.partner" view_mode="kanban,form,tree" name="客户（个人）"
               context="{'default_company_type':'person'}"
@@ -68,6 +48,9 @@
 
       <menuitem id="mycrm_vendors_individual" name="供应商（个人）" parent="mycrm_vendors_menu" action="my_ven_ind_action"/>
       <menuitem id="mycrm_vendors_company" name="供应商（公司）" parent="mycrm_vendors_menu" action="my_ven_cmp_action"/>
+      <record model="ir.ui.menu" id="base.menu_sale_config">
+        <field eval="[(3, ref('base.group_partner_manager'))]" name="groups_id"/>
+    </record>
 
 
 
@@ -87,24 +70,106 @@
               <xpath expr="//button[@name='action_done']" position="after">
                   <field name="new_state" invisible="1"/>
                   <field name="need_ask" invisible="1"/>
-
-                      <button name="ask_for_more_discount" type="object"  attrs="{'invisible':['|',('need_ask','=',False),('new_state','!=', 'draft')]}" string="申请折扣" />
-                      <button name="allow_for_more_discount" type="object" attrs="{'invisible':['|',('need_ask','=',False),('new_state','in',['draft','done'])]}" string="同意折扣申请"/>
-                      <button name="reject_for_more_discount" type="object" attrs="{'invisible':['|',('need_ask','=',False),('new_state','in',['draft','done'])]}" string="拒绝折扣申请"/>
-
+                  <button name="ask_for_more_discount" type="object"  class="btn-primary" string="申请折扣"
+                          attrs="{'invisible':['|',('need_ask','=',False),('new_state','!=', 'draft')]}"/>
+                  <button name="ask_for_more_discount2" type="object"  class="btn-primary" string="向管理部申请"
+                          attrs="{'invisible':['|',('need_ask','=',False),('new_state','!=', 'confirmed1')]}"
+                          groups="base.group_sale_salesman_all_leads"/>
+                  <button name="allow_for_more_discount" type="object" class="btn-primary" string="同意折扣申请"
+                          attrs="{'invisible':['|',('need_ask','=',False),('new_state','not in',['confirmed1'])]}"
+                          groups="base.group_sale_salesman_all_leads"/>
+                  <button name="allow_for_more_discount" type="object" class="btn-primary" string="同意折扣申请"
+                          attrs="{'invisible':['|',('need_ask','=',False),('new_state','not in',['confirmed2'])]}"
+                          groups="base.group_sale_manager"/>
+                  <button name="reject_for_more_discount" type="object" class="btn-primary" string="拒绝折扣申请"
+                          attrs="{'invisible':['|',('need_ask','=',False),('new_state','not in',['confirmed1'])]}"
+                          groups="base.group_sale_salesman_all_leads"/>
+                  <button name="reject_for_more_discount" type="object" class="btn-primary" string="拒绝折扣申请"
+                          attrs="{'invisible':['|',('need_ask','=',False),('new_state','not in',['confirmed2'])]}"
+                          groups="base.group_sale_manager"/>
               </xpath>
               <xpath expr="//header/button[@name='action_quotation_send'][1]" position="replace">
                   <button name="action_quotation_send" string="Send by Email" type="object" class="btn-primary"
-                        attrs="{'invisible':['|',('new_state','!=','done'),('state','!=','draft')]}"/>
+                        attrs="{'invisible':['|',('state','!=','draft'),('need_ask','=',True)]}"/>
+              </xpath>
+              <xpath expr="//header/button[@name='action_quotation_send'][2]" position="replace">
+                  <button name="action_quotation_send" string="Send by Email" type="object"
+                        attrs="{'invisible':['|',('state','not in',['sent','sale']),('need_ask','=',True)]}"/>
               </xpath>
               <xpath expr="//header/button[@name='print_quotation'][1]" position="replace">
                   <button name="print_quotation" string="Print" type="object" class="btn-primary"
-                          attrs="{'invisible':['|',('new_state','!=','done'),('state','!=','draft')]}" />
+                          attrs="{'invisible':['|',('state','!=','draft'),('need_ask','=',True)]}"/>
+              </xpath>
+              <xpath expr="//header/button[@name='print_quotation'][2]" position="replace">
+                  <button name="print_quotation" string="Print" type="object"
+                          attrs="{'invisible':['|',('state','not in',['sent','sale']),('need_ask','=',True)]}"/>
+              </xpath>
+              <xpath expr="//header/button[@name='action_confirm'][1]" position="replace">
+                <button name="action_confirm" string="Confirm Sale" type="object" context="{'show_sale': True}"
+                        class="btn-primary"
+                        attrs="{'invisible':['|',('state','!=','sent'),('need_ask','=',True)]}"/>
               </xpath>
               <xpath expr="//header/button[@name='action_confirm'][2]" position="replace">
                 <button name="action_confirm" string="Confirm Sale" type="object" context="{'show_sale': True}"
-                        attrs="{'invisible':['|',('new_state','!=','done'),('state','!=','draft')]}"/>
+                        attrs="{'invisible':['|',('state','!=','draft'),('need_ask','=',True)]}"/>
               </xpath>
+              <!--<button name="action_cancel" states="draft,sent,sale" type="object" string="Cancel"/>-->
+                <!--<button name="action_draft" states="cancel" type="object" string="Set to Quotation"/>-->
+                <!--<button name="action_done" type="object" string="Set to Done" states="sale"-->
+                        <!--help="If a sale order is done, you cannot modify it manually anymore. However, you will still be able to invoice or deliver. This is used to freeze the sale order."/>-->
+              <xpath expr="//header/button[@name='action_cancel']" position="replace">
+                  <button name="action_cancel" type="object" string="Cancel"
+                          attrs="{'invisible':['|',('state','not in',['draft','sent','sale']), ('need_ask','=',True)]}"/>
+              </xpath>
+              <xpath expr="//header/button[@name='action_draft']" position="replace">
+                  <button name="action_draft" type="object" string="Set to Quotation"
+                          attrs="{'invisible':['|',('state','not in',['cancel']), ('need_ask','=',True)]}"/>
+              </xpath>
+              <xpath expr="//header/button[@name='action_done']" position="replace">
+                  <button name="action_done" type="object" string="Set to Done"
+                          help="If a sale order is done, you cannot modify it manually anymore. However, you will still be able to invoice or deliver. This is used to freeze the sale order."
+                          attrs="{'invisible':['|',('state','not in',['sale']), ('need_ask','=',True)]}"/>
+              </xpath>
+
+              <xpath expr="//header/field[@name='state']" position="before">
+                  <field name="new_state" widget="statusbar"
+                          attrs="{'invisible':[('need_ask','=',False)]}"/>
+              </xpath>
+              <xpath expr="//header/field[@name='state']" position="replace">
+                  <field name="state" widget="statusbar"
+                          attrs="{'invisible':['|',('need_ask','=',True),('state','in',['cancel','done'])]}"/>
+              </xpath>
+
+              <field name="partner_id" position="attributes">
+                  <attribute name="domain">[('customer','=',True), ('parent_id', '=', False)]</attribute>
+              </field>
+
+
+          </field>
+      </record>
+
+      <record id="mycrm_view_quotation_tree_inherited" model="ir.ui.view">
+          <field name="name">MyCRM view quotation tree inherited</field>
+          <field name="model">sale.order</field>
+          <field name="inherit_id" ref="sale.view_quotation_tree"/>
+          <field name="arch" type="xml">
+              <xpath expr="//tree" position="attributes">
+                  <attribute name="decoration-danger">new_state in ['confirmed1','confirmed2']</attribute>
+              </xpath>
+              <field name="name" position="after">
+                  <field name="new_state" />
+              </field>
+          </field>
+      </record>
+
+      <record id="my_crm_case_form_view_oppor_inherited" model="ir.ui.view">
+          <field name="name">MyCRM case form view oppor inherited</field>
+          <field name="model">crm.lead</field>
+          <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+          <field name="arch" type="xml">
+              <field name="partner_id" position="attributes">
+                  <attribute name="domain">[('customer','=',True), ('parent_id', '=', False)]</attribute>
+              </field>
           </field>
       </record>
 
