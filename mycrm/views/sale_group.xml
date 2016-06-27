@@ -11,12 +11,12 @@
         <record id="mycrm_sale_manager" model="res.groups">
             <field name="category_id" ref="mycrm_sales_category"/>
             <field name="name">销售总监</field>
-            <field name="implied_ids" eval="[(4, ref('mycrm_sale_user')),(4,ref('base.group_sale_salesman_all_leads'))]"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_sale_salesman_all_leads'))]"/>
         </record>
         <record id="mycrm_sale_admin" model="res.groups">
             <field name="category_id" ref="mycrm_sales_category"/>
             <field name="name">管理部</field>
-            <field name="implied_ids" eval="[(4, ref('mycrm_sale_manager')),(4,ref('base.group_sale_manager'))]"/>
+            <field name="implied_ids" eval="[(4,ref('base.group_sale_manager'))]"/>
         </record>
 
         <record model="ir.module.category" id="mycrm_purchase_category">

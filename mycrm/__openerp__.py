@@ -25,7 +25,7 @@
     'data': [
         'views/sale_group.xml',
         'security/ir.model.access.csv',
-        'security/calendar_rule_for_all.xml',
+        'security/menu_access_rules.xml',
         'views/views.xml',
         'views/templates.xml',
 
