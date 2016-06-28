@@ -77,16 +77,21 @@ class MyOrder(models.Model):
         if min_discount < 0:
             raise exceptions.ValidationError('The discount can not be negative.')
 
-        if self.env.ref('base.group_sale_salesman_all_leads').id not in self.create_uid.groups_id.ids:
-            if  max_discount > 5 and self.new_state != 'done':
-                self.need_ask = True
-            else:
-                self.new_state = 'done'
+        # if self.env.ref('base.group_sale_salesman_all_leads').id not in self.create_uid.groups_id.ids:
+        #     if  max_discount > 5 and self.new_state != 'done':
+        #         self.need_ask = True
+        #     else:
+        #         self.new_state = 'done'
+        # else:
+        #     if max_discount > 10 and self.new_state != 'done':
+        #         self.need_ask = True
+        #     else:
+        #         self.new_state = 'done'
+
+        if max_discount > self.env.user.max_discount and self.new_state != 'done':
+            self.need_ask = True
         else:
-            if max_discount > 10 and self.new_state != 'done':
-                self.need_ask = True
-            else:
-                self.new_state = 'done'
+            self.new_state = 'done'
 
 
 
@@ -100,5 +105,23 @@ class MyOrderLine(models.Model):
     def _do_check_discount(self):
         self.order_id.new_state='draft'
         self.order_id.check_discount()
+
+
+class UserExtend(models.Model):
+    _inherit = 'res.users'
+
+    max_discount = fields.Float(compute='_compute_max_discount')
+
+    @api.one
+    @api.depends('groups_id')
+    def _compute_max_discount(self):
+        if self.env.ref('mycrm.mycrm_sale_admin') in self.groups_id:
+            self.max_discount = 100
+        elif self.env.ref('mycrm.mycrm_sale_manager') in self.groups_id:
+            self.max_discount = 10
+        elif self.env.ref('mycrm.mycrm_sale_user') in self.groups_id:
+            self.max_discount = 5
+        else:
+            self.max_discount = 0
 
 
