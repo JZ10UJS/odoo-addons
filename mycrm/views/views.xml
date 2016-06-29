@@ -131,7 +131,7 @@
                           attrs="{'invisible':['|',('state','not in',['sale']), ('need_ask','=',True)]}"/>
               </xpath>
 
-              <xpath expr="//header/field[@name='state']" position="before">
+              <xpath expr="//header/field[@name='state']" position="after">
                   <field name="new_state" widget="statusbar"
                           attrs="{'invisible':[('need_ask','=',False)]}"/>
               </xpath>
@@ -144,6 +144,16 @@
                   <attribute name="domain">[('customer','=',True), ('parent_id', '=', False)]</attribute>
               </field>
 
+              <!--<field name="amount_untaxed" position="replace">-->
+                  <!--<field name="amount_untaxed" widget="monetary" options="{'currency_field':'user_id.company_id.currency_id'}"/>-->
+              <!--</field>-->
+              <!--<field name="amount_tax" position="replace">-->
+                  <!--<field name="amount_tax" widget="monetary" options="{'currency_field':'user_id.company_id.currency_id'}"/>-->
+              <!--</field>-->
+              <!--<field name="amount_total" position="replace">-->
+                  <!--<field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary"-->
+                         <!--options="{'currency_field':'user_id.company_id.currency_id'}"/>-->
+              <!--</field>-->
 
           </field>
       </record>

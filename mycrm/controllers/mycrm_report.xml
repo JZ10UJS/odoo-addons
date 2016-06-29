@@ -1,0 +1,8 @@
+<openerp>
+    <data>
+
+        <report id="mycrm_quotation_order_report" model="sale.order" string="Mycrm pdf"
+                attachment_use="False"
+                report_type="qweb-pdf" name="mycrm.report_without_prices" file="mycrm.report_without_prices"/>
+    </data>
+</openerp>

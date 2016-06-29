@@ -18,5 +18,62 @@
         <!--     </t> -->
         <!--   </dl> -->
         <!-- </template> -->
+        <!--<template id="mycrm_report_quotation_inherit_demo" inherit_id="sale.report_saleorder_document">-->
+            <!--&lt;!&ndash;<xpath expr="//div[@class='col-xs-4 pull-right']//td[@class='text-right'][1]" position="replace">&ndash;&gt;-->
+                <!--&lt;!&ndash;<td class="text-right">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span t-field="doc.amount_untaxed"&ndash;&gt;-->
+                        <!--&lt;!&ndash;t-field-options='{"widget": "monetary", "currency_field":"doc.user_id.company_id.currency_id"}'/>&ndash;&gt;-->
+                <!--&lt;!&ndash;</td>&ndash;&gt;-->
+            <!--&lt;!&ndash;</xpath>&ndash;&gt;-->
+            <!--&lt;!&ndash; <xpath expr="//div[@class='col-xs-4 pull-right']//td[@class='text-right'][2]" position="replace">-->
+                <!--<td class="text-right">-->
+                    <!--<span t-field="doc.amount_tax"-->
+                        <!--t-field-options='{"widget": "monetary", "display_currency": "doc.user_id.company_id.currency_id"}'/>-->
+                <!--</td>-->
+            <!--</xpath> &ndash;&gt;-->
+            <!--&lt;!&ndash;<xpath expr="//span[@t-field='doc.amount_total']" position="replace">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<span t-field="doc.amount_total"&ndash;&gt;-->
+                        <!--&lt;!&ndash;t-field-options='{"widget": "monetary", "display_currency": "doc.user_id.company_id.currency_id"}'/>&ndash;&gt;-->
+            <!--&lt;!&ndash;</xpath>&ndash;&gt;-->
+        <!--</template>-->
+        <template id="mycrm_report_quotation_inherit_demo" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//span[@t-field='l.price_subtotal']" position="replace">
+                <span t-field="l.price_subtotal"/>
+            </xpath>
+            <xpath expr="//t[@t-set='display_discount']" position="after">
+                <t t-set="display_tax" t-val="any([l.tax_id for l in doc.order_line])"/>
+            </xpath>
+            <xpath expr="//table/thead/tr/th[5]" position="replace">
+                 <th t-if='display_tax' class="text-right">Taxes</th>
+            </xpath>
+            <xpath expr="//table/tbody/t/tr/td[5]" position="replace">
+                 <td t-if='display_tax' class="text-right">
+                     <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.tax_id))"/>
+                 </td>
+            </xpath>
+            <xpath expr="//div[@class='col-xs-4 pull-right']" position="attributes">
+                <attribute name="class">col-xs-5 pull-right</attribute>
+            </xpath>
+        </template>
+
+        <report id="mycrm_quotation_order_report" model="sale.order" string="Mycrm pdf"
+                attachment_use="False"
+                report_type="qweb-pdf" name="mycrm.report_without_prices" file="mycrm.report_without_prices"/>
+
+        <!--<template id="mycrm_report_quotation">-->
+            <!--<t t-call="report.external_layout">-->
+                <!--<h1 t-field="docs.name"/>-->
+                <!--<h2 t-field="docs.user_id"/>-->
+                <!--&lt;!&ndash;<t t-foreach="docs" t-as="o">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<table>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td class="col-xs-4"><span t-esc="o.name"/></td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td class="col-xs-4"><span t-esc="o.discount"/></td>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<td class="col-xs-4"><span t-esc="o.price_subtotal"/></td>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</table>&ndash;&gt;-->
+                <!--&lt;!&ndash;</t>&ndash;&gt;-->
+            <!--</t>-->
+        <!--</template>-->
     </data>
 </openerp>

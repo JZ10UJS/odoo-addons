@@ -28,6 +28,7 @@
         'security/menu_access_rules.xml',
         'views/views.xml',
         'views/templates.xml',
+        'views/report_without_prices.xml',
 
     ],
     # only loaded in demonstration mode
