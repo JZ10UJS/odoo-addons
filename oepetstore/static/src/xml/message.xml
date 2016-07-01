@@ -1,0 +1,49 @@
+<templates xml:space="preserve">
+    <t t-name="message">
+        <div class="oe_petstore_pettoyslist">
+        </div>
+    </t>
+
+    <t t-name="message_list">
+        <table class="oe_list_content">
+            <thead>
+                <tr>
+                    <th class="oe_list_header_text oe_sortable">消息</th>
+                    <th class="oe_list_header_text oe_sortable">创建时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <t t-foreach="msgList" t-as="bo">
+                <tr class="oe_list_header_columns">
+                    <td class="oe_list_field_cell oe_list_field_text">
+                        <t t-esc="bo.message"/>
+                    </td>
+                    <td class="oe_list_field_cell oe_list_field_text">
+                        <t t-esc="bo.create_date"/>
+                    </td>
+                    <td>
+                        <a class="btn btn-info button-view" t-att-data="bo.id" name="detailBtn" href="#">
+                            <i class="fa fa-list-ul"></i> 详情
+                        </a>
+                        <a class="btn btn-warning button-edit" t-att-data="bo.id" name="traceOrderBtn" href="javascript:void(0);">
+                            <i class="fa fa-pencil"></i> 编辑
+                        </a>
+                        <a class="btn btn-danger button-cancel" t-att-data="bo.id" name="cancelOrderBtn" href="javascript:void(0);">
+                            <i class="fa fa-remove"></i> 取消
+                        </a>
+                    </td>
+                </tr>
+            </t>
+        </table>
+    </t>
+    <t t-extend="UserMenu">
+        <t t-jquery="ul.dropdown-menu" t-operation="replace">
+
+            <ul class="dropdown-menu">
+                <li><a href="#" data-menu="settings">Preferences</a></li>
+                <li><a href="#" data-menu="about">About Odoo</a></li>
+                <li><a href="#" data-menu="logout">Log out</a></li>
+            </ul>
+        </t>
+    </t>
+</templates>

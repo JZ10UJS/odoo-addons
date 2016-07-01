@@ -94,7 +94,6 @@ class MyOrder(models.Model):
             self.new_state = 'done'
 
 
-
 class MyOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
