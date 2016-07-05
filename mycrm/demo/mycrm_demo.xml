@@ -92,15 +92,24 @@
             <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('mycrm.mycrm_sale_manager')])]"/>
         </record>
 
-        <!--<record id="mycrm_sale_team" model="crm.team">-->
-            <!--<field name="name">华东区</field>-->
-            <!--<field name="user_id" ref="mycrm_user_3"/>-->
-            <!--<field name="member_ids" eval="[(4,ref('mycrm_user_3')),((4, ref('mycrm_user_2'))]"/>-->
-        <!--</record>-->
-        <!--<record id="mycrm_sale_team" model="crm.team">-->
-            <!--<field name="name">华北区</field>-->
-            <!--<field name="user_id" ref="mycrm_user_5"/>-->
-            <!--<field name="member_ids" eval="[[4,ref('mycrm_user_5')],[(4, ref('mycrm_user_4')]]"/>-->
-        <!--</record>-->
+        <record id="mycrm_sale_team_1" model="crm.team">
+            <field name="name">华东区</field>
+            <field name="user_id" ref="mycrm.mycrm_user_3"/>
+            <field name="code" eval="'021'"/>
+            <field name="alias_name" eval="'huadong'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+        </record>
+        <record id="mycrm_sale_team_2" model="crm.team">
+            <field name="name">华北区</field>
+            <field name="user_id" ref="mycrm.mycrm_user_5"/>
+            <field name="code" eval="'010'"/>
+            <field name="alias_name" eval="'huabei'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+        </record>
+        <record id="mycrm_user_5" model="res.users">
+            <field name="sale_team_id" ref="mycrm.mycrm_sale_team_2"/>
+        </record>
     </data>
 </openerp>

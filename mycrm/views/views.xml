@@ -24,14 +24,16 @@
         </record>
 
         <act_window id="base.action_partner_form" res_model="res.partner" view_mode="kanban,form,tree" name="Customers"
-                    domain="[('customer','=',True), ('parent_id', '=', False)]"/>
+                    context="{'default_user_id':uid}"
+                    domain="[('customer','=',True), ('parent_id', '=', False)]"
+                />
 
         <act_window id="my_cus_cmp_action" res_model="res.partner" view_mode="kanban,form,tree" name="客户（公司）"
-                    context="{'default_company_type':'company'}"
+                    context="{'default_company_type':'company','default_user_id':uid}"
                     domain="[('customer','=',True), ('parent_id', '=', False),('is_company','=',True)]"/>
 
         <act_window id="my_cus_ind_action" res_model="res.partner" view_mode="kanban,form,tree" name="客户（个人）"
-                    context="{'default_company_type':'person'}"
+                    context="{'default_company_type':'person','default_user_id':uid}"
                     domain="[('customer','=',True), ('parent_id', '=', False),('is_company','=',False)]"/>
 
 
@@ -60,10 +62,10 @@
 
 
         <record model="ir.ui.menu" id="calendar.mail_menu_calendar">
-            <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_sale_manager')])]"/>
         </record>
         <record model="ir.ui.menu" id="mail.menu_contacts">
-            <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_sale_manager')])]"/>
         </record>
 
 
