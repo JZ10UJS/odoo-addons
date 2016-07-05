@@ -31,7 +31,7 @@
         'views/report_without_prices.xml',
 
     ],
-    'qweb': ['static/src/xml/mycrm.xml'],
+    'qweb': ['static/src/xml/*.xml'],
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',

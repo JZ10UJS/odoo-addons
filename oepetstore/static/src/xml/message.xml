@@ -7,8 +7,8 @@
     <t t-name="message_list">
         <table class="oe_list_content">
             <thead>
-                <tr>
-                    <th class="oe_list_header_text oe_sortable">消息</th>
+                <tr class="oe_list_header_columns">
+                    <th class="oe_list_header_text oe_sortable" data-id="message">消息</th>
                     <th class="oe_list_header_text oe_sortable">创建时间</th>
                     <th>操作</th>
                 </tr>
@@ -29,7 +29,7 @@
                             <i class="fa fa-pencil"></i> 编辑
                         </a>
                         <a class="btn btn-danger button-cancel" t-att-data="bo.id" name="cancelOrderBtn" href="javascript:void(0);">
-                            <i class="fa fa-remove"></i> 取消
+                            <i class="fa fa-remove"></i> 删除
                         </a>
                     </td>
                 </tr>
@@ -38,12 +38,17 @@
     </t>
     <t t-extend="UserMenu">
         <t t-jquery="ul.dropdown-menu" t-operation="replace">
-
             <ul class="dropdown-menu">
                 <li><a href="#" data-menu="settings">Preferences</a></li>
                 <li><a href="#" data-menu="about">About Odoo</a></li>
                 <li><a href="#" data-menu="logout">Log out</a></li>
             </ul>
         </t>
+    </t>
+
+    <t t-extend="web.login_layout">
+        <xpath expr="//a[@href='https://www.odoo.com']" position="replace">
+            <a href="http://www.cloudguarding.com" target="_blank">Powered by <span>YouYun</span></a>
+        </xpath>
     </t>
 </templates>

@@ -41,6 +41,9 @@ class MyOrder(models.Model):
                                      ('done', u'通过'),
     ], string=u'折扣申请', default='draft', readonly=True)
 
+    pre_sales_engineer_ids = fields.Many2many('res.users', string='Pre-sales Engineer')
+
+
     @api.multi
     def ask_for_more_discount(self):
         self.new_state = 'confirmed1'

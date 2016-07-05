@@ -1,5 +1,11 @@
 <openerp>
     <data>
+        <template id="assets_backend" name="mycrm_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/mycrm/static/src/js/mycrm.js"/>
+            </xpath>
+        </template>
+
         <record id="cmp_form_res_partner_inherited" model="ir.ui.view">
             <field name="name">Res partner form Customers</field>
             <field name="model">res.partner</field>
@@ -9,10 +15,10 @@
                     <attribute name="invisible">0</attribute>
                 </field>
                 <page name="sales_purchases" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                    <attribute name="groups">base.group_sale_manager</attribute>
                 </page>
                 <page name="internal_notes" position="attributes">
-                    <attribute name="invisible">1</attribute>
+                    <attribute name="groups">base.group_sale_manager</attribute>
                 </page>
             </field>
         </record>
@@ -141,6 +147,11 @@
 
                 <field name="partner_id" position="attributes">
                     <attribute name="domain">[('customer','=',True), ('parent_id', '=', False)]</attribute>
+                </field>
+
+                <field name="partner_id" position="after">
+                    <field name="pre_sales_engineer_ids" widget="many2many_tags"/>
+
                 </field>
 
                 <!--<field name="amount_untaxed" position="replace">-->

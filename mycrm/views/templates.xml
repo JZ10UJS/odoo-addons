@@ -54,26 +54,27 @@
             <xpath expr="//div[@class='col-xs-4 pull-right']" position="attributes">
                 <attribute name="class">col-xs-5 pull-right</attribute>
             </xpath>
+            <xpath expr="//div[@t-if='doc.user_id.name']" position="after">
+                <div t-if="doc.pre_sales_engineer_ids" class="col-xs-6">
+                    <strong>Pre-sales Engineers:</strong>
+                    <p>
+                        <t t-foreach="doc.pre_sales_engineer_ids" t-as="engineer">
+                            <t t-esc="engineer.name"/>
+                        </t>
+                    </p>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="mycrm_menu_secondary" inherit_id="web.menu_secondary">
+            <xpath expr="//a[@href='http://www.odoo.com']" position="replace">
+                <a href="http://www.cloudguarding.com"><span>YouYun</span></a>
+            </xpath>
         </template>
 
         <report id="mycrm_quotation_order_report" model="sale.order" string="Mycrm pdf"
                 attachment_use="False"
                 report_type="qweb-pdf" name="mycrm.report_without_prices" file="mycrm.report_without_prices"/>
 
-        <!--<template id="mycrm_report_quotation">-->
-            <!--<t t-call="report.external_layout">-->
-                <!--<h1 t-field="docs.name"/>-->
-                <!--<h2 t-field="docs.user_id"/>-->
-                <!--&lt;!&ndash;<t t-foreach="docs" t-as="o">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<table>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<td class="col-xs-4"><span t-esc="o.name"/></td>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<td class="col-xs-4"><span t-esc="o.discount"/></td>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<td class="col-xs-4"><span t-esc="o.price_subtotal"/></td>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</table>&ndash;&gt;-->
-                <!--&lt;!&ndash;</t>&ndash;&gt;-->
-            <!--</t>-->
-        <!--</template>-->
     </data>
 </openerp>
