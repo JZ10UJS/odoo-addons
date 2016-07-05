@@ -23,7 +23,7 @@
 
     # always loaded
     'data': [
-        'views/sale_group.xml',
+        'views/mycrm_sale_data.xml',
         'security/ir.model.access.csv',
         'security/menu_access_rules.xml',
         'views/views.xml',
@@ -35,6 +35,7 @@
     # only loaded in demonstration mode
     'demo': [
         'demo/demo.xml',
+        'demo/mycrm_demo.xml',
     ],
     'application':True,
 }
