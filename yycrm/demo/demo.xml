@@ -1,0 +1,126 @@
+<openerp>
+    <data>
+        <record id="yycrm_partner_1" model="res.partner">
+            <field name="name">Deng.K</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="customer" eval="False"/>
+            <field name="email">dk@test.com</field>
+            <field name="street">Avenue des Dessus-de-Lives, 2</field>
+            <field name="city">Namur (Loyers)</field>
+            <field name="zip">5101</field>
+            <field name="country_id" ref="base.cn"/>
+            <field name="tz">Asia/Shanghai</field>
+        </record>
+        <record id="yycrm_partner_2" model="res.partner">
+            <field name="name">Zhang.J</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="customer" eval="False"/>
+            <field name="email">zj@test.com</field>
+            <field name="street">Avenue des Dessus-de-Lives, 3</field>
+            <field name="city">Namur (Loyers)</field>
+            <field name="zip">5101</field>
+            <field name="country_id" ref="base.cn"/>
+            <field name="tz">Asia/Shanghai</field>
+        </record>
+        <record id="yycrm_partner_3" model="res.partner">
+            <field name="name">Zhang.Y</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="customer" eval="False"/>
+            <field name="email">zy@test.com</field>
+            <field name="street">Avenue des Dessus-de-Lives, 4</field>
+            <field name="city">Namur (Loyers)</field>
+            <field name="zip">5101</field>
+            <field name="country_id" ref="base.cn"/>
+            <field name="tz">Asia/Shanghai</field>
+        </record>
+        <record id="yycrm_partner_4" model="res.partner">
+            <field name="name">Lch</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="customer" eval="False"/>
+            <field name="email">lch@test.com</field>
+            <field name="street">Avenue des Dessus-de-Lives, 5</field>
+            <field name="city">Namur (Loyers)</field>
+            <field name="zip">5101</field>
+            <field name="country_id" ref="base.cn"/>
+            <field name="tz">Asia/Shanghai</field>
+        </record>
+        <record id="yycrm_partner_5" model="res.partner">
+            <field name="name">Wang.Z</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="customer" eval="False"/>
+            <field name="email">wz@test.com</field>
+            <field name="street">Avenue des Dessus-de-Lives, 6</field>
+            <field name="city">Namur (Loyers)</field>
+            <field name="zip">5101</field>
+            <field name="country_id" ref="base.cn"/>
+            <field name="tz">Asia/Shanghai</field>
+        </record>
+
+        <record id="yycrm_user_1" model="res.users">
+            <field name="partner_id" ref="yycrm_partner_1"/>
+            <field name="login">dengke</field>
+            <field name="password">dengke</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="groups_id" eval="[(6,0,[ref('yycrm.yycrm_sale_admin')])]"/>
+        </record>
+        <record id="yycrm_user_2" model="res.users">
+            <field name="partner_id" ref="yycrm_partner_2"/>
+            <field name="login">zhangjie</field>
+            <field name="password">zhangjie</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="groups_id" eval="[(6,0,[ref('yycrm.yycrm_sale_user')])]"/>
+        </record>
+        <record id="yycrm_user_3" model="res.users">
+            <field name="partner_id" ref="yycrm_partner_3"/>
+            <field name="login">zhangyu</field>
+            <field name="password">zhangyu</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="groups_id" eval="[(6,0,[ref('yycrm.yycrm_sale_manager')])]"/>
+        </record>
+        <record id="yycrm_user_4" model="res.users">
+            <field name="partner_id" ref="yycrm_partner_4"/>
+            <field name="login">liuchao</field>
+            <field name="password">liuchao</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('yycrm.yycrm_sale_user')])]"/>
+        </record>
+        <record id="yycrm_user_5" model="res.users">
+            <field name="partner_id" ref="yycrm_partner_5"/>
+            <field name="login">wangzheng</field>
+            <field name="password">wangzheng</field>
+            <field name="company_id" ref="base.main_company"/>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('yycrm.yycrm_sale_manager')])]"/>
+        </record>
+
+        <record id="yycrm_sale_team_1" model="crm.team">
+            <field name="name">华东区</field>
+            <field name="user_id" ref="yycrm.yycrm_user_3"/>
+            <field name="code" eval="'021'"/>
+            <field name="alias_name" eval="'huadong'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+        </record>
+        <record id="yycrm_sale_team_2" model="crm.team">
+            <field name="name">华北区</field>
+            <field name="user_id" ref="yycrm.yycrm_user_5"/>
+            <field name="code" eval="'010'"/>
+            <field name="alias_name" eval="'huabei'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+        </record>
+
+        <record id="yycrm_user_5" model="res.users">
+            <field name="sale_team_id" ref="yycrm.yycrm_sale_team_2"/>
+        </record>
+        <record id="yycrm_user_4" model="res.users">
+            <field name="sale_team_id" ref="yycrm.yycrm_sale_team_2"/>
+        </record>
+        <record id="yycrm_user_3" model="res.users">
+            <field name="sale_team_id" ref="yycrm.yycrm_sale_team_1"/>
+        </record>
+        <record id="yycrm_user_2" model="res.users">
+            <field name="sale_team_id" ref="yycrm.yycrm_sale_team_1"/>
+        </record>
+
+    </data>
+</openerp>

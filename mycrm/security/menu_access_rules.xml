@@ -37,7 +37,6 @@
             <field name="domain_force">[(1,'=',1)]</field>
             <field name="groups" eval="[(4, ref('mycrm.mycrm_sale_admin')),(4, ref('base.group_sale_manager'))]"/>
         </record>
-
         <record model="ir.rule" id="mycrm_sale_report">
             <field name="name">MyCRM sale report manager</field>
             <field name="model_id" ref="sale.model_sale_report"/>
@@ -45,11 +44,27 @@
             <field name="groups" eval="[(4, ref('mycrm.mycrm_sale_manager')),(4, ref('base.group_sale_salesman_all_leads'))]"/>
         </record>
 
-        <record model="ir.rule" id="mycrm_res_partner">
-            <field name="name">MyCRM res partner for creater</field>
-            <field name="model_id" ref="base.model_res_partner"/>
-            <field name="domain_force">['|', ('create_uid', '=', user.id), ('create_uid.sale_team_id.user_id', '=', user.id)]</field>
-            <field name="groups" eval="[(4, ref('mycrm.mycrm_sale_user')),(4, ref('mycrm.mycrm_sale_manager'))]"/>
-        </record>
+
+        <!--这会导致登录用户对res.users访问受阻-->
+        <!--<record model="ir.rule" id="mycrm_res_partner">-->
+            <!--<field name="name">MyCRM res partner for creater</field>-->
+            <!--<field name="model_id" ref="base.model_res_partner"/>-->
+            <!--<field name="domain_force">['|',('create_uid', '=', user.id), ('create_uid.sale_team_id.user_id', '=', user.id)]</field>-->
+            <!--<field name="groups" eval="[(4, ref('mycrm.mycrm_sale_user')),(4, ref('mycrm.mycrm_sale_manager'))]"/>-->
+            <!--<field name="perm_read" eval="True"/>-->
+            <!--<field name="perm_write" eval="True"/>-->
+            <!--<field name="perm_create" eval="True"/>-->
+            <!--<field name="perm_unlink" eval="False"/>-->
+        <!--</record>-->
+        <!--<record model="ir.rule" id="mycrm_res_users">-->
+            <!--<field name="name">MyCRM res users for creater</field>-->
+            <!--<field name="model_id" ref="base.model_res_users"/>-->
+            <!--<field name="domain_force">[(1,'=',1)]</field>-->
+            <!--<field name="groups" eval="[(4, ref('mycrm.mycrm_sale_user')),(4, ref('mycrm.mycrm_sale_manager'))]"/>-->
+            <!--<field name="perm_read" eval="True"/>-->
+            <!--<field name="perm_write" eval="False"/>-->
+            <!--<field name="perm_create" eval="False"/>-->
+            <!--<field name="perm_unlink" eval="False"/>-->
+        <!--</record>-->
     </data>
 </openerp>

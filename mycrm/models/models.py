@@ -41,7 +41,7 @@ class MyOrder(models.Model):
                                      ('done', u'通过'),
     ], string=u'折扣申请', default='draft', readonly=True)
 
-    pre_sales_engineer_ids = fields.Many2many('res.users', string='Pre-sales Engineer')
+    pre_sales_engineer_ids = fields.Many2many('res.users', string='Pre-sales Engineers')
 
 
     @api.multi

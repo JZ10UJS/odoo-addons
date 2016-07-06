@@ -108,8 +108,19 @@
             <field name="use_leads" eval="True"/>
             <field name="use_quotations" eval="True"/>
         </record>
+
         <record id="mycrm_user_5" model="res.users">
             <field name="sale_team_id" ref="mycrm.mycrm_sale_team_2"/>
         </record>
+        <record id="mycrm_user_4" model="res.users">
+            <field name="sale_team_id" ref="mycrm.mycrm_sale_team_2"/>
+        </record>
+        <record id="mycrm_user_3" model="res.users">
+            <field name="sale_team_id" ref="mycrm.mycrm_sale_team_1"/>
+        </record>
+        <record id="mycrm_user_2" model="res.users">
+            <field name="sale_team_id" ref="mycrm.mycrm_sale_team_1"/>
+        </record>
+
     </data>
 </openerp>

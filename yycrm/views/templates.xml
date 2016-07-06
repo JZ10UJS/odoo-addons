@@ -1,0 +1,31 @@
+<openerp>
+    <data>
+        <!-- <template id="listing"> -->
+        <!--   <ul> -->
+        <!--     <li t-foreach="objects" t-as="object"> -->
+        <!--       <a t-attf-href="#{ root }/objects/#{ object.id }"> -->
+        <!--         <t t-esc="object.display_name"/> -->
+        <!--       </a> -->
+        <!--     </li> -->
+        <!--   </ul> -->
+        <!-- </template> -->
+        <!-- <template id="object"> -->
+        <!--   <h1><t t-esc="object.display_name"/></h1> -->
+        <!--   <dl> -->
+        <!--     <t t-foreach="object._fields" t-as="field"> -->
+        <!--       <dt><t t-esc="field"/></dt> -->
+        <!--       <dd><t t-esc="object[field]"/></dd> -->
+        <!--     </t> -->
+        <!--   </dl> -->
+        <!-- </template> -->
+
+        <!--修改界面左下角的odoo广告，改为自己公司-->
+        <template id="mycrm_menu_secondary" inherit_id="web.menu_secondary">
+            <xpath expr="//a[@href='http://www.odoo.com']" position="replace">
+                <a href="http://www.cloudguarding.com">
+                    <span>YouYun</span>
+                </a>
+            </xpath>
+        </template>
+    </data>
+</openerp>

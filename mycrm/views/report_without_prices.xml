@@ -1,37 +1,37 @@
 <openerp>
     <data>
-        <template id="report_without_prices_document">
-            <t t-call="report.external_layout">
-                <div class="page">
-                    <div class="row">
-                        <h3>Title</h3>
-                        <h4 t-field="doc.name"/>
-                        <h5 t-field="doc.amount_total"/>
-                        <h5 t-field="doc.user_id"/>
-                        <span t-field="doc.user_id.company_id.image_small"/>
-                        <t t-foreach="doc.order_line" t-as="l">
-                            <table>
-                                <tbody class="sale-tbody">
-                                <tr>
-                                    <td><span t-field="l.name"/></td>
-                                    <td><span t-field="l.discount"/></td>
-                                    <td><span t-field="l.price_unit"/></td>
-                                    <td><span t-field="l.price_subtotal"/></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </t>
-                    </div>
-                </div>
-            </t>
-        </template>
+        <!--<template id="report_without_prices_document">-->
+            <!--<t t-call="report.external_layout">-->
+                <!--<div class="page">-->
+                    <!--<div class="row">-->
+                        <!--<h3>Title</h3>-->
+                        <!--<h4 t-field="doc.name"/>-->
+                        <!--<h5 t-field="doc.amount_total"/>-->
+                        <!--<h5 t-field="doc.user_id"/>-->
+                        <!--<span t-field="doc.user_id.company_id.image_small"/>-->
+                        <!--<t t-foreach="doc.order_line" t-as="l">-->
+                            <!--<table>-->
+                                <!--<tbody class="sale-tbody">-->
+                                <!--<tr>-->
+                                    <!--<td><span t-field="l.name"/></td>-->
+                                    <!--<td><span t-field="l.discount"/></td>-->
+                                    <!--<td><span t-field="l.price_unit"/></td>-->
+                                    <!--<td><span t-field="l.price_subtotal"/></td>-->
+                                <!--</tr>-->
+                                <!--</tbody>-->
+                            <!--</table>-->
+                        <!--</t>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</t>-->
+        <!--</template>-->
 
-        <template id="report_without_prices">
-            <t t-call="report.html_container">
-                <t t-foreach="docs" t-as="doc">
-                    <t t-call="mycrm.report_without_prices_document"/>
-                </t>
-            </t>
-        </template>
+        <!--<template id="report_without_prices">-->
+            <!--<t t-call="report.html_container">-->
+                <!--<t t-foreach="docs" t-as="doc">-->
+                    <!--<t t-call="mycrm.report_without_prices_document"/>-->
+                <!--</t>-->
+            <!--</t>-->
+        <!--</template>-->
     </data>
 </openerp>

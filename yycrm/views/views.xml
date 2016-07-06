@@ -1,0 +1,200 @@
+<openerp>
+    <data>
+        <!--添加js文件使其生效（主要是修改导航栏最右边的下拉菜单）-->
+        <template id="assets_backend" name="yycrm_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/yycrm/static/src/js/yycrm.js"/>
+            </xpath>
+        </template>
+
+        <!--对sales/customers进行一些定制化   res.partner-->
+        <record id="yy_cus_view_tree" model="ir.ui.view">
+            <!--修改customer的tree字段-->
+            <field name="name">YYCRM res partner view tree</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="company_type"/>
+                    <field name="mobile"/>
+                    <field name="phone"/>
+                    <field name="create_uid"/>
+                    <field name="user_id" string="Owner"/>
+                </tree>
+            </field>
+        </record>
+        <record id="yy_res_partner_view_form_inherited" model="ir.ui.view">
+            <!--继承base.view_partner_form，修改其外观-->
+            <field name="name">YYCRM res partner view form inherited</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group" position="replace">
+                    <field name="type" attrs="{'invisible': [('parent_id','=', False)]}" groups="base.group_no_one"/>
+                    <group  string="Base Info">
+                        <group>
+                            <field name="function" placeholder="e.g. Sales Director" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="website" widget="url" placeholder="e.g. www.cloudguarding.com"
+                                attrs="{'invisible': [('is_company','!=', True)]}"/>
+                            <field name="mobile" widget="phone" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="trade" attrs="{'invisible': [('is_company','!=', True)]}"/>
+                        </group>
+                        <group>
+                            <field name="department" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="fax" attrs="{'invisible': [('is_company','=', True)]}"/>
+                            <field name="email" attrs="{'invisible': [('is_company','=', True)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Address">
+                            <!--<label for="street" string="Address"/>-->
+                            <!--<div class="o_address_format">-->
+                            <!--<div class="oe_edit_only">-->
+                                <!--<button name="open_parent" type="object" string="(edit)" class="oe_link"-->
+                                        <!--attrs="{'invisible': [('parent_id', '=', False)]}"/>-->
+                            <!--</div>-->
+
+                            <field name="street" placeholder="Street..." class="o_address_street"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="street2" placeholder="Street 2..." class="o_address_street" invisible="1"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="city" placeholder="City" class="o_address_city"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="state_id" class="o_address_state" placeholder="State"
+                                   options="{&quot;no_open&quot;: True}" on_change="onchange_state(state_id)"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                   context="{'country_id': country_id, 'zip': zip}"/>
+                            <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <field name="country_id" placeholder="Country" class="o_address_country"
+                                   options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}"
+                                   attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            <!--</div>-->
+                        </group>
+                        <group>
+                            <!--占位置，无实用-->
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[@name='sales_purchases']" position="attributes">
+                    <attribute name="groups">base.group_sale_manager</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--对sales/opportunity定制   crm.lead-->
+        <record id="yy_oppor_view_form_inherited" model="ir.ui.view">
+            <field name="name">YYCRM crm lead oppor view form inherited</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group" position="replace">
+                    <group>
+                        <group>
+                            <field name="partner_id" on_change="on_change_partner_id(partner_id)" string="Customer"
+                                   context="{'default_name': partner_name,
+                                             'default_country_id': country_id,
+                                             'default_function': function,
+                                             'default_email': email_from,
+                                             'default_user_id': user_id,
+                                             'default_team_id': team_id,
+                                             'default_trade': trade,
+                                             }"
+                                    domain="[('customer','=',True),('parent_id', '=', False)]"/>
+                            <field name="date_deadline"/>
+                            <field name="email_from" string="Email" widget="email"/>
+                        </group>
+                        <group>
+                            <field name="trade"/>
+                            <field name="last_activity_id" invisible="1"/>
+                                <label for="next_activity_id"/>
+                                <div>
+                                    <div class="o_row mr16">
+                                        <field name="next_activity_id" options="{'no_create': True, 'no_open': True}" domain="['|',('team_id','=',False),('team_id','=',team_id)]" on_change="onchange_next_activity_id(next_activity_id)"/>
+                                        <span class="oe_form_field" attrs="{'invisible': ['|', ('next_activity_id', '=', False), ('date_action', '=', False)]}"> on </span>
+                                        <field name="date_action" attrs="{'invisible': [('next_activity_id', '=', False)]}" placeholder="Choose a date..."/>
+                                        <div attrs="{'invisible': ['|', ('last_activity_id', '=', False), ('next_activity_id', '!=', False)]}">
+                                            <button name="log_next_activity_1" type="object" class="btn-link" attrs="{'invisible': [('next_activity_1','=',False)]}">
+                                                <field name="next_activity_1" readonly="1"/>
+                                            </button>
+                                            <span attrs="{'invisible': [('next_activity_2','=',False)]}">|</span>
+                                            <button name="log_next_activity_2" type="object" class="btn-link" attrs="{'invisible': [('next_activity_2','=',False)]}">
+                                                <field name="next_activity_2" readonly="1"/>
+                                            </button>
+                                            <span attrs="{'invisible': [('next_activity_3','=',False)]}">|</span>
+                                            <button name="log_next_activity_3" type="object" class="btn-link" attrs="{'invisible': [('next_activity_3','=',False)]}">
+                                                <field name="next_activity_3" readonly="1"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="o_row">
+                                        <field name="title_action" placeholder="e.g. Discuss proposal" attrs="{'invisible': [('next_activity_id', '=', False)]}"/>
+                                        <div attrs="{'invisible': [('next_activity_id', '=', False)]}">
+                                            <button name="log_next_activity_done" string="Done" type="object" class="btn-link"/>
+                                            <button name="cancel_next_activity" string="Cancel" type="object" class="btn-link"/>
+                                        </div>
+                                    </div>
+                                </div>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="user_id" on_change="on_change_user(user_id, context)"
+                                   context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager', 'base.group_sale_salesman_all_leads'],
+                                   'team_id': team_id}"/>
+                            <field name="team_id"  readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="channel_id"/>
+                            <field name="pre_sales_engineer_ids" widget="many2many_tags"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="product_ids" widget="many2many_tags"/>
+                            <!--<p>营销 todo</p>-->
+                        </group>
+                        <group>
+                            <field name="solution_ids" widget="many2many_tags"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="lost_reason" attrs="{'invisible': [('active', '=', True)]}"/>
+                            <field name="date_conversion" invisible="1"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="yy_cus_action" model="ir.actions.act_window">
+            <!--添加domain让res.partner只出现customer-->
+            <field name="name">YYCRM res partner action</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'default_user_id':uid}</field>
+            <field name="domain">[('customer','=',True), ('parent_id', '=', False)]</field>
+        </record>
+        <record id="yy_cus_cmp_action" model="ir.actions.act_window">
+            <!--添加domain让res.partner只出现customer的公司-->
+            <field name="name">YYCRM res partner action_cmp</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="yy_cus_view_tree"/>
+            <field name="context">{'default_company_type':'company', 'default_user_id':uid}</field>
+            <field name="domain">[('customer','=',True), ('parent_id', '=', False),('is_company','=',True)]</field>
+        </record>
+        <record id="yy_cus_ind_action" model="ir.actions.act_window">
+            <!--添加domain让res.partner只出现customer的个人-->
+            <field name="name">YYCRM res partner action_ind</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="yy_cus_view_tree"/>
+            <field name="context">{'default_company_type':'person', 'default_user_id':uid}</field>
+            <field name="domain">[('customer','=',True), ('parent_id', '=', False),('is_company','=',False)]</field>
+        </record>
+        <menuitem id="base.menu_partner_form" name="Customer" parent="base.menu_sales" action="yy_cus_action"/><!--修改Customer的action-->
+        <menuitem id="yycrm_customer_company" name="Company" parent="base.menu_partner_form" action="yy_cus_cmp_action"/>
+        <menuitem id="yycrm_customer_individual" name="Individual" parent="base.menu_partner_form" action="yy_cus_ind_action"/>
+
+    </data>
+</openerp>
