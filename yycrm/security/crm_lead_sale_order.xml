@@ -1,0 +1,38 @@
+<openerp>
+    <data>
+        <!--删除原来sale.group_sale_salesman_all_leads的查看所有人的crm.lead 和 sale.order的权限-->
+        <!--由于sale.group_sale_manager包含了sale.group_sale_salesman_all_leads的权限，所以这会导致manager的相应权限也被删除-->
+        <delete model="ir.rule" search="[('name','=','All Orders')]"/>
+        <delete model="ir.rule" search="[('name','=','All Leads')]"/>
+
+        <!--对yycrm.yycrm_sale_manager这个组添加domain, 使其只能看到自己team的crm.lead 和 sale.order-->
+        <record model="ir.rule" id="yycrm_sale_order_manager_rule">
+            <field name="name">YYCRM sale order manager rule</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="domain_force">[('team_id.user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('yycrm.yycrm_sale_manager'))]"/>
+        </record>
+        <record model="ir.rule" id="yycrm_crm_lead_manager_rule">
+            <field name="name">YYCRM crm lead manager rule</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="domain_force">[('team_id.user_id','=',user.id)]</field>
+            <field name="groups" eval="[(4, ref('yycrm.yycrm_sale_manager'))]"/>
+        </record>
+
+        <!--恢复base.group_sale_manager的对 sale.order, crm.lead的权限啊-->
+        <record model="ir.rule" id="yycrm_sale_order_admin_rule">
+            <field name="name">YYCRM sale order admin rule</field>
+            <field name="model_id" ref="sale.model_sale_order"/>
+            <field name="domain_force">[('1','=','1')]</field>
+            <field name="groups" eval="[(4, ref('base.group_sale_manager'))]"/>
+        </record>
+        <record model="ir.rule" id="yycrm_crm_lead_admin_rule">
+            <field name="name">YYCRM crm lead admin rule</field>
+            <field name="model_id" ref="crm.model_crm_lead"/>
+            <field name="domain_force">[('1','=','1')]</field>
+            <field name="groups" eval="[(4, ref('base.group_sale_manager'))]"/>
+        </record>
+
+
+    </data>
+</openerp>

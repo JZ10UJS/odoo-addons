@@ -4,6 +4,7 @@
         <template id="assets_backend" name="yycrm_assets" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <script type="text/javascript" src="/yycrm/static/src/js/yycrm.js"/>
+                <script type="text/javascript" src="/yycrm/static/src/js/yykanban.js"/>
             </xpath>
         </template>
 
@@ -19,7 +20,7 @@
                     <field name="mobile"/>
                     <field name="phone"/>
                     <field name="create_uid"/>
-                    <field name="user_id" string="Owner"/>
+                    <field name="user_id" string="Salesman"/>
                 </tree>
             </field>
         </record>
@@ -165,6 +166,20 @@
                 </xpath>
             </field>
         </record>
+        <record id="yy_pipeline_view_kanban_inherited" model="ir.ui.view">
+            <field name="name">YYCRM pipeline view kanban inherited</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_kanban_view_leads"/>
+            <field name="arch" type="xml">
+                <field name="color" position="after">
+                    <field name="trade"/>
+                    <field name="product_ids"/>
+                    <field name="planned_revenue"/>
+                </field>
+                <!--<xpath expr="//[@class='oe_kanban_content']" position="replace">-->
+                <!--</xpath>-->
+            </field>
+        </record>
 
         <record id="yy_cus_action" model="ir.actions.act_window">
             <!--添加domain让res.partner只出现customer-->
@@ -195,6 +210,120 @@
         <menuitem id="base.menu_partner_form" name="Customer" parent="base.menu_sales" action="yy_cus_action"/><!--修改Customer的action-->
         <menuitem id="yycrm_customer_company" name="Company" parent="base.menu_partner_form" action="yy_cus_cmp_action"/>
         <menuitem id="yycrm_customer_individual" name="Individual" parent="base.menu_partner_form" action="yy_cus_ind_action"/>
+
+        测试
+        <act_window id='hello_test_1' name="test_1" res_model="crm.lead"  view_type='form' view_mode="yykanban,tree,form,search"
+            domain="[('type','=','opportunity')]" context="{'stage_type': 'opportunity','default_type': 'opportunity','default_user_id': uid,'search_default_assigned_to_me': 1,}"/>
+        <record id="my_view" model="ir.ui.view">
+            <field name="name">Hello Test</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <yykanban default_group_by="stage_id" class="o_kanban_small_column">
+                    <field name="stage_id" options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}"/>
+                    <field name="color"/>
+                    <field name="priority"/>
+                    <field name="planned_revenue"/>
+                    <field name="user_email"/>
+                    <field name="user_id"/>
+                    <field name="partner_address_email"/>
+                    <field name="message_needaction_counter"/>
+                    <field name="tag_ids"/>
+                    <field name="partner_id"/>
+                    <field name="active"/>
+                    <field name="company_currency"/>
+                    <templates>
+                        <field name="date_deadline"/>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                        <span class="fa fa-bars fa-lg"/>
+                                    </a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                                        <t t-if="widget.editable"><li><a type="edit">Edit</a></li></t>
+                                        <t t-if="widget.deletable"><li><a type="delete">Delete</a></li></t>
+                                        <li t-if="! record.active.value"><a name="action_set_active" type="object">Unarchive</a></li>
+                                        <li t-if="record.active.value"><a name="action_set_unactive" type="object">Archive</a></li>
+                                        <li><ul class="oe_kanban_colorpicker" data-field="color"/></li>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <div>
+                                        <field name="tag_ids"/>
+                                    </div>
+                                    <div>
+                                        <strong><field name="name"/></strong>
+                                    </div>
+                                    <div class="text-muted">
+                                        <t t-if="record.planned_revenue.raw_value"><field name="planned_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/></t> <span t-if="record.partner_id.value"> - <t t-esc="record.partner_id.value"/></span>
+                                    </div>
+                                    <div class="text-muted">
+                                        <t t-if="record.date_action.raw_value and record.date_action.raw_value lt (new Date())" t-set="red">oe_kanban_text_red</t>
+                                        <span t-attf-class="#{red || ''}">
+                                            <field name="date_action"/>
+                                            <t t-if="record.date_action.raw_value"> : </t>
+                                            <field name="next_activity_id"/>
+                                        </span>
+                                    </div>
+                                    <div class="o_kanban_footer">
+                                        <field name="priority" widget="priority" groups="base.group_user"/>
+                                        <t t-if="record.message_needaction_counter.raw_value">
+                                            <span class="oe_kanban_mail_new" title="Unread Messages"><i class="fa fa-comments"/><t t-raw="record.message_needaction_counter.raw_value"/></span>
+                                        </t>
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </yykanban>
+            </field>
+        </record>
+        <record id="my_view_crm_case_leads_filter" model="ir.ui.view">
+            <field name="name">CRM - Leads Search</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <search string="Search Leads">
+                    <field name="name" string="Lead / Customer" filter_domain="['|','|','|',('partner_name','ilike',self),('email_from','ilike',self),('contact_name','ilike',self),('name','ilike',self)]"/>
+                    <field name="tag_ids" string="Tag" filter_domain="[('tag_ids', 'ilike', self)]"/>
+                    <field name="team_id"/>
+                    <field name="user_id"/>
+                    <field name="partner_id" operator="child_of" string="Customer"/>
+                    <field name="create_date"/>
+                    <field name="country_id"/>
+                    <separator />
+                    <filter string="My Leads"
+                            name="assigned_to_me"
+                            domain="[('user_id','=',uid)]"
+                            help="Leads that are assigned to me"/>
+                    <filter string="Unassigned" name="unassigned"
+                            domain="[('user_id','=', False)]"
+                            help="No salesperson"/>
+                    <separator />
+                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <filter string="Archived" name="archived" domain="[('active', '=', False)]"/>
+                    <separator />
+                    <filter string="Exclude Opt Out"
+                            name='not_opt_out' domain="[('opt_out', '=', False)]"
+                            help="Leads that did not ask not to be included in mass mailing campaigns"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Salesperson" name="groupby_salesperson" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Sales Team" name="groupby_team" domain="[]" context="{'group_by':'team_id'}"/>
+                        <filter string="Stage" name="groupby_stage" domain="[]" context="{'group_by':'stage_id'}"/>
+                        <filter name="customer" string="Customer" help="Partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Campaign" name="groupby_campaign"  domain="[]" context="{'group_by':'campaign_id'}"/>
+                        <filter string="Source" name="groupby_source" domain="[]" context="{'group_by':'source_id'}"/>
+                        <filter string="Medium" name="groupby_channel" domain="[]" context="{'group_by':'medium_id'}"/>
+                        <filter string="Creation Month" name="groupby_createmonth" domain="[]" context="{'group_by':'create_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <menuitem id="menu_test_1" name="Test Menu"/>
+        <menuitem id="menu_test_2" name="Hello" parent="menu_test_1" action="hello_test_1"/>
+
 
     </data>
 </openerp>

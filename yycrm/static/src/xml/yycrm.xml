@@ -10,4 +10,14 @@
             </ul>
         </t>
     </t>
+
+    <!--<t t-extend="KanbanView.Group">-->
+        <!--<t t-jquery=".o_kanben_header" t-operation="after">-->
+            <!--<div class="row o_column_revenue_count_all">-->
+                <!--<span class="text-center">-->
+                    <!--￥ 2,000,000-->
+                <!--</span>-->
+            <!--</div>-->
+        <!--</t>-->
+    <!--</t>-->
 </templates>

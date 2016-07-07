@@ -26,6 +26,7 @@
         'views/yycrm_sale_group.xml',
         'security/ir.model.access.csv',
         'security/res_partner.xml',
+        'security/crm_lead_sale_order.xml',
         'views/views.xml',
         'views/templates.xml',
     ],
