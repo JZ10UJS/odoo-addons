@@ -1,0 +1,14 @@
+<openerp>
+    <data>
+        <record id="yycrm_task_rule" model="ir.rule">
+            <field name="name">YYCRM Task Rule</field>
+            <field name="model_id" ref="yycrm.model_yycrm_task"/>
+            <field name="domain_force">['|',('create_uid', '=', user.id), ('create_uid.sale_team_id.user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('yycrm.yycrm_sale_user')), (4, ref('yycrm.yycrm_sale_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
+</openerp>

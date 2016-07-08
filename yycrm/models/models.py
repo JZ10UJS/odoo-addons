@@ -27,6 +27,45 @@ class Solution(models.Model):
     name = fields.Char(string='description')
 
 
+class Task(models.Model):
+    _name = 'yycrm.task'
+    _inherit = 'mail.thread'
+
+    name = fields.Char(string='Next Task', required=True)
+    opportunity_id = fields.Many2one('crm.lead', string='Opportunity', required=True)
+    date_deadline = fields.Date(string='Date Deadline', required=True)
+    is_done = fields.Boolean(string='Done ?', default=False)
+
+    customer_id = fields.Many2one('res.partner', string='Customer')
+    city = fields.Char(string='City')
+    street = fields.Char(string='Street')
+    phone = fields.Char(string='Phone')
+    mobile = fields.Char(string='Mobile')
+    email = fields.Char(string='Email')
+
+    @api.one
+    def mark_done(self):
+        for record in self:
+            record.write({'is_done': True})
+        return True
+
+    @api.multi
+    def one_change_opportunity_id(self, oppor_id):
+        values = {}
+        if oppor_id:
+            oppor = self.env['crm.lead'].browse([oppor_id])
+            partner = oppor.partner_id
+            values = {
+                'customer_id': partner,
+                'street': partner.street,
+                'city': partner.city,
+                'email': partner.email,
+                'phone': partner.phone,
+                'mobile': partner.mobile,
+                'function': partner.function,
+            }
+        return {'value': values}
+
 class View(osv.osv.osv):
     _inherit = 'ir.ui.view'
 

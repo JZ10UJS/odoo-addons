@@ -3,3 +3,4 @@ access_yycrm_department,yy_sales_user_team_department,yycrm.model_yycrm_departme
 access_yycrm_trade,yy_sales_user_team_trade,yycrm.model_yycrm_trade,base.group_sale_salesman,1,1,1,1
 access_yycrm_channel,yy_sales_user_team_channel,yycrm.model_yycrm_channel,base.group_sale_salesman,1,1,1,1
 access_yycrm_solution,yy_sales_user_team_solution,yycrm.model_yycrm_solution,base.group_sale_salesman,1,1,1,1
+access_yycrm_task,yy_sales_user_team_task,yycrm.model_yycrm_task,base.group_sale_salesman,1,1,1,0

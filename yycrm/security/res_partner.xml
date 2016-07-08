@@ -1,6 +1,7 @@
 <openerp>
     <data>
         <!--这会导致登录用户对res.users访问受阻-->
+        <!--Fixed-->
         <record id="yycrm_res_partner_rule" model="ir.rule">
             <field name="name">YYCRM res partner rule</field>
             <field name="model_id" ref="base.model_res_partner"/>
