@@ -27,6 +27,7 @@
         'security/ir.model.access.csv',
         'security/res_partner.xml',
         'security/crm_lead_sale_order.xml',
+        'security/yycrm_own_record_rule.xml',
         'views/views.xml',
         'views/templates.xml',
     ],

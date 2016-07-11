@@ -230,3 +230,85 @@ odoo.define('yycrm.YYKanban', function(require){
         },
     });
 });
+
+
+odoo.define('yycrm.sales_team_dashboard', function (require) {
+    "use strict";
+
+    var SalesTeamDashboardView = require('sales_team.dashboard');
+    var Model = require('web.Model');
+
+    SalesTeamDashboardView.include({
+
+        events: {
+            'click .o_yycrm_task_panel': 'on_task_action_clicked',
+            'click .o_dashboard_action': 'on_dashboard_action_clicked',
+            'click .o_target_to_set': 'on_dashboard_target_clicked',
+        },
+
+        fetch_data: function() {
+            return new Model('yycrm.task')
+                .call('retrieve_sales_dashboard', []);
+        },
+
+        on_task_action_clicked: function(ev){
+            ev.preventDefault();
+
+            var self = this;
+            var $action = $(ev.currentTarget);
+            var action_name = $action.attr('name');
+            var action_extra = $action.data('id');
+            var additional_context = {}
+
+            new Model("ir.model.data")
+                .call('xmlid_to_res_id', [action_name])
+                .then(function(data){
+                    if (data) {
+                        self.do_action({
+                            'views': [[false, 'form']],
+                            'view_type': 'form',
+                            'view_mode': 'form',
+                            'res_model': 'yycrm.task',
+                            'type': 'ir.actions.act_window',
+                            'target': 'current',
+                            'res_id': action_extra,
+                        });
+                    }
+                });
+
+        },
+        on_dashboard_action_clicked: function(ev){
+            ev.preventDefault();
+    
+            var self = this;
+            var $action = $(ev.currentTarget);
+            var action_name = $action.attr('name');
+            var action_extra = $action.data('extra');
+            var additional_context = {}
+    
+            // TODO: find a better way to add defaults to search view
+            if (action_name === 'yycrm.yy_task_pivot_action') {
+                additional_context = {'view_type':'pivot'};
+            } else if (action_name === 'yycrm.yy_task_act_window_action') {
+                if (action_extra === 'today') {
+                    additional_context['search_default_today'] = 1;
+                } else if (action_extra === 'this_week') {
+                    additional_context['search_default_this_week'] = 1;
+                } else if (action_extra === 'overdue') {
+                    additional_context['search_default_overdue'] = 1;
+                }
+            } else if (action_name === 'crm.crm_opportunity_report_action_graph') {
+                additional_context['search_default_won'] = 1;
+            }
+    
+            new Model("ir.model.data")
+                .call("xmlid_to_res_id", [action_name])
+                .then(function(data) {
+                    if (data){
+                       self.do_action(data, {additional_context: additional_context});
+                    }
+                });
+        },
+    });
+
+});

@@ -141,7 +141,7 @@
 
         <!--摒弃自带的next activity改用自建的Task-->
         <act_window id="yy_task_act_window_action" name="Tasks" res_model="yycrm.task" view_type="form"
-            view_mode="tree,form,search"/>
+            view_mode="sales_team_dashboard,tree,form,pivot" context="{'search_default_have_done':1}"/>
         <record id="yy_task_view_tree" model="ir.ui.view">
             <field name="name">YYCRM Task View Form</field>
             <field name="model">yycrm.task</field>
@@ -193,10 +193,6 @@
                             </group>
                         </group>
                     </sheet>
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids" widget="mail_followers"/>
-                        <field name="message_ids" widget="mail_thread"/>
-                    </div>
                 </form>
             </field>
         </record>
@@ -206,12 +202,48 @@
             <field name="arch" type="xml">
                 <search>
                     <field name="name"/>
+                    <field name="date_deadline"/>
                     <filter string="Done" domain="[('is_done','=',True)]"/>
-                    <filter string="Not Done" domain="[('is_done','=',False)]"/>
+                    <filter string="Not Done" name='have_done' domain="[('is_done','=',False)]"/>
+                    <separator/>
+                    <filter string="Today" name="today" domain="[('date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter string="This Weak" name="this_week" domain="['&amp;', ('date_deadline', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                ('date_deadline', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                    <filter string="Overdue" name="overdue" domain="[('date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
                 </search>
             </field>
         </record>
+        <record id="yy_task_view_pivot" model="ir.ui.view">
+            <field name="name">YYCRM task view pivot</field>
+            <field name="model">yycrm.task</field>
+            <field name="arch" type="xml">
+                <pivot string="Tasks" display_quantity="true">
+                    <field name="date_deadline" type="row"/>
+                    <field name="opportunity_id" type="col"/>
+                </pivot>
+            </field>
+        </record>
         <menuitem id="yy_task_menu" name="Task" action="yy_task_act_window_action" parent="base.menu_sales"/>
+        <act_window id="yy_task_pivot_action" name="Pivot Tasks" res_model="yycrm.task" view_type="form"
+                    view_mode='pivot' view_id="yy_task_view_pivot"/>
+
+        <!--修改dashboard, 从crm.team的model 转换成 yycrm.task-->
+        <record id="yy_sales_team_dashboard" model="ir.ui.view">
+            <field name="name">YYCRM sales team dashboard</field>
+            <field name="model">yycrm.task</field>
+            <field name="arch" type="xml">
+                <sales_team_dashboard class="oe_background_grey o_kanban_dashboard o_salesteam_kanban" create="0">
+                    <field name="name"/>
+                    <field name="opportunity_id"/>
+                    <field name="date_deadline"/>
+                    <templates>
+                        <t t-name="kanban-box"></t>
+                    </templates>
+                </sales_team_dashboard>
+            </field>
+        </record>
+        <act_window id="sales_team.crm_team_salesteams_act" name="Dashboard" res_model="yycrm.task" view_type="form"
+                    view_mode="sales_team_dashboard" view_id="yy_sales_team_dashboard"/>
 
         <!--添加domain让res.partner只出现customer-->
         <record id="yy_cus_action" model="ir.actions.act_window">
@@ -376,6 +408,8 @@
         <menuitem id="menu_test_1" name="Test Menu"/>
         <menuitem id="menu_test_2" name="Hello" parent="menu_test_1" action="hello_test_1"/>
         <!--测试结束-->
+
+
 
     </data>
 </openerp>

@@ -14,4 +14,8 @@ openerp.yycrm = function(instance, local){
             return this;
         },
     });
+
+    // console.log(require('sales_team.dashboard'));
+    // var SalesTeamDashboardView = instance.sales_team.dashboard;
+    // console.log(SalesTeamDashboardView);
 };
