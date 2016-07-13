@@ -95,7 +95,7 @@ odoo.define('yycrm.YYKanban', function(require){
 
     var YYKanbanView = KanbanView.extend({
         display_name: _lt('YYKanban'),
-        icon: 'fa fa-list-ul',
+        icon: 'fa fa-th-large',
         view_type: "yykanban",
         render_grouped: function (fragment) {
             var self = this;
@@ -241,7 +241,7 @@ odoo.define('yycrm.sales_team_dashboard', function (require) {
     SalesTeamDashboardView.include({
 
         events: {
-            'click .o_yycrm_task_panel': 'on_task_action_clicked',
+            'click .oe_yycmr_kanban_action': 'on_task_action_clicked',
             'click .o_dashboard_action': 'on_dashboard_action_clicked',
             'click .o_target_to_set': 'on_dashboard_target_clicked',
         },

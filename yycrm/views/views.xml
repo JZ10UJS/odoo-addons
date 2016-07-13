@@ -8,6 +8,31 @@
             </xpath>
         </template>
 
+        <!--隐藏 Discuss Calendar Contacts，只有admin才能查看 -->
+        <record id="mail.menu_contacts" model="ir.ui.menu">
+            <field name="name">Contacts</field>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+        </record>
+        <record id="calendar.mail_menu_calendar" model="ir.ui.menu">
+            <field name="name">Calendar</field>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+        </record>
+        <record id="mail.mail_channel_menu_root_chat" model="ir.ui.menu">
+            <field name="name">Discuss</field>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+        </record>
+        <!--隐藏activity-->
+        <record id="crm.crm_lead_menu_activities" model="ir.ui.menu">
+            <field name="name">Next Activities</field>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+        </record>
+        <!--隐藏menu, 使其group为sale_manager Sales/Invoicing-->
+        <record id="sale.menu_sale_invoicing" model="ir.ui.menu">
+            <field name="name">Next Activities</field>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_sale_manager')])]"/>
+        </record>
+
+
         <!--对sales/customers进行一些定制化   res.partner-->
         <!--修改customer的tree字段-->
         <record id="yy_cus_view_tree" model="ir.ui.view">
@@ -86,6 +111,29 @@
         </record>
 
         <!--对sales/opportunity定制   crm.lead-->
+        <record id="crm.crm_lead_opportunities_tree_view" model="ir.actions.act_window">
+            <field name="name">Your Pipeline</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">yykanban,tree,graph,pivot,form,calendar</field>
+            <field name="domain">[('type','=','opportunity')]</field>
+            <field name="context">{
+                    'stage_type': 'opportunity',
+                    'default_type': 'opportunity',
+                    'default_user_id': uid,
+                    'search_default_assigned_to_me': 1,
+    }</field>
+            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="help" type="html">
+                <p>
+                    Odoo helps you keep track of your sales pipeline to follow
+                    up potential sales and better forecast your future revenues.
+                </p><p>
+                    You will be able to plan meetings and phone calls from
+                    opportunities, convert them into quotations, attach related
+                    documents, track all discussions, and much more.
+                </p>
+            </field>
+        </record>
         <record id="yy_oppor_view_form_inherited" model="ir.ui.view">
             <field name="name">YYCRM crm lead oppor view form inherited</field>
             <field name="model">crm.lead</field>
@@ -141,7 +189,7 @@
 
         <!--摒弃自带的next activity改用自建的Task-->
         <act_window id="yy_task_act_window_action" name="Tasks" res_model="yycrm.task" view_type="form"
-            view_mode="sales_team_dashboard,tree,form,pivot" context="{'search_default_have_done':1}"/>
+            view_mode="tree,form,pivot" context="{'search_default_have_done':1}"/>
         <record id="yy_task_view_tree" model="ir.ui.view">
             <field name="name">YYCRM Task View Form</field>
             <field name="model">yycrm.task</field>
@@ -227,6 +275,8 @@
         <act_window id="yy_task_pivot_action" name="Pivot Tasks" res_model="yycrm.task" view_type="form"
                     view_mode='pivot' view_id="yy_task_view_pivot"/>
 
+
+
         <!--修改dashboard, 从crm.team的model 转换成 yycrm.task-->
         <record id="yy_sales_team_dashboard" model="ir.ui.view">
             <field name="name">YYCRM sales team dashboard</field>
@@ -276,15 +326,14 @@
         <menuitem id="yycrm_customer_company" name="Company" parent="base.menu_partner_form" action="yy_cus_cmp_action"/>
         <menuitem id="yycrm_customer_individual" name="Individual" parent="base.menu_partner_form" action="yy_cus_ind_action"/>
 
-        <!--测试 extend KanbanView-->
-        <act_window id='hello_test_1' name="test_1" res_model="crm.lead"  view_type='form' view_mode="yykanban,tree,form,search"
-            domain="[('type','=','opportunity')]" context="{'stage_type': 'opportunity','default_type': 'opportunity','default_user_id': uid,'search_default_assigned_to_me': 1,}"/>
+
+        <!--实现对pipeline的定制-->
         <record id="my_view" model="ir.ui.view">
             <field name="name">Hello Test</field>
             <field name="model">crm.lead</field>
             <field name="arch" type="xml">
                 <yykanban default_group_by="stage_id" class="o_kanban_small_column">
-                    <field name="stage_id" options="{&quot;group_by_tooltip&quot;: {&quot;requirements&quot;: &quot;Description&quot;, &quot;legend_priority&quot;: &quot;Use of stars&quot;}}"/>
+                    <field name="stage_id" options='{"group_by_tooltip": {"requirements": "Description", "legend_priority": "Use of stars"}}'/>
                     <field name="color"/>
                     <field name="priority"/>
                     <field name="planned_revenue"/>
@@ -302,7 +351,7 @@
                             <div t-attf-class="#{kanban_color(record.color.raw_value)} oe_kanban_global_click">
                                 <div class="o_dropdown_kanban dropdown">
 
-                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#">
+                                    <a class="dropdown-toggle btn" data-toggle="dropdown" href="#" >
                                         <span class="fa fa-bars fa-lg"/>
                                     </a>
                                     <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
@@ -334,12 +383,12 @@
                                     <div class="o_kanban_footer">
                                         <field name="priority" widget="priority" groups="base.group_user"/>
                                         <t t-if="record.message_needaction_counter.raw_value">
-                                            <span class="oe_kanban_mail_new" title="Unread Messages"><i class="fa fa-comments"/><t t-raw="record.message_needaction_counter.raw_value"/></span>
+                                            <span class='oe_kanban_mail_new' title='Unread Messages'><i class='fa fa-comments'/><t t-raw="record.message_needaction_counter.raw_value"/></span>
                                         </t>
                                         <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" width="24" height="24" class="oe_kanban_avatar pull-right"/>
                                     </div>
                                 </div>
-                                <div class="oe_clear"/>
+                                <div class="oe_clear"></div>
                             </div>
                         </t>
                     </templates>
@@ -358,56 +407,7 @@
                 </field>
             </field>
         </record>
-        <record id="my_view_crm_case_leads_filter" model="ir.ui.view">
-            <field name="name">CRM - Leads Search</field>
-            <field name="model">crm.lead</field>
-            <field name="arch" type="xml">
-                <search string="Search Opportunities">
-                    <field name="name" string="Opportunity" filter_domain="['|','|','|',('partner_id','ilike',self),('partner_name','ilike',self),('email_from','ilike',self),('name', 'ilike', self)]"/>
-                    <field name="tag_ids" string="Tag" filter_domain="[('tag_ids', 'ilike', self)]"/>
-                    <field name="team_id"/>
-                    <field name="user_id"/>
-                    <field name="partner_id" operator="child_of" string="Customer"/>
-                    <field name="stage_id" domain="[]"/>
-                    <field name="next_activity_id"/>
-                    <field name="title_action"/>
-                    <field name="probability"/>
-                    <field name="lost_reason"/>
-                    <separator/>
-                    <filter string="Won" name="won" domain="['&amp;', ('stage_id.probability', '=', 100), ('stage_id.fold', '=', True)]"/>
-                    <filter string="Lost" name="lost" domain="['&amp;', ('probability', '=', 0), ('active', '=', False)]"/>
-                    <separator/>
-                    <filter string="My Opportunities" name="assigned_to_me" domain="[('user_id', '=', uid)]" help="Opportunities that are assigned to me"/>
-                    <filter string="Unassigned" name="unassigned" domain="[('user_id','=', False)]" help="No salesperson"/>
-                    <separator/>
-                    <filter string="Today Activities" name="today" domain="[('date_action', '=', context_today().strftime('%Y-%m-%d'))]"/>
-                    <filter string="This Week Activities" name="this_week" domain="['&amp;', ('date_action', '&gt;=', context_today().strftime('%Y-%m-%d')),                                      ('date_action', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d'))                             ]"/>
-                    <filter string="Overdue Activities" name="overdue" domain="[('date_action', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>
-                    <separator/>
-                    <filter string="Follow-up" name="follow_up" domain="[('date_action', '&lt;=', context_today().strftime('%Y-%m-%d') )]" help="Show all opportunities for which the next action date is today or before"/>
-                    <separator/>
-                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
-                    <filter string="Archived" domain="[('active', '=', False)]"/>
-                    <group expand="0" string="Group By" colspan="16">
-                        <filter string="Salesperson" context="{'group_by':'user_id'}"/>
-                        <filter string="Sales Team" context="{'group_by':'team_id'}"/>
-                        <filter string="Country" context="{'group_by':'country_id'}"/>
-                        <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
-                        <filter name="stage" string="Stage" context="{'group_by':'stage_id'}"/>
-                        <filter string="Campaign" domain="[]" context="{'group_by':'campaign_id'}"/>
-                        <filter string="Medium" domain="[]" context="{'group_by':'medium_id'}"/>
-                        <filter string="Source" domain="[]" context="{'group_by':'source_id'}"/>
-                        <separator orientation="vertical"/>
-                        <filter string="Creation Month" context="{'group_by':'create_date:month'}" name="month"/>
-                        <filter string="Expected Closing" context="{'group_by':'date_deadline'}"/>
-                        <filter string="Lost Reason" context="{'group_by':'lost_reason'}"/>
-                    </group>
-                </search>
-            </field>
-        </record>
-        <menuitem id="menu_test_1" name="Test Menu"/>
-        <menuitem id="menu_test_2" name="Hello" parent="menu_test_1" action="hello_test_1"/>
-        <!--测试结束-->
+
 
 
 

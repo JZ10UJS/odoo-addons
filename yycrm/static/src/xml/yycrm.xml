@@ -3,15 +3,36 @@
     <t t-extend="UserMenu">
         <t t-jquery="ul.dropdown-menu" t-operation="replace">
             <ul class="dropdown-menu">
-                <li><a href="#" data-menu="about">About Odoo</a></li>
-                <li class="divider"/>
+                <li t-if='widget.session.uid===1'><a href="#" data-menu="about">About Odoo</a></li>
+                <li class="divider" t-if='widget.session.uid===1'/>
                 <li><a href="#" data-menu="settings">Preferences</a></li>
                 <li><a href="#" data-menu="logout">Log out</a></li>
             </ul>
         </t>
     </t>
+    <!--去掉导航开启debug之后出现的小按钮，使其只能被admin查看到-->
+    <t t-extend="WebClient.DebugManager">
+        <t t-jquery=".oe_debug_manager" t-operation="replace">
+            <li class="oe_debug_manager" t-if="widget.session.uid===1 and widget.session.debug">
+                <a href="#" title="Open Debug Menu" class="dropdown-toggle oe_debug_button" data-toggle="dropdown">
+                    <span class="fa fa-bug"/>
+                    <b class="caret"/>
+                </a>
+                <ul class="dropdown-menu js_debug_dropdown" role="menu"/>
+            </li>
+        </t>
+    </t>
 
-    <!--隐藏mail.thread导致的查看res.partner的问题-->
+    <!--隐藏导航栏的mail相关-->
+    <t t-extend="mail.chat.InboxItem">
+        <t t-jquery=".o_mail_navbar_item" t-operation="replace"/>
+    </t>
+    <t t-extend="mail.chat.MessagingMenu">
+        <t t-jquery=".o_mail_navbar_item" t-operation="replace"/>
+    </t>
+
+
+    <!--隐藏mail.thread的几个button, fix其查看res.partner的越权问题-->
     <t t-extend="mail.Chatter">
         <t t-jquery=".o_chatter_topbar" t-operation="replace">
             <button t-if="widget.options.display_log_button" class="btn btn-sm btn-info o_chatter_button_log_note" title="Log a note. Followers will not be notified.">
@@ -24,11 +45,12 @@
         </t>
     </t>
 
+    <!--修改Sales/Dashboard的展现-->
     <t t-extend="sales_team.SalesDashboard">
         <!--<t t-jquery="td[title='To Calendar']" t-operation="replace"></t>-->
         <!--<t t-jquery="table:first tr:last td:first" t-operation="replace"></t>-->
         <t t-jquery=".o_sales_dashboard" t-operation="replace">
-            <div style="width:80%;padding:0px 20px 0px 0px;">
+            <div style="width:75%;padding:0px 20px 0px 0px;">
                 <div t-if="show_demo or values" class="o_sales_dashboard">
                 <div t-attf-class="#{show_demo ? 'o_demo' : ''}">
                     <table class="table table-condensed">
@@ -187,13 +209,15 @@
                 </div>
             </div>
             </div>
-            <div style="width:18%;padding:0px 0px 20px 20px;border-left:1px dotted #333333;">
+            <div style="width:23%;padding:0px 0px 20px 20px;border-left:1px dotted #333333;">
                 <h2>To Do:</h2>
                 <t t-foreach="values.task_not_done" t-as="task">
-                    <div class="panel panel-info o_yycrm_task_panel oe_kanban_action" name="yycrm.yy_task_act_window_action" t-attf-data-id="#{task.id}">
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                             <h3 class="panel-title">
-                                <a t-attf-href="/web?id=#{task.id}&amp;view_type=form&amp;model=yycrm.task&amp;menu_id=230&amp;action=321"><t t-esc="task.name"/></a>
+                                <a class="oe_yycmr_kanban_action" name="yycrm.yy_task_act_window_action"  t-attf-data-id="#{task.id}">
+                                    <t t-esc="task.name"/>
+                                </a>
                             </h3>
                         </div>
                         <div class="panel-body">
@@ -204,7 +228,8 @@
                                 </tr>
                                 <tr>
                                     <td>Opportunity: </td>
-                                    <td><t t-esc="task.opportunity_id"/></td>
+                                    <td><t t-esc="task.opportunity_id[1]"/></td>
+
                                 </tr>
                             </table>
                         </div>

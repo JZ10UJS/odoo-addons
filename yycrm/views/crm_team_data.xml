@@ -1,0 +1,90 @@
+<openerp>
+    <data>
+        <record id="yycrm_stage_1" model="crm.stage">
+            <field name="name">Forcast</field>
+            <field name="type" eval="'opportunity'"/>
+            <field name="fold" eval="False"/>
+            <field name="on_change" eval="True"/>
+            <field name="probability" eval="30"/>
+        </record>
+        <record id="yycrm_stage_2" model="crm.stage">
+            <field name="name">Upside</field>
+            <field name="type" eval="'opportunity'"/>
+            <field name="fold" eval="False"/>
+            <field name="on_change" eval="True"/>
+            <field name="probability" eval="60"/>
+        </record>
+        <record id="yycrm_stage_3" model="crm.stage">
+            <field name="name">Commit</field>
+            <field name="type" eval="'opportunity'"/>
+            <field name="fold" eval="False"/>
+            <field name="on_change" eval="True"/>
+            <field name="probability" eval="80"/>
+        </record>
+        <record id="yycrm_stage_4" model="crm.stage">
+            <field name="name">Close</field>
+            <field name="type" eval="'opportunity'"/>
+            <field name="fold" eval="True"/>
+            <field name="on_change" eval="True"/>
+            <field name="probability" eval="100"/>
+        </record>
+
+
+        <record id="yycrm_sale_team_1" model="crm.team">
+            <field name="name">华东区</field>
+            <field name="code" eval="'001'"/>
+            <field name="alias_name" eval="'East China'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+            <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
+                                                   ref('yycrm_stage_2'),
+                                                   ref('yycrm_stage_3'),
+                                                   ref('yycrm_stage_4')])]"/>
+        </record>
+        <record id="yycrm_sale_team_2" model="crm.team">
+            <field name="name">华北区</field>
+            <field name="code" eval="'002'"/>
+            <field name="alias_name" eval="'North China'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+            <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
+                                                   ref('yycrm_stage_2'),
+                                                   ref('yycrm_stage_3'),
+                                                   ref('yycrm_stage_4')])]"/>
+        </record>
+        <record id="yycrm_sale_team_3" model="crm.team">
+            <field name="name">华中区</field>
+            <field name="code" eval="'003'"/>
+            <field name="alias_name" eval="'Central China'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+            <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
+                                                   ref('yycrm_stage_2'),
+                                                   ref('yycrm_stage_3'),
+                                                   ref('yycrm_stage_4')])]"/>
+        </record>
+        <record id="yycrm_sale_team_4" model="crm.team">
+            <field name="name">华南区</field>
+            <field name="code" eval="'004'"/>
+            <field name="alias_name" eval="'South China'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+            <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
+                                                   ref('yycrm_stage_2'),
+                                                   ref('yycrm_stage_3'),
+                                                   ref('yycrm_stage_4')])]"/>
+        </record>
+        <record id="yycrm_sale_team_5" model="crm.team">
+            <field name="name">华西区</field>
+            <field name="code" eval="'005'"/>
+            <field name="alias_name" eval="'West China'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+            <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
+                                                   ref('yycrm_stage_2'),
+                                                   ref('yycrm_stage_3'),
+                                                   ref('yycrm_stage_4')])]"/>
+        </record>
+
+    </data>
+</openerp>

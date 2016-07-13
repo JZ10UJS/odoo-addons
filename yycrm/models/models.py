@@ -37,7 +37,7 @@ class Task(models.Model):
     name = fields.Char(string='Next Task', required=True)
     opportunity_id = fields.Many2one('crm.lead', string='Opportunity', required=True)
     date_deadline = fields.Date(string='Date Deadline', required=True)
-    is_done = fields.Boolean(string='Done ?', default=False)
+    is_done = fields.Boolean(string='Done?', default=False)
 
     customer_id = fields.Many2one('res.partner', string='Customer')
     city = fields.Char(string='City')
@@ -195,3 +195,48 @@ class Leads(models.Model):
         data['value']['trade'] = partner.trade
         return data
 
+class CrmTeam(models.Model):
+    _inherit = 'crm.team'
+
+    def action_your_pipeline(self, cr, uid, context=None):
+        IrModelData = self.pool['ir.model.data']
+        action = IrModelData.xmlid_to_object(cr, uid, 'crm.crm_lead_opportunities_tree_view', context=context).read(
+            ['name', 'help', 'res_model', 'target', 'domain', 'context', 'type', 'search_view_id'])
+        if not action:
+            action = {}
+        else:
+            action = action[0]
+
+        user_team_id = self.pool['res.users'].browse(cr, uid, uid, context=context).sale_team_id.id
+        if not user_team_id:
+            user_team_id = self.search(cr, uid, [], context=context, limit=1)
+            user_team_id = user_team_id and user_team_id[0] or False
+            action['help'] = """<p class='oe_view_nocontent_create'>Click here to add new opportunities</p><p>
+            Looks like you are not a member of a sales team. You should add yourself
+            as a member of one of the sales team.
+        </p>"""
+            if user_team_id:
+                action['help'] += "<p>As you don't belong to any sales team, Odoo opens the first one by default.</p>"
+
+        action_context = eval(action['context'], {'uid': uid})
+        if user_team_id:
+            action_context.update({
+                'default_team_id': user_team_id,
+                'search_default_team_id': user_team_id
+            })
+
+        tree_view_id = IrModelData.xmlid_to_res_id(cr, uid, 'crm.crm_case_tree_view_oppor')
+        form_view_id = IrModelData.xmlid_to_res_id(cr, uid, 'crm.crm_case_form_view_oppor')
+        kanb_view_id = IrModelData.xmlid_to_res_id(cr, uid, 'yycrm.yy_pipeline_view_kanban_inherited')
+        action.update({
+            'views': [
+                [kanb_view_id, 'yykanban'],
+                [tree_view_id, 'tree'],
+                [form_view_id, 'form'],
+                [False, 'graph'],
+                [False, 'calendar'],
+                [False, 'pivot']
+            ],
+            'context': action_context,
+        })
+        return action
