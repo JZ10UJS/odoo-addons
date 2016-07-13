@@ -82,17 +82,23 @@
             <field name="login">liuchao</field>
             <field name="password">liuchao</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('yycrm.yycrm_sale_user')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('yycrm.yycrm_sale_user')])]"/>
         </record>
         <record id="yycrm_user_5" model="res.users">
             <field name="partner_id" ref="yycrm_partner_5"/>
             <field name="login">wangzheng</field>
             <field name="password">wangzheng</field>
             <field name="company_id" ref="base.main_company"/>
-            <field name="groups_id" eval="[(6,0,[ref('base.group_user'), ref('yycrm.yycrm_sale_manager')])]"/>
+            <field name="groups_id" eval="[(6,0,[ref('yycrm.yycrm_sale_manager')])]"/>
         </record>
 
 
+        <record id="yycrm_sale_team_1" model="crm.team">
+            <field name="user_id" ref="yycrm_user_3"/>
+        </record>
+        <record id="yycrm_sale_team_2" model="crm.team">
+            <field name="user_id" ref="yycrm_user_5"/>
+        </record>
 
         <record id="yycrm_user_5" model="res.users">
             <field name="sale_team_id" ref="yycrm.yycrm_sale_team_2"/>

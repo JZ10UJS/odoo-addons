@@ -227,6 +227,7 @@ class CrmTeam(models.Model):
 
         tree_view_id = IrModelData.xmlid_to_res_id(cr, uid, 'crm.crm_case_tree_view_oppor')
         form_view_id = IrModelData.xmlid_to_res_id(cr, uid, 'crm.crm_case_form_view_oppor')
+        # 修改这两处，用以实现对pipeline的外观修改
         kanb_view_id = IrModelData.xmlid_to_res_id(cr, uid, 'yycrm.yy_pipeline_view_kanban_inherited')
         action.update({
             'views': [

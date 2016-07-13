@@ -275,8 +275,6 @@
         <act_window id="yy_task_pivot_action" name="Pivot Tasks" res_model="yycrm.task" view_type="form"
                     view_mode='pivot' view_id="yy_task_view_pivot"/>
 
-
-
         <!--修改dashboard, 从crm.team的model 转换成 yycrm.task-->
         <record id="yy_sales_team_dashboard" model="ir.ui.view">
             <field name="name">YYCRM sales team dashboard</field>
@@ -326,9 +324,8 @@
         <menuitem id="yycrm_customer_company" name="Company" parent="base.menu_partner_form" action="yy_cus_cmp_action"/>
         <menuitem id="yycrm_customer_individual" name="Individual" parent="base.menu_partner_form" action="yy_cus_ind_action"/>
 
-
         <!--实现对pipeline的定制-->
-        <record id="my_view" model="ir.ui.view">
+        <record id="yycrm_pipeline_view" model="ir.ui.view">
             <field name="name">Hello Test</field>
             <field name="model">crm.lead</field>
             <field name="arch" type="xml">
@@ -398,7 +395,7 @@
         <record id="yy_pipeline_view_kanban_inherited" model="ir.ui.view">
             <field name="name">YYCRM pipeline view kanban inherited</field>
             <field name="model">crm.lead</field>
-            <field name="inherit_id" ref="yycrm.my_view"/>
+            <field name="inherit_id" ref="yycrm.yycrm_pipeline_view"/>
             <field name="arch" type="xml">
                 <field name="color" position="after">
                     <field name="trade"/>
@@ -408,7 +405,22 @@
             </field>
         </record>
 
-
+        <!--对sale.order的form view进行修改-->
+        <record id="yycrm_sale_order_form_view_inherited" model="ir.ui.view">
+            <field name="name">YYCRM sale order form view inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id" domain="[('customer','=',True),('user_id','=',uid),('parent_id','=',False)]"
+                           context="{'search_default_customer':1, 'show_address': 1}"
+                           options="{&quot;always_reload&quot;: True}"/>
+                </xpath>
+                <xpath expr="//page[2]" position="attributes">
+                    <attribute name="groups">base.group_salesman_all_leads</attribute>
+                </xpath>
+            </field>
+        </record>
 
 
     </data>

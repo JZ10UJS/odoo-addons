@@ -24,6 +24,7 @@
     # always loaded
     'data': [
         'views/yycrm_sale_group.xml',
+        'views/crm_team_data.xml',
         'security/ir.model.access.csv',
         'security/res_partner.xml',
         'security/crm_lead_sale_order.xml',
