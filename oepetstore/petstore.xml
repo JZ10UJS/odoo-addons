@@ -84,5 +84,6 @@
 
         <menuitem id="message_day_action_menu" name="QwebMessageList" parent="petstore_menu"
                   action="message_day_action"/>
+
     </data>
 </openerp>

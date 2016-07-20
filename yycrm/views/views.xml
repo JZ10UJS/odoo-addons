@@ -116,12 +116,7 @@
             <field name="res_model">crm.lead</field>
             <field name="view_mode">yykanban,tree,graph,pivot,form,calendar</field>
             <field name="domain">[('type','=','opportunity')]</field>
-            <field name="context">{
-                    'stage_type': 'opportunity',
-                    'default_type': 'opportunity',
-                    'default_user_id': uid,
-                    'search_default_assigned_to_me': 1,
-    }</field>
+            <field name="context">{'stage_type': 'opportunity','default_type': 'opportunity','default_user_id': uid,'search_default_assigned_to_me': 1}</field>
             <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
             <field name="help" type="html">
                 <p>
@@ -303,7 +298,7 @@
         </record>
         <!--添加domain让res.partner只出现customer的公司-->
         <record id="yy_cus_cmp_action" model="ir.actions.act_window">
-            <field name="name">YYCRM res partner action_cmp</field>
+            <field name="name">Company Customer</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="yy_cus_view_tree"/>
@@ -313,7 +308,7 @@
         <!--添加domain让res.partner只出现customer的个人-->
         <record id="yy_cus_ind_action" model="ir.actions.act_window">
 
-            <field name="name">YYCRM res partner action_ind</field>
+            <field name="name">Individual Customer</field>
             <field name="res_model">res.partner</field>
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="yy_cus_view_tree"/>
@@ -421,6 +416,7 @@
                 </xpath>
             </field>
         </record>
+
 
 
     </data>

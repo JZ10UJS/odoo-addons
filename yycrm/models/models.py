@@ -213,11 +213,11 @@ class CrmTeam(models.Model):
             user_team_id = user_team_id and user_team_id[0] or False
             action['help'] = """<p class='oe_view_nocontent_create'>Click here to add new opportunities</p><p>
             Looks like you are not a member of a sales team. You should add yourself
-            as a member of one of the sales team.
-        </p>"""
+            as a member of one of the sales team.\n</p>"""
             if user_team_id:
                 action['help'] += "<p>As you don't belong to any sales team, Odoo opens the first one by default.</p>"
 
+        print action['context']
         action_context = eval(action['context'], {'uid': uid})
         if user_team_id:
             action_context.update({

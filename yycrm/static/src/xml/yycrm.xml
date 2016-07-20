@@ -45,7 +45,7 @@
         </t>
     </t>
 
-    <!--修改Sales/Dashboard的展现-->
+    <!--修改Sales/Dashboard的展现 添加右侧待办事项-->
     <t t-extend="sales_team.SalesDashboard">
         <!--<t t-jquery="td[title='To Calendar']" t-operation="replace"></t>-->
         <!--<t t-jquery="table:first tr:last td:first" t-operation="replace"></t>-->
