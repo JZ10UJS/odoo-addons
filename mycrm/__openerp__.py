@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "YouYun CRM",
+    'name': "MY CRM",
 
     'summary': """
         This is a customized CRM for YouYun based on the basic CRM""",
@@ -37,5 +37,5 @@
         'demo/demo.xml',
         'demo/mycrm_demo.xml',
     ],
-    'application':True,
+    'application':False,
 }

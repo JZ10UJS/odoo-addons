@@ -1,30 +1,29 @@
 <openerp>
     <data>
-        <!-- <template id="listing"> -->
-        <!--   <ul> -->
-        <!--     <li t-foreach="objects" t-as="object"> -->
-        <!--       <a t-attf-href="#{ root }/objects/#{ object.id }"> -->
-        <!--         <t t-esc="object.display_name"/> -->
-        <!--       </a> -->
-        <!--     </li> -->
-        <!--   </ul> -->
-        <!-- </template> -->
-        <!-- <template id="object"> -->
-        <!--   <h1><t t-esc="object.display_name"/></h1> -->
-        <!--   <dl> -->
-        <!--     <t t-foreach="object._fields" t-as="field"> -->
-        <!--       <dt><t t-esc="field"/></dt> -->
-        <!--       <dd><t t-esc="object[field]"/></dd> -->
-        <!--     </t> -->
-        <!--   </dl> -->
-        <!-- </template> -->
-
         <!--修改界面左下角的odoo广告，改为自己公司-->
-        <template id="mycrm_menu_secondary" inherit_id="web.menu_secondary">
+        <template id="yycrm_menu_secondary" inherit_id="web.menu_secondary">
             <xpath expr="//a[@href='http://www.odoo.com']" position="replace">
                 <a href="http://www.cloudguarding.com">
                     <span>YouYun</span>
                 </a>
+            </xpath>
+        </template>
+
+        <!--修改登录login界面，增加logo与顶部的距离，并将odoo连接更换为YouYun-->
+        <template id="yycrm_login_layout" inherit_id="web.login_layout">
+            <xpath expr="//div[@class='col-md-6 col-md-offset-3 o_database_list']" position="replace">
+                <div class="col-md-6 col-md-offset-3 o_database_list">
+                    <div class="text-center" style="margin-top:30px;">
+                        <img t-attf-src="/web/binary/company_logo{{ '?dbname='+db if db else '' }}"/>
+                    </div>
+                    <t t-raw="0"/>
+                    <div class="text-center" t-if="not disable_footer">
+                        <t t-if="not disable_database_manager">
+                            <a class="" href="/web/database/manager">Manage Databases</a> |
+                        </t>
+                        <a href="http://www.cloudguarding.com" target="_blank">Powered by <span>YouYun</span></a>
+                    </div>
+                </div>
             </xpath>
         </template>
     </data>

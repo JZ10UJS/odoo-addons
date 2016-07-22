@@ -24,7 +24,7 @@
             </div>
             <!--添加的 my add-->
             <div class="row">
-                <p class="text-center o_column_revenue_count_all">￥ 2,000,000</p>
+                <p class="text-center o_column_revenue_count_all"></p>
             </div>
             <div t-if="widget.remaining > 0" class="o_kanban_load_more">
                 <t t-call="KanbanView.LoadMore"/>

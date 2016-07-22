@@ -171,6 +171,8 @@ openerp.oepetstore = function (instance, local) {
     });
 
     instance.web.client_actions.add('petstore.messagemenu', 'instance.oepetstore.MessageListPage');
+    
+    
 
     instance.oepetstore.ListView = instance.web.ListView.include({
         view_loading: function () {

@@ -241,7 +241,7 @@ odoo.define('yycrm.sales_team_dashboard', function (require) {
     SalesTeamDashboardView.include({
 
         events: {
-            'click .oe_yycmr_kanban_action': 'on_task_action_clicked',
+            'click .oe_yycrm_kanban_action': 'on_task_action_clicked',
             'click .o_dashboard_action': 'on_dashboard_action_clicked',
             'click .o_target_to_set': 'on_dashboard_target_clicked',
         },
