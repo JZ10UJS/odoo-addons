@@ -221,7 +221,7 @@
                             </tr>
                         </table>
                     </div>
-                    <t t-call="yycrm_graph"/>
+                    <!--<t t-call="yycrm_graph"/>-->
 
                     <div t-if="show_demo" class="o_welcome_message">
                         <div class="o_welcome_image">

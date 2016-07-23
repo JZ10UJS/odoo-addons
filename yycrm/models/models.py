@@ -290,7 +290,7 @@ class Leads(models.Model):
     def on_change_partner_id(self, partner_id):
         data = super(Leads, self).on_change_partner_id(partner_id)
         partner = self.env['res.partner'].browse([partner_id])
-        data['value']['trade'] = partner.trade
+        data['value']['trade'] = partner.trade or partner.parent_id.trade
         return data
 
 
