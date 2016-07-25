@@ -36,6 +36,18 @@
             <field name="name">Settings</field>
             <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
         </record>
+        <!--<record id="user_groups_view_form_inherited" model="ir.ui.view">
+            <field name="name">YYCRM User Groups View</field>
+            <field name="inherit_id" ref="base.user_groups_view"/>
+            <field name="arch" type="xml">
+                <field name=""
+            </field>
+        </record>-->
+
+        <!--让管理部具有添加修改 sales team的权限-->
+        <record id="base.sales_team_config" model="ir.ui.menu">
+            <field name="groups_id" eval="[(4, ref('yycrm_sale_admin'))]"/>
+        </record>
 
 
         <!--对sales/customers进行一些定制化   res.partner-->
@@ -80,12 +92,12 @@
                     </group>
                     <group>
                         <group string="Address">
-                            <!--<label for="street" string="Address"/>-->
-                            <!--<div class="o_address_format">-->
-                            <!--<div class="oe_edit_only">-->
-                                <!--<button name="open_parent" type="object" string="(edit)" class="oe_link"-->
-                                        <!--attrs="{'invisible': [('parent_id', '=', False)]}"/>-->
-                            <!--</div>-->
+                            <!--<label for="street" string="Address"/>
+                            <div class="o_address_format">
+                            <div class="oe_edit_only">
+                                <button name="open_parent" type="object" string="(edit)" class="oe_link"
+                                        attrs="{'invisible': [('parent_id', '=', False)]}"/>
+                            </div>-->
 
                             <field name="street" placeholder="Street..." class="o_address_street"
                                    attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
@@ -428,17 +440,21 @@
             <field name="arch" type="xml">
                 <field name="user_id" position="attributes">
                     <attribute name="domain">[('is_sale_manager', '=', True)]</attribute>
+                    <!--<attribute name="domain">[('groups_id', 'in', yycrm_sale_manager_id)]</attribute>
+                    这个后期可以修改为 在 crm.team 中添加一个属性 yycrm_sale_manager_id = self.env.ref('yycrm.yycrm_sale_manager')
+                    然后在这个view中添加 <field name="yycrm_sale_manager_id" invisible="1"/>
+                    再修改上面的attribute-->
                 </field>
             </field>
         </record>
 
-        <!--将dashboard由后台的 sales_dashboard_view 完全转化成actions.client，用以更方便的扩展-->
-        <!--<record id="dashboard_action" model="ir.actions.client">-->
-            <!--<field name="name">Dashboard</field>-->
-            <!--<field name="tag">yycrm.dashboard</field>-->
-        <!--</record>-->
-        <!--<menuitem id="sales_team.menu_sales_team_act" name="DashBoard" parent="base.menu_base_partner" sequence="1"-->
-                  <!--action="dashboard_action"/>-->
+        <!--将dashboard由后台的 sales_dashboard_view 完全转化成actions.client，用以更方便的扩展
+        <record id="dashboard_action" model="ir.actions.client">
+            <field name="name">Dashboard</field>
+            <field name="tag">yycrm.dashboard</field>
+        </record>
+        <menuitem id="sales_team.menu_sales_team_act" name="DashBoard" parent="base.menu_base_partner" sequence="1"
+                  action="dashboard_action"/>-->
 
 
     </data>

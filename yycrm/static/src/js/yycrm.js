@@ -3,7 +3,7 @@ openerp.yycrm = function(instance, local){
         _lt = instance.web._lt;
     var QWeb = instance.web.qweb;
 
-    // 实现弹出窗口可拖动 for admin
+    // 实现弹出窗口可拖动
     instance.web.Dialog.include({
         open: function(){
             var self = this;

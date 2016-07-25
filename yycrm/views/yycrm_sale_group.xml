@@ -19,13 +19,13 @@
             <field name="implied_ids" eval="[(4,ref('base.group_sale_manager'))]"/>
         </record>
 
-        <!--<record model="ir.module.category" id="yycrm_purchase_category">-->
-            <!--<field name="name">yycrm Purchase</field>-->
-        <!--</record>-->
+        <!--<record model="ir.module.category" id="yycrm_purchase_category">
+            <field name="name">yycrm Purchase</field>
+        </record>
 
-        <!--<record id="yycrm_purchase_user" model="res.groups">-->
-            <!--<field name="category_id" ref="yycrm_purchase_category"/>-->
-            <!--<field name="name">yycrm basic user</field>-->
-        <!--</record>-->
+        <record id="yycrm_purchase_user" model="res.groups">
+            <field name="category_id" ref="yycrm_purchase_category"/>
+            <field name="name">yycrm basic user</field>
+        </record>-->
     </data>
 </openerp>

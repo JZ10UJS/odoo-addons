@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, date
 from dateutil.relativedelta import relativedelta
 
 from openerp import models, fields, api, osv, tools
+from openerp import SUPERUSER_ID
 
 
 
@@ -261,6 +262,7 @@ class Task(models.Model):
 
         return res
 
+
 class View(osv.osv.osv):
     _inherit = 'ir.ui.view'
 
@@ -340,6 +342,20 @@ class CrmTeam(models.Model):
             'context': action_context,
         })
         return action
+
+    def _get_default_team_id(self, cr, uid, context=None, user_id=None):
+        if context is None:
+            context = {}
+        if user_id is None:
+            user_id = uid
+        team_ids = self.search(cr, SUPERUSER_ID, ['|', ('user_id', '=', user_id), ('member_ids', 'in', user_id)],
+                               limit=1, context=context)
+        team_id = team_ids[0] if team_ids else False
+        if not team_id and context.get('default_team_id'):
+            team_id = context['default_team_id']
+        if not team_id:
+            team_id = self.pool['ir.model.data'].xmlid_to_res_id(cr, uid, 'yycrm.yycrm_sale_team_6')
+        return team_id
 
 
 class Users(models.Model):
