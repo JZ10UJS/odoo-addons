@@ -231,11 +231,11 @@ class Task(models.Model):
         for act in task_done:
             if act['date_deadline']:
                 date_act = datetime.strptime(act['date_deadline'], tools.DEFAULT_SERVER_DATE_FORMAT).date()
-                if date_act <= date.today().replace(day=1) - relativedelta(
-                        months=-1) and date_act >= date.today().replace(day=1):
+                if date_act <= date.today().replace(day=1) - relativedelta(months=-1) \
+                        and date_act >= date.today().replace(day=1):
                     res['done']['this_month'] += 1
-                elif date_act < date.today().replace(day=1) and date_act >= date.today().replace(day=1) - relativedelta(
-                        months=+1):
+                elif date_act < date.today().replace(day=1) and \
+                                date_act >= date.today().replace(day=1) - relativedelta(months=+1):
                     res['done']['last_month'] += 1
 
         task_not_done = self.pool('yycrm.task').search_read(cr, uid,
@@ -299,9 +299,12 @@ class Leads(models.Model):
 class CrmTeam(models.Model):
     _inherit = 'crm.team'
 
+    user_id = fields.Many2one('res.users', string='Team Leader',
+                              domain=lambda self: [('groups_id', 'in', [self.env.ref('yycrm.yycrm_sale_manager').id])])
+
     def action_your_pipeline(self, cr, uid, context=None):
-        IrModelData = self.pool['ir.model.data']
-        action = IrModelData.xmlid_to_object(cr, uid, 'crm.crm_lead_opportunities_tree_view', context=context).read(
+        ir_model_data = self.pool['ir.model.data']
+        action = ir_model_data.xmlid_to_object(cr, uid, 'crm.crm_lead_opportunities_tree_view', context=context).read(
             ['name', 'help', 'res_model', 'target', 'domain', 'context', 'type', 'search_view_id'])
         if not action:
             action = {}
@@ -326,10 +329,10 @@ class CrmTeam(models.Model):
                 'search_default_team_id': user_team_id
             })
 
-        tree_view_id = IrModelData.xmlid_to_res_id(cr, uid, 'crm.crm_case_tree_view_oppor')
-        form_view_id = IrModelData.xmlid_to_res_id(cr, uid, 'crm.crm_case_form_view_oppor')
+        tree_view_id = ir_model_data.xmlid_to_res_id(cr, uid, 'crm.crm_case_tree_view_oppor')
+        form_view_id = ir_model_data.xmlid_to_res_id(cr, uid, 'crm.crm_case_form_view_oppor')
         # 修改这两处，用以实现对pipeline的外观修改
-        kanb_view_id = IrModelData.xmlid_to_res_id(cr, uid, 'yycrm.yy_pipeline_view_kanban_inherited')
+        kanb_view_id = ir_model_data.xmlid_to_res_id(cr, uid, 'yycrm.yy_pipeline_view_kanban_inherited')
         action.update({
             'views': [
                 [kanb_view_id, 'yykanban'],
@@ -343,6 +346,7 @@ class CrmTeam(models.Model):
         })
         return action
 
+    # 重写改方法，将原来的默认第一个team，修改为默认 其它
     def _get_default_team_id(self, cr, uid, context=None, user_id=None):
         if context is None:
             context = {}
@@ -354,23 +358,67 @@ class CrmTeam(models.Model):
         if not team_id and context.get('default_team_id'):
             team_id = context['default_team_id']
         if not team_id:
-            team_id = self.pool['ir.model.data'].xmlid_to_res_id(cr, uid, 'yycrm.yycrm_sale_team_6')
+            team_id = self.pool['ir.model.data'].xmlid_to_res_id(cr, uid, 'yycrm.yycrm_sale_team_6')  # 就是这啦
         return team_id
 
 
-class Users(models.Model):
-    _inherit = 'res.users'
+class groups_view(models.Model):
+    _inherit = 'res.groups'
 
-    # 用在给crm.team设置team leader时，添加一个限制条件，只显示groups中有yycrm_sale_manager的user
-    # 由于要使用domain, 所以这个field必须要存到数据库中
-    is_sale_manager = fields.Boolean(compute='_is_sale_manager', store=True)
+    # 重写该方法，隐藏 res.user 表单中的 特定group选项，使其不被渲染出来。
+    @api.model
+    def get_groups_by_application(self):
+        """ return all groups classified by application (module category), as a list of pairs:
+                [(app, kind, [group, ...]), ...],
+            where app and group are browse records, and kind is either 'boolean' or 'selection'.
+            Applications are given in sequence order.  If kind is 'selection', the groups are
+            given in reverse implication order.
+        """
 
-    @api.one
-    @api.depends('groups_id')
-    def _is_sale_manager(self):
-        if self.env.ref('yycrm.yycrm_sale_manager') in self.groups_id:
-            self.is_sale_manager = True
+        def linearized(gs):
+            gs = set(gs)
+            # determine sequence order: a group should appear after its implied groups
+            order = dict.fromkeys(gs, 0)
+            for g in gs:
+                for h in gs.intersection(g.trans_implied_ids):
+                    order[h] -= 1
+            # check whether order is total, i.e., sequence orders are distinct
+            if len(set(order.itervalues())) == len(gs):
+                return sorted(gs, key=lambda g: order[g])
+            return None
+
+        # classify all groups by application
+        gids = self.get_application_groups()
+        by_app, others = {}, []
+        for g in self.browse(gids):
+            if g.category_id:
+                by_app.setdefault(g.category_id, []).append(g)
+            else:
+                others.append(g)
+        # build the result
+        res = []
+        apps = sorted(by_app.iterkeys(), key=lambda a: a.sequence or 0)
+
+        # 就是这段 try了，之所以要使用try，是因为odoo读取顺序的问题，只为了防止新建数据库时可能出现的错误
+        try:
+            a = self.env.ref('yycrm.yycrm_sales_category')
+        except Exception as e:
+            print 'some error in this'
+            print e
         else:
-            self.is_sale_manager = False
+            if a in apps:
+                apps.remove(self.env.ref('base.module_category_sales_management'))
+
+        for app in apps:
+            gs = linearized(by_app[app])
+            if gs:
+                res.append((app, 'selection', gs))
+            else:
+                res.append((app, 'boolean', by_app[app]))
+        if others:
+            res.append((False, 'boolean', others))
+
+        return res
+
 
 
