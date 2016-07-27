@@ -33,6 +33,7 @@
                         <group>
                             <field name="name"/>
                             <field name="responsible_id"/>
+                            <field name="session_count"/>
                         </group>
                         <notebook>
                             <page string="Description">
@@ -40,9 +41,10 @@
                             </page>
                             <page string="Sessions">
                                 <field name="session_ids">
-                                    <tree string="Registered sessions">
+                                    <tree string="Registered sessions" editable="bottom" on_write='print_sth'>
                                         <field name="name"/>
                                         <field name="instructor_id"/>
+                                        <button class="oe_inline oe_stat_button" icon="fa-cny" string="删除" name="%(session_list_action)d" type="action"/>
                                     </tree>
                                 </field>
                             </page>
@@ -84,6 +86,8 @@
                     <field name="course_id"/>
                     <field name="duration" invisible="1"/>
                     <field name="taken_seats" widget="progressbar"/>
+                    <field name="state"/>
+                    <button name="action_done" type="object" icon="fa-rocket" string="Mark as done!"/>
                 </tree>
             </field>
         </record>
@@ -108,7 +112,7 @@
                     <sheet>
                         <group>
                             <group string="General">
-                                <field name="course_id"/>
+                                <field name="course_id" widget="many2onebutton"/>
                                 <field name="name"/>
                                 <field name="instructor_id"/>
                                 <field name="active"/>

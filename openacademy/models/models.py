@@ -14,6 +14,11 @@ class Course(models.Model):
         ondelete='set null', string="Responsible", index=True)
     session_ids = fields.One2many(
         'openacademy.session', 'course_id', string="Sessions")
+    session_count = fields.Integer(string='Session Count', compute='_count_session')
+
+    @api.depends('session_ids')
+    def _count_session(self):
+        self.session_count = len(self.session_ids)
 
     @api.multi
     def copy(self, default=None):
@@ -38,6 +43,7 @@ class Course(models.Model):
          'UNIQUE(name)',
          "The course title must be unique"),
     ]
+
 
 
 class Session(models.Model):
@@ -71,6 +77,10 @@ class Session(models.Model):
         ('confirmed', "Confirmed"),
         ('done', "Done"),
     ], default='draft')
+
+    @api.one
+    def print_sth(self):
+        print '---------------The tree has been modified-------------------'
 
     @api.multi
     def action_draft(self):

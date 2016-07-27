@@ -12,7 +12,7 @@
             <t t-call="report.html_container">
                 <t t-foreach="docs" t-as="doc">
                     <t t-call="report.external_layout">
-                        <div class="page">
+                        <div class="page" style="padding-top: 240px;">
                             <h2 t-field="doc.name"/>
                             <p>From <span t-field="doc.start_date"/> to <span t-field="doc.end_date"/></p>
                             <h3>Attendees:</h3>
