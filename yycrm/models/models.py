@@ -71,9 +71,6 @@ class Task(models.Model):
         return {'value': values}
 
     def retrieve_sales_dashboard(self, cr, uid, context=None):
-        # print cr, uid
-        # data = super(Leads, self).retrieve_sales_dashboard(cr, uid, context=context)
-        # return data
         res = {
             'meeting': {
                 'today': 0,
@@ -195,7 +192,6 @@ class Task(models.Model):
         cr = self.env.cr
         uid = self.env.uid
         context = self.env.context
-        print cr, uid, context
 
         opportunities = self.pool['crm.lead'].search_read(cr, uid,
                                                           [('type', '=', 'opportunity'), ('user_id', '=', uid)],
@@ -301,6 +297,7 @@ class CrmTeam(models.Model):
 
     user_id = fields.Many2one('res.users', string='Team Leader',
                               domain=lambda self: [('groups_id', 'in', [self.env.ref('yycrm.yycrm_sale_manager').id])])
+    max_discount = fields.Float(u'最大折扣', default=0.0)
 
     def action_your_pipeline(self, cr, uid, context=None):
         ir_model_data = self.pool['ir.model.data']
@@ -321,7 +318,6 @@ class CrmTeam(models.Model):
             if user_team_id:
                 action['help'] += "<p>As you don't belong to any sales team, Odoo opens the first one by default.</p>"
 
-        print action['context']
         action_context = eval(action['context'], {'uid': uid})
         if user_team_id:
             action_context.update({
@@ -403,8 +399,7 @@ class groups_view(models.Model):
         try:
             a = self.env.ref('yycrm.yycrm_sales_category')
         except Exception as e:
-            print 'some error in this'
-            print e
+            pass
         else:
             if a in apps:
                 apps.remove(self.env.ref('base.module_category_sales_management'))
@@ -420,5 +415,10 @@ class groups_view(models.Model):
 
         return res
 
+
+class User(models.Model):
+    _inherit = 'res.users'
+
+    max_discount = fields.Float(u'最大折扣', default=0.0)
 
 

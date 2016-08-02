@@ -1,7 +1,12 @@
 <openerp>
     <data>
-        <!--删除安装crm自带的crm.team-->
+        <!--删除安装crm自带的crm.team   这里是个巨坑-->
         <delete model="crm.stage" search="[('name','not in', ['Forcast','Upside','Commit','Close'])]"/>
+        <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead1'))]"/>-->
+        <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead2'))]"/>-->
+        <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead3'))]"/>-->
+        <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead4'))]"/>-->
+        <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead5'))]"/>-->
         <record id="yycrm_stage_1" model="crm.stage">
             <field name="name">Forcast</field>
             <field name="type" eval="'opportunity'"/>
@@ -33,6 +38,8 @@
 
         <!--删除crm自建的Direct Sales-->
         <delete model="crm.team" search="[('name','ilike', 'Sales')]"/>
+        <!--<delete model="crm.team" search="[('id', '=', ref('sales_team.team_sales_department'))]"/>-->
+        <!--<delete model="crm.team" search="[('id', '=', ref('sales_team.crm_team_1'))]"/>-->
         <record id="yycrm_sale_team_1" model="crm.team">
             <field name="name">华东区</field>
             <field name="code" eval="'001'"/>

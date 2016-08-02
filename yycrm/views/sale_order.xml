@@ -1,0 +1,148 @@
+<openerp>
+    <data>
+        <!--对sale.order的form view进行修改-->
+        <record id="yycrm_sale_order_form_view_inherited" model="ir.ui.view">
+            <field name="name">YYCRM sale order form view inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <!--<xpath expr="//header" position="replace">
+                    <header>
+                        <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                            type="action" class="btn-primary"
+                            attrs="{'invisible': ['|',('need_permission', '=', True), ('invoice_status', '!=', 'to invoice')]}"/>
+                        <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                            type="action" context="{'default_advance_payment_method': 'percentage'}"
+                            attrs="{'invisible': ['|',('need_permission', '=', True), '|',('invoice_status', '!=', 'no'), ('state', '!=', 'sale')]}"/>
+                        <button name="action_quotation_send" string="Send by Email" type="object" class="btn-primary"
+                                attrs="{'invisible': ['|', ('need_permission', '=', True), ('state','!=','draft')]}"/>
+                        <button name="action_quotation_send" string="Send by Email" type="object"
+                                attrs="{'invisible': ['|', ('need_permission', '=', True), ('state','not in', ['sent', 'sale'])]}"/>
+                        <button name="print_quotation" string="Print" type="object" class="btn-primary"
+                                attrs="{'invisible': ['|', ('need_permission', '=', True), ('state','!=','draft')]}"/>
+                        <button name="print_quotation" string="Print" type="object"
+                                attrs="{'invisible': ['|', ('need_permission', '=', True), ('state','not in', ['sent', 'sale'])]}"/>
+                        <button name="action_confirm" string="Confirm Sale" class="btn-primary" type="object" context="{'show_sale': True}"
+                                attrs="{'invisible': ['|', ('need_permission', '=', True), ('state','!=','sent')]}"/>
+                        <button name="action_confirm" string="Confirm Sale" type="object" context="{'show_sale': True}"
+                                attrs="{'invisible': ['|', ('need_permission', '=', True), ('state','!=','draft')]}"/>
+                        <button name="action_cancel" type="object" string="Cancel"
+                                attrs="{'invisible': ['|', ('need_permission', '=', True), ('state', 'not in', ['draft','sent','sale'])]}"/>
+                        <button name="action_draft" type="object" string="Set to Quotation"
+                                attrs="{'invisible': ['|', ('need_permission', '=', True), ('state','!=','cancel')]}"/>
+                        <button name="action_done" type="object" string="Set to Done"
+                                attrs="{'invisible': ['|', ('need_permission', '=', True), ('state','!=','sale')]}"
+                                help="If a sale order is done, you cannot modify it manually anymore. However, you will still be able to invoice or deliver. This is used to freeze the sale order."/>
+
+                        <button name="p_action_draft" string="拒绝" type="object" groups="base.group_sale_salesman_all_leads"
+                                attrs="{'invisible':['|', ('need_permission','=',False), ('permission_status', '=', 'p_draft')]}"/>
+                        <button name="p_action_confirm1" string="折扣申请" type="object" attrs="{'invisible':['|', ('need_permission','=',False), ('permission_status', '!=', 'p_draft')]}"/>
+                        <button name="p_action_confirm2" string="向管理部申请" type="object" groups="base.group_sale_salesman_all_leads"
+                                attrs="{'invisible':[('need_permission','=',False)]}"/>
+                        <button name="p_action_done" string="通过" type="object" groups="base.group_sale_salesman_all_leads"
+                                attrs="{'invisible':[('need_permission','=',False)]}"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,sale,done" attrs="{'invisible': [('need_permission', '=', True)]}"/>
+                    </header>
+                </xpath>-->
+
+                <xpath expr="//button[@name='action_done']" position="after">
+                    <button name="ask_for_more_discount" type="object" class="btn-primary" string="申请折扣"
+                            attrs="{'invisible':['|',('need_ask','=',False),('new_state','!=', 'draft')]}"/>
+                    <button name="ask_for_more_discount2" type="object" class="btn-primary" string="向管理部申请"
+                            attrs="{'invisible':['|',('need_ask','=',False),('new_state','!=', 'confirmed1')]}"
+                            groups="base.group_sale_salesman_all_leads"/>
+                    <button name="allow_for_more_discount" type="object" class="btn-primary" string="同意折扣申请"
+                            attrs="{'invisible':['|',('need_ask','=',False),('new_state','not in',['confirmed1'])]}"
+                            groups="base.group_sale_salesman_all_leads"/>
+                    <button name="allow_for_more_discount" type="object" class="btn-primary" string="同意折扣申请"
+                            attrs="{'invisible':['|',('need_ask','=',False),('new_state','not in',['confirmed2'])]}"
+                            groups="base.group_sale_manager"/>
+                    <button name="reject_for_more_discount" type="object" class="btn-primary" string="拒绝折扣申请"
+                            attrs="{'invisible':['|',('need_ask','=',False),('new_state','not in',['confirmed1'])]}"
+                            groups="base.group_sale_salesman_all_leads"/>
+                    <button name="reject_for_more_discount" type="object" class="btn-primary" string="拒绝折扣申请"
+                            attrs="{'invisible':['|',('need_ask','=',False),('new_state','not in',['confirmed2'])]}"
+                            groups="base.group_sale_manager"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_quotation_send'][1]" position="replace">
+                    <button name="action_quotation_send" string="Send by Email" type="object" class="btn-primary"
+                            attrs="{'invisible':['|',('state','!=','draft'),('need_ask','=',True)]}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_quotation_send'][2]" position="replace">
+                    <button name="action_quotation_send" string="Send by Email" type="object"
+                            attrs="{'invisible':['|',('state','not in',['sent','sale']),('need_ask','=',True)]}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='print_quotation'][1]" position="replace">
+                    <button name="print_quotation" string="Print" type="object" class="btn-primary"
+                            attrs="{'invisible':['|',('state','!=','draft'),('need_ask','=',True)]}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='print_quotation'][2]" position="replace">
+                    <button name="print_quotation" string="Print" type="object"
+                            attrs="{'invisible':['|',('state','not in',['sent','sale']),('need_ask','=',True)]}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_confirm'][1]" position="replace">
+                    <button name="action_confirm" string="Confirm Sale" type="object" context="{'show_sale': True}"
+                            class="btn-primary"
+                            attrs="{'invisible':['|',('state','!=','sent'),('need_ask','=',True)]}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_confirm'][2]" position="replace">
+                    <button name="action_confirm" string="Confirm Sale" type="object" context="{'show_sale': True}"
+                            attrs="{'invisible':['|',('state','!=','draft'),('need_ask','=',True)]}"/>
+                </xpath>
+                <!--<button name="action_cancel" states="draft,sent,sale" type="object" string="Cancel"/>-->
+                <!--<button name="action_draft" states="cancel" type="object" string="Set to Quotation"/>-->
+                <!--<button name="action_done" type="object" string="Set to Done" states="sale"-->
+                <!--help="If a sale order is done, you cannot modify it manually anymore. However, you will still be able to invoice or deliver. This is used to freeze the sale order."/>-->
+                <xpath expr="//header/button[@name='action_cancel']" position="replace">
+                    <button name="action_cancel" type="object" string="Cancel"
+                            attrs="{'invisible':['|',('state','not in',['draft','sent','sale']), ('need_ask','=',True)]}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_draft']" position="replace">
+                    <button name="action_draft" type="object" string="Set to Quotation"
+                            attrs="{'invisible':['|',('state','not in',['cancel']), ('need_ask','=',True)]}"/>
+                </xpath>
+                <xpath expr="//header/button[@name='action_done']" position="replace">
+                    <button name="action_done" type="object" string="Set to Done"
+                            help="If a sale order is done, you cannot modify it manually anymore. However, you will still be able to invoice or deliver. This is used to freeze the sale order."
+                            attrs="{'invisible':['|',('state','not in',['sale']), ('need_ask','=',True)]}"/>
+                </xpath>
+
+                <xpath expr="//header/field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar"
+                           attrs="{'invisible':['|',('need_ask','=',True),('state','in',['cancel','done'])]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="partner_id"
+                           domain="[('customer','=',True),('user_id','=',uid)]"
+                           context="{'search_default_customer':1, 'show_address': 1}"
+                           options="{&quot;always_reload&quot;: True}"/>
+                    <!--<field name="need_permission"/>-->
+                    <!--<field name="permission_status" attrs="{'invisible':[('need_permission','=',False)]}" readonly="1"/>-->
+                    <field name="need_ask" invisible="1"/>
+                    <field name="new_state" class="oe_read_only"/>
+                </xpath>
+
+                <xpath expr="//page[2]" position="attributes">
+                    <attribute name="groups">base.group_sale_salesman_all_leads</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--对quotation的tree view进行修改-->
+        <record id="yycrm_sale_quotation_tree_view_inherited" model="ir.ui.view">
+            <field name="name">YYCRM sale order tree view inherited</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-info">new_state == 'confirmed1' or new_state == 'confirmed2'</attribute>
+                </xpath>
+                <field name="state" position="after">
+                    <field name="new_state"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -31,6 +31,7 @@
         'security/yycrm_own_record_rule.xml',
         'views/views.xml',
         'views/templates.xml',
+        'views/sale_order.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
