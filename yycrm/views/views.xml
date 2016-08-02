@@ -420,23 +420,66 @@
             </field>
         </record>
 
-        <!--对sale.order的form view进行修改-->
-        <record id="yycrm_sale_order_form_view_inherited" model="ir.ui.view">
-            <field name="name">YYCRM sale order form view inherited</field>
-            <field name="model">sale.order</field>
-            <field name="inherit_id" ref="sale.view_order_form"/>
+        <!--添加res.users的个人discount的定制-->
+        <record id="yycrm_res_users_discount_view_tree" model="ir.ui.view">
+            <field name="name">YYCRM res users discount view tree</field>
+            <field name="model">res.users</field>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_id']" position="replace">
-                    <field name="partner_id" domain="[('customer','=',True),('user_id','=',uid),('parent_id','=',False)]"
-                           context="{'search_default_customer':1, 'show_address': 1}"
-                           options="{&quot;always_reload&quot;: True}"/>
-                </xpath>
-                <xpath expr="//page[2]" position="attributes">
-                    <attribute name="groups">base.group_salesman_all_leads</attribute>
-                </xpath>
+                <tree>
+                    <field name="name"/>
+                    <field name="sale_team_id"/>
+                    <field name="max_discount"/>
+                </tree>
             </field>
         </record>
+        <record id="yycrm_res_users_discount_view_form" model="ir.ui.view">
+            <field name="name">YYCRM res users discount view form</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="max_discount"/>
+                            <field name="sale_team_id"/>
+                        </group>
+                    </sheet>
+                </form>
 
+            </field>
+        </record>
+        <record id="res_users_discount_action" model="ir.actions.act_window">
+            <field name="name">Discount</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('yycrm_res_users_discount_view_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('yycrm_res_users_discount_view_form')})]"/>
+        </record>
+        <menuitem id="res_users_discount_menu" name="Discount" parent='base.menu_sale_config' action="res_users_discount_action" groups="base.group_sale_manager"/>
 
+        <!--crm.team的tree, form view中显示团队的discount-->
+        <record id="yycrm_sale_team_view_tree_inherited" model="ir.ui.view">
+            <field name="name">YYCRM sale team view tree inherited</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_tree"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="max_discount"/>
+                </field>
+            </field>
+        </record>
+        <record id="yycrm_sale_team_view_form_inherited" model="ir.ui.view">
+            <field name="name">YYCRM sale team view form inherited</field>
+            <field name="model">crm.team</field>
+            <field name="inherit_id" ref="sales_team.crm_team_view_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="max_discount"/>
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>
