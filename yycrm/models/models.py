@@ -335,7 +335,7 @@ class CrmTeam(models.Model):
                 [tree_view_id, 'tree'],
                 [form_view_id, 'form'],
                 [False, 'graph'],
-                [False, 'calendar'],
+            #   [False, 'calendar'],
                 [False, 'pivot']
             ],
             'context': action_context,
@@ -361,7 +361,7 @@ class CrmTeam(models.Model):
 class groups_view(models.Model):
     _inherit = 'res.groups'
 
-    # 重写该方法，隐藏 res.user 表单中的 特定group选项，使其不被渲染出来。
+    # 重写该方法，隐藏 res.users 表单中的 特定group选项，使其不被渲染出来。
     @api.model
     def get_groups_by_application(self):
         """ return all groups classified by application (module category), as a list of pairs:
@@ -396,13 +396,13 @@ class groups_view(models.Model):
         apps = sorted(by_app.iterkeys(), key=lambda a: a.sequence or 0)
 
         # 就是这段 try了，之所以要使用try，是因为odoo读取顺序的问题，只为了防止新建数据库时可能出现的错误
-        try:
-            a = self.env.ref('yycrm.yycrm_sales_category')
-        except Exception as e:
-            pass
-        else:
-            if a in apps:
-                apps.remove(self.env.ref('base.module_category_sales_management'))
+        # try:
+        #     a = self.env.ref('yycrm.yycrm_sales_category')
+        # except Exception as e:
+        #     pass
+        # else:
+        #     if a in apps:
+        #         apps.remove(self.env.ref('base.module_category_sales_management'))
 
         for app in apps:
             gs = linearized(by_app[app])
@@ -420,5 +420,12 @@ class User(models.Model):
     _inherit = 'res.users'
 
     max_discount = fields.Float(u'最大折扣', default=0.0)
+    is_salesman = fields.Boolean(compute='get_is_salesman', store=True)
+
+    @api.multi
+    @api.depends('groups_id')
+    def get_is_salesman(self):
+        for record in self:
+            record.is_salesman = record.has_group('base.group_sale_salesman')
 
 
