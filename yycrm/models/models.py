@@ -271,8 +271,12 @@ class View(osv.osv.osv):
 class Partner(models.Model):
     _inherit = 'res.partner'
 
-    department = fields.Many2one('yycrm.department', string='Department')
+    department = fields.Char('Department')
     trade = fields.Many2one('yycrm.trade',string='Trade')
+
+    email = fields.Char('Email', track_visibility='onchange')
+    mobile = fields.Char('Mobile', track_visibility='onchange')
+    phone = fields.Char('Phone', track_visibility='onchange')
 
 
 class Leads(models.Model):
