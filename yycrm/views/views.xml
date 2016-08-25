@@ -31,22 +31,46 @@
             <field name="name">Next Activities</field>
             <field name="groups_id" eval="[(6,0,[ref('base.group_sale_manager')])]"/>
         </record>
+        <record id="crm.crm_activity_menu" model="ir.ui.menu">
+            <field name="name">Activities in leads and oppor</field>
+            <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
+        </record>
+
         <!--隐藏menu, Sales/Configuration/Settings, 使其只能被admin所见-->
         <record id="base.menu_sale_general_settings" model="ir.ui.menu">
             <field name="name">Settings</field>
             <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
         </record>
-<!--
-        <record id="user_groups_view_form_inherited" model="ir.ui.view">
-            <field name="name">YYCRM User Groups View</field>
-            <field name="inherit_id" ref="base.user_groups_view"/>
-            <field name="arch" type="xml">
-                <field name="sel_groups_9_29_10" position="attributes">
-                    <attribute name="invisible">1</attribute>
-                </field>
-            </field>
+
+        <!--隐藏customer界面下的wizard-->
+        <!--Partner Mass Mailing-->
+        <record id="base.action_partner_mass_mail" model="ir.actions.act_window">
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
         </record>
--->
+        <!--Portal Access Management-->
+        <record id="portal.partner_wizard_action" model="ir.actions.act_window">
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+        <!--Merge Selected Contacts-->
+        <record id="crm.action_partner_merge" model="ir.actions.act_window" >
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+        <!--Journal Items-->
+        <record id="account.action_move_line_select_by_partner" model="ir.actions.act_window" >
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+
+        <!--隐藏pipeline下的wizard-->
+        <record id="crm.action_merge_opportunities" model="ir.actions.act_window" >
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+        <record id="crm.action_lead_mass_mail" model="ir.actions.act_window" >
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+        <record id="sale.action_view_sale_advance_payment_inv" model="ir.actions.act_window" >
+            <field name="groups_id" eval="[(6,0,[ref('base.group_system')])]"/>
+        </record>
+
 
         <!--让管理部具有添加修改 sales team的权限-->
         <record id="base.sales_team_config" model="ir.ui.menu">
@@ -130,15 +154,69 @@
                 </xpath>
             </field>
         </record>
+        <record id="yy_res_partner_view_form_inherited_1" model="ir.ui.view">
+            <field name="name">YYCRM res partner view form inherited 1</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="crm.view_partners_form_crm1"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='schedule_meeting']" position="replace"></xpath>
+            </field>
+        </record>
 
         <!--对sales/opportunity定制   crm.lead-->
+        <record id="yy_oppor_view_search_inherited" model="ir.ui.view">
+            <field name="name">YYCRM crm lead oppor view search inherited</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <search string="Search Opportunities">
+                    <field name="name" string="Opportunity" filter_domain="['|','|','|',('partner_id','ilike',self),('partner_name','ilike',self),('email_from','ilike',self),('name', 'ilike', self)]"/>
+                    <field name="tag_ids" string="Tag" filter_domain="[('tag_ids', 'ilike', self)]"/>
+                    <field name="team_id"/>
+                    <field name="user_id"/>
+                    <field name="partner_id" operator="child_of" string="Customer"/>
+                    <field name="stage_id" domain="[]"/>
+                    <field name="next_activity_id"/>
+                    <field name="title_action"/>
+                    <field name="probability"/>
+                    <field name="lost_reason"/>
+                    <separator/>
+                    <filter string="Won" name="won"
+                            domain="['&amp;', ('stage_id.probability', '=', 100), ('stage_id.fold', '=', True)]"/>
+                    <filter string="Lost" name="lost"
+                            domain="['&amp;', ('probability', '=', 0), ('active', '=', False)]"/>
+                    <separator/>
+                    <filter string="My Opportunities" name="assigned_to_me"
+                            domain="[('user_id', '=', uid)]"
+                            help="Opportunities that are assigned to me"/>
+                    <filter string="Unassigned" name="unassigned"
+                            domain="[('user_id','=', False)]" help="No salesperson"/>
+                    <separator/>
+                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <filter string="Archived" domain="[('active', '=', False)]"/>
+                    <group expand="0" string="Group By" colspan="16">
+                        <filter string="Salesperson" context="{'group_by':'user_id'}"/>
+                        <filter string="Sales Team" context="{'group_by':'team_id'}"/>
+                        <filter string="Country" context="{'group_by':'country_id'}" />
+                        <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                        <filter name="stage" string="Stage" context="{'group_by':'stage_id'}"/>
+                        <filter string="Campaign" domain="[]" context="{'group_by':'campaign_id'}"/>
+                        <filter string="Medium" domain="[]" context="{'group_by':'medium_id'}"/>
+                        <filter string="Source" domain="[]" context="{'group_by':'source_id'}"/>
+                        <separator orientation="vertical" />
+                        <filter string="Creation Month" context="{'group_by':'create_date:month'}" name="month"/>
+                        <filter string="Expected Closing" context="{'group_by':'date_deadline'}"/>
+                        <filter string="Lost Reason" context="{'group_by':'lost_reason'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
         <record id="crm.crm_lead_opportunities_tree_view" model="ir.actions.act_window">
             <field name="name">Your Pipeline</field>
             <field name="res_model">crm.lead</field>
             <field name="view_mode">yykanban,tree,graph,pivot,form,calendar</field>
             <field name="domain">[('type','=','opportunity')]</field>
             <field name="context">{'stage_type': 'opportunity','default_type': 'opportunity','default_user_id': uid,'search_default_assigned_to_me': 1}</field>
-            <field name="search_view_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="search_view_id" ref="yy_oppor_view_search_inherited"/>
             <field name="help" type="html">
                 <p>
                     Odoo helps you keep track of your sales pipeline to follow
@@ -155,6 +233,8 @@
             <field name="model">crm.lead</field>
             <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
             <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_schedule_meeting']" position="replace">
+                </xpath>
                 <xpath expr="//form/sheet/group" position="replace">
                     <group>
                         <group>
@@ -243,7 +323,7 @@
                                 <field name="date_deadline"/>
                             </group>
                         </group>
-                        <group string="Customer Info">
+                        <group string="Customer Info" class="oe_read_only">
                             <group>
                                 <field name="customer_id" domain="[('customer','=',True),('parent_id','=',False)]"/>
                                 <field name="city"/>
@@ -453,6 +533,7 @@
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">res.users</field>
             <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_salesman', '=', True)]</field>
             <field name="view_ids"
                    eval="[(5, 0, 0),
                           (0, 0, {'view_mode': 'tree', 'view_id': ref('yycrm_res_users_discount_view_tree')}),
