@@ -1,14 +1,14 @@
 <openerp>
     <data>
         <!--删除安装crm自带的crm.team   这里是个巨坑-->
-        <delete model="crm.stage" search="[('name','not in', ['Forcast','Upside','Commit','Close'])]"/>
+        <delete model="crm.stage" search="[('name','not in', ['Forecast','Upside','Commit','Close'])]"/>
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead1'))]"/>-->
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead2'))]"/>-->
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead3'))]"/>-->
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead4'))]"/>-->
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead5'))]"/>-->
         <record id="yycrm_stage_1" model="crm.stage">
-            <field name="name">Forcast</field>
+            <field name="name">Forecast</field>
             <field name="type" eval="'opportunity'"/>
             <field name="fold" eval="False"/>
             <field name="on_change" eval="True"/>
