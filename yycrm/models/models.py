@@ -288,12 +288,37 @@ class Leads(models.Model):
     product_ids = fields.Many2many('product.product', string='Products')
     pre_sales_engineer_ids = fields.Many2many('res.users', string='Pre-sales Engineer')
 
+    forecast = fields.Selection([
+        ('upside', 'Upside'),
+        ('commit', 'Commit'),
+        ('closed', 'Closed'),
+    ], string='Forecast', track_visibility='onchange')
+
     @api.multi
     def on_change_partner_id(self, partner_id):
         data = super(Leads, self).on_change_partner_id(partner_id)
         partner = self.env['res.partner'].browse([partner_id])
         data['value']['trade'] = partner.trade or partner.parent_id.trade
         return data
+
+    def action_set_won(self, cr, uid, ids, context=None):
+        """ Won semantic: probability = 100 (active untouched) """
+        stages_leads = {}
+        for lead in self.browse(cr, uid, ids, context=context):
+            stage_id = self.stage_find(cr, uid, [lead], lead.team_id.id or False,
+                                       [('probability', '=', 100.0), ('on_change', '=', True)], context=context)
+            if stage_id:
+                if stages_leads.get(stage_id):
+                    stages_leads[stage_id].append(lead.id)
+                else:
+                    stages_leads[stage_id] = [lead.id]
+        for stage_id, lead_ids in stages_leads.items():
+            self.write(cr, uid, lead_ids, {'stage_id': stage_id}, context=context)
+        return self.write(cr, uid, ids, {'probability': 100, 'forecast': 'closed'}, context=context)
+
+    def action_set_lost(self, cr, uid, ids, context=None):
+        """ Lost semantic: probability = 0, active = False """
+        return self.write(cr, uid, ids, {'probability': 0, 'active': False, 'forecast': 'closed'}, context=context)
 
 
 class CrmTeam(models.Model):

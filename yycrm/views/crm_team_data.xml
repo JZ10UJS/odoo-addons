@@ -1,35 +1,42 @@
 <openerp>
     <data>
         <!--删除安装crm自带的crm.team   这里是个巨坑-->
-        <delete model="crm.stage" search="[('name','not in', ['Forcast','Upside','Commit','Close'])]"/>
+        <delete model="crm.stage" search="[('name','not in', ['Prospect','Qualification','Proposal','Agreement','Closed'])]"/>
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead1'))]"/>-->
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead2'))]"/>-->
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead3'))]"/>-->
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead4'))]"/>-->
         <!--<delete model="crm.stage" search="[('id', '=', ref('crm.stage_lead5'))]"/>-->
         <record id="yycrm_stage_1" model="crm.stage">
-            <field name="name">Forcast</field>
+            <field name="name">Prospect</field>
             <field name="type" eval="'opportunity'"/>
             <field name="fold" eval="False"/>
             <field name="on_change" eval="True"/>
-            <field name="probability" eval="30"/>
+            <field name="probability" eval="25"/>
         </record>
         <record id="yycrm_stage_2" model="crm.stage">
-            <field name="name">Upside</field>
+            <field name="name">Qualification</field>
             <field name="type" eval="'opportunity'"/>
             <field name="fold" eval="False"/>
             <field name="on_change" eval="True"/>
-            <field name="probability" eval="60"/>
+            <field name="probability" eval="50"/>
         </record>
         <record id="yycrm_stage_3" model="crm.stage">
-            <field name="name">Commit</field>
+            <field name="name">Proposal</field>
             <field name="type" eval="'opportunity'"/>
             <field name="fold" eval="False"/>
             <field name="on_change" eval="True"/>
-            <field name="probability" eval="80"/>
+            <field name="probability" eval="75"/>
         </record>
         <record id="yycrm_stage_4" model="crm.stage">
-            <field name="name">Close</field>
+            <field name="name">Agreement</field>
+            <field name="type" eval="'opportunity'"/>
+            <field name="fold" eval="False"/>
+            <field name="on_change" eval="True"/>
+            <field name="probability" eval="99"/>
+        </record>
+        <record id="yycrm_stage_5" model="crm.stage">
+            <field name="name">Closed</field>
             <field name="type" eval="'opportunity'"/>
             <field name="fold" eval="True"/>
             <field name="on_change" eval="True"/>
@@ -49,7 +56,8 @@
             <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
                                                    ref('yycrm_stage_2'),
                                                    ref('yycrm_stage_3'),
-                                                   ref('yycrm_stage_4')])]"/>
+                                                   ref('yycrm_stage_4'),
+                                                   ref('yycrm_stage_5')])]"/>
         </record>
         <record id="yycrm_sale_team_2" model="crm.team">
             <field name="name">华北区</field>
@@ -60,7 +68,8 @@
             <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
                                                    ref('yycrm_stage_2'),
                                                    ref('yycrm_stage_3'),
-                                                   ref('yycrm_stage_4')])]"/>
+                                                   ref('yycrm_stage_4'),
+                                                   ref('yycrm_stage_5')])]"/>
         </record>
         <record id="yycrm_sale_team_3" model="crm.team">
             <field name="name">华中区</field>
@@ -71,7 +80,8 @@
             <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
                                                    ref('yycrm_stage_2'),
                                                    ref('yycrm_stage_3'),
-                                                   ref('yycrm_stage_4')])]"/>
+                                                   ref('yycrm_stage_4'),
+                                                   ref('yycrm_stage_5')])]"/>
         </record>
         <record id="yycrm_sale_team_4" model="crm.team">
             <field name="name">华南区</field>
@@ -82,7 +92,8 @@
             <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
                                                    ref('yycrm_stage_2'),
                                                    ref('yycrm_stage_3'),
-                                                   ref('yycrm_stage_4')])]"/>
+                                                   ref('yycrm_stage_4'),
+                                                   ref('yycrm_stage_5')])]"/>
         </record>
         <record id="yycrm_sale_team_5" model="crm.team">
             <field name="name">华西区</field>
@@ -93,7 +104,8 @@
             <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
                                                    ref('yycrm_stage_2'),
                                                    ref('yycrm_stage_3'),
-                                                   ref('yycrm_stage_4')])]"/>
+                                                   ref('yycrm_stage_4'),
+                                                   ref('yycrm_stage_5')])]"/>
         </record>
 
         <record id="yycrm_sale_team_6" model="crm.team">
@@ -105,7 +117,8 @@
             <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
                                                    ref('yycrm_stage_2'),
                                                    ref('yycrm_stage_3'),
-                                                   ref('yycrm_stage_4')])]"/>
+                                                   ref('yycrm_stage_4'),
+                                                   ref('yycrm_stage_5')])]"/>
         </record>
 
     </data>
