@@ -191,7 +191,7 @@
                     <filter string="Unassigned" name="unassigned"
                             domain="[('user_id','=', False)]" help="No salesperson"/>
                     <separator/>
-                    <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>
+                    <!--<filter string="Unread Messages" name="message_needaction" domain="[('message_needaction','=',True)]"/>-->
                     <filter string="Archived" domain="[('active', '=', False)]"/>
                     <group expand="0" string="Group By" colspan="16">
                         <filter string="Salesperson" context="{'group_by':'user_id'}"/>
@@ -199,9 +199,9 @@
                         <filter string="Country" context="{'group_by':'country_id'}" />
                         <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
                         <filter name="stage" string="Stage" context="{'group_by':'stage_id'}"/>
-                        <filter string="Campaign" domain="[]" context="{'group_by':'campaign_id'}"/>
-                        <filter string="Medium" domain="[]" context="{'group_by':'medium_id'}"/>
-                        <filter string="Source" domain="[]" context="{'group_by':'source_id'}"/>
+                        <!--<filter string="Campaign" domain="[]" context="{'group_by':'campaign_id'}"/>-->
+                        <!--<filter string="Medium" domain="[]" context="{'group_by':'medium_id'}"/>-->
+                        <!--<filter string="Source" domain="[]" context="{'group_by':'source_id'}"/>-->
                         <separator orientation="vertical" />
                         <filter string="Creation Month" context="{'group_by':'create_date:month'}" name="month"/>
                         <filter string="Expected Closing" context="{'group_by':'date_deadline'}"/>
@@ -233,6 +233,7 @@
             <field name="model">crm.lead</field>
             <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
             <field name="arch" type="xml">
+                <xpath expr="//header/field[@name='stage_id']" position="replace"></xpath>
                 <xpath expr="//button[@name='action_schedule_meeting']" position="replace">
                 </xpath>
                 <xpath expr="//form/sheet/group" position="replace">
@@ -253,6 +254,15 @@
                             <field name="trade"/>
                             <!--<field name="email_from" string="Email" widget="email"/>-->
                         </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="stage_id"/>
+                        </group>
+                        <group>
+                            <field name="forecast"/>
+                        </group>
+
                     </group>
                     <group>
                         <group>
