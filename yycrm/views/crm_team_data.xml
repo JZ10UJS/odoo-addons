@@ -109,8 +109,21 @@
         </record>
 
         <record id="yycrm_sale_team_6" model="crm.team">
-            <field name="name">其它</field>
+            <field name="name">Inside</field>
             <field name="code" eval="'006'"/>
+            <field name="alias_name" eval="'inside'"/>
+            <field name="use_leads" eval="True"/>
+            <field name="use_quotations" eval="True"/>
+            <field name="stage_ids" eval="[(6, 0, [ref('yycrm_stage_1'),
+                                                   ref('yycrm_stage_2'),
+                                                   ref('yycrm_stage_3'),
+                                                   ref('yycrm_stage_4'),
+                                                   ref('yycrm_stage_5')])]"/>
+        </record>
+
+        <record id="yycrm_sale_team_7" model="crm.team">
+            <field name="name">其它</field>
+            <field name="code" eval="'007'"/>
             <field name="alias_name" eval="'Other'"/>
             <field name="use_leads" eval="True"/>
             <field name="use_quotations" eval="True"/>
@@ -120,6 +133,8 @@
                                                    ref('yycrm_stage_4'),
                                                    ref('yycrm_stage_5')])]"/>
         </record>
+
+
 
     </data>
 </openerp>

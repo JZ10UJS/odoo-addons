@@ -272,7 +272,15 @@ class Partner(models.Model):
     _inherit = 'res.partner'
 
     department = fields.Char('Department')
-    trade = fields.Many2one('yycrm.trade',string='Trade')
+    trade = fields.Selection([
+        ('sp', u'运营商'),
+        ('gov', u'政府'),
+        ('finance', u'金融'),
+        ('edu', u'教育'),
+        ('health', u'医疗'),
+        ('enterprise', u'企业'),
+        ('others', u'其它')
+    ], string='Trade')
 
     email = fields.Char('Email', track_visibility='onchange')
     mobile = fields.Char('Mobile', track_visibility='onchange')
@@ -282,7 +290,15 @@ class Partner(models.Model):
 class Leads(models.Model):
     _inherit = 'crm.lead'
 
-    trade = fields.Many2one('yycrm.trade', string='Trade')
+    trade = fields.Selection([
+        ('sp', u'运营商'),
+        ('gov', u'政府'),
+        ('finance', u'金融'),
+        ('edu', u'教育'),
+        ('health', u'医疗'),
+        ('enterprise', u'企业'),
+        ('others', u'其它')
+    ], string='Trade')
     channel_id = fields.Many2one('yycrm.channel', string='Project Channel')
     solution_ids = fields.Many2many('yycrm.solution', string='Solution')
     product_ids = fields.Many2many('product.product', string='Products')
@@ -351,7 +367,7 @@ class CrmTeam(models.Model):
         if user_team_id:
             action_context.update({
                 'default_team_id': user_team_id,
-                'search_default_team_id': user_team_id
+                # 'search_default_team_id': user_team_id
             })
 
         tree_view_id = ir_model_data.xmlid_to_res_id(cr, uid, 'crm.crm_case_tree_view_oppor')
@@ -383,7 +399,7 @@ class CrmTeam(models.Model):
         if not team_id and context.get('default_team_id'):
             team_id = context['default_team_id']
         if not team_id:
-            team_id = self.pool['ir.model.data'].xmlid_to_res_id(cr, uid, 'yycrm.yycrm_sale_team_6')  # 就是这啦
+            team_id = self.pool['ir.model.data'].xmlid_to_res_id(cr, uid, 'yycrm.yycrm_sale_team_7')  # 就是这啦
         return team_id
 
 
