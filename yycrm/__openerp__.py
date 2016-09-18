@@ -24,12 +24,12 @@
     # always loaded
     'data': [
         'views/yycrm_sale_group.xml',
-        'views/crm_team_data.xml',
         'security/ir.model.access.csv',
         'security/res_partner.xml',
         'security/crm_lead_sale_order.xml',
         'security/yycrm_own_record_rule.xml',
         'views/views.xml',
+        'views/partner_channel.xml',
         'views/templates.xml',
         'views/sale_order.xml',
     ],

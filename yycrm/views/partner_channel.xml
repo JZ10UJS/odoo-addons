@@ -1,0 +1,102 @@
+<openerp>
+    <data>
+        <act_window id="yy_channel_act_window_action" name="Channels" res_model="yycrm.channel" view_type="form"
+            view_mode="tree,form"/>
+
+        <record id="yy_channel_view_tree" model="ir.ui.view">
+            <field name="name">YYCRM Channel View Form</field>
+            <field name="model">yycrm.channel</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                    <field name="opportunity_count" string="Opportunities"/>
+                </tree>
+            </field>
+        </record>
+        <record id="yy_channel_view_form" model="ir.ui.view">
+            <field name="name">YYCRM Channel View Form</field>
+            <field name="model">yycrm.channel</field>
+            <field name="arch" type="xml">
+                <form string="Channel">
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <field name="image" widget="image" class="oe_avatar" options="{'preview_image': 'image_medium', 'size': [90, 90]}" modifiers="{}"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" default_focus="1" placeholder="Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="email"/>
+                            <field name="phone"/>
+                            <field string="Opportunities" name="opportunity_count" widget="statinfo" readonly="1"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <menuitem id="yy_channel_menu" name="Channel" action="yy_channel_act_window_action" parent="base.menu_sales"/>
+        <!--<record id="yy_task_view_form" model="ir.ui.view">-->
+            <!--<field name="name">YYCRM Task View Form</field>-->
+            <!--<field name="model">yycrm.task</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Next Task">-->
+                    <!--<header>-->
+                        <!--<button name="mark_done" string="Mark Done" class="btn-primary" type="object"-->
+                        <!--attrs="{'invisible': [('is_done','=',True)]}"/>-->
+                    <!--</header>-->
+                    <!--<sheet>-->
+                        <!--<label for="name" class="oe_edit_only"/>-->
+                        <!--<h1><field name="name" string="Description" placeholder="e.g.上门拜访客户"/></h1>-->
+                        <!--<field name="is_done" invisible="1"/>-->
+                        <!--<group string="Info">-->
+                            <!--<group>-->
+                                <!--<field name="opportunity_id" on_change="one_change_opportunity_id(opportunity_id)"-->
+                                <!--domain="[('user_id','=',uid)]"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                                <!--<field name="date_deadline"/>-->
+                            <!--</group>-->
+                        <!--</group>-->
+                        <!--<group string="Customer Info" class="oe_read_only">-->
+                            <!--<group>-->
+                                <!--<field name="customer_id" domain="[('customer','=',True),('parent_id','=',False)]"/>-->
+                                <!--<field name="city"/>-->
+                                <!--<field name="street"/>-->
+                            <!--</group>-->
+                            <!--<group>-->
+                                <!--<field name="mobile" widget="phone"/>-->
+                                <!--<field name="phone" widget="phone"/>-->
+                                <!--<field name="email" widget="email"/>-->
+                            <!--</group>-->
+                        <!--</group>-->
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<record id="yy_task_view_search" model="ir.ui.view">-->
+            <!--<field name="name">YYCRM Task Veiw Search</field>-->
+            <!--<field name="model">yycrm.task</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<search>-->
+                    <!--<field name="name"/>-->
+                    <!--<field name="date_deadline"/>-->
+                    <!--<filter string="Done" domain="[('is_done','=',True)]"/>-->
+                    <!--<filter string="Not Done" name='have_done' domain="[('is_done','=',False)]"/>-->
+                    <!--<separator/>-->
+                    <!--<filter string="Today" name="today" domain="[('date_deadline', '=', context_today().strftime('%Y-%m-%d'))]"/>-->
+                    <!--<filter string="This Weak" name="this_week" domain="['&amp;', ('date_deadline', '&gt;=', context_today().strftime('%Y-%m-%d')),-->
+                                <!--('date_deadline', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>-->
+                    <!--<filter string="Overdue" name="overdue" domain="[('date_deadline', '&lt;', context_today().strftime('%Y-%m-%d'))]"/>-->
+                <!--</search>-->
+            <!--</field>-->
+        <!--</record>-->
+    </data>
+</openerp>

@@ -7,7 +7,6 @@ from openerp import models, fields, api, osv, tools
 from openerp import SUPERUSER_ID
 
 
-
 class Department(models.Model):
     _name = 'yycrm.department'
 
@@ -22,8 +21,19 @@ class Trade(models.Model):
 
 class ProjectChannels(models.Model):
     _name = 'yycrm.channel'
+    _inherit = ['mail.thread']
 
-    name = fields.Char(string='description')
+    name = fields.Char('Name', required=True)
+    image = fields.Binary('Image')
+    email = fields.Char('Email', track_visibility='onchange')
+    phone = fields.Char('Phone', track_visibility='onchange')
+    lead_ids = fields.One2many('crm.lead', 'channel_id', string='Leads')
+    opportunity_count = fields.Integer(compute='_get_count', string='Opportunity Count')
+
+    @api.depends('lead_ids')
+    def _get_count(self):
+        for record in self:
+            record.opportunity_count = len(record.lead_ids)
 
 
 class Solution(models.Model):
