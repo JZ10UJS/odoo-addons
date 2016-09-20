@@ -61,7 +61,7 @@ msgstr "项目预测状态"
 #: model:ir.model.fields,field_description:yycrm.field_crm_lead_trade
 #: model:ir.model.fields,field_description:yycrm.field_yycrm_trade_name
 #: model:ir.model.fields,field_description:yycrm.field_res_partner_trade
-msgid "trade"
+msgid "Industry"
 msgstr "行业"
 
 #. module: yycrm

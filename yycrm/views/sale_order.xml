@@ -67,11 +67,11 @@
                 </xpath>
                 <xpath expr="//header/button[@name='action_quotation_send'][1]" position="replace">
                     <button name="action_quotation_send" string="Send by Email" type="object" class="btn-primary"
-                            attrs="{'invisible':['|',('state','!=','draft'),('need_ask','=',True)]}"/>
+                            invisible="1"/>
                 </xpath>
                 <xpath expr="//header/button[@name='action_quotation_send'][2]" position="replace">
                     <button name="action_quotation_send" string="Send by Email" type="object"
-                            attrs="{'invisible':['|',('state','not in',['sent','sale']),('need_ask','=',True)]}"/>
+                            invisible="1"/>
                 </xpath>
                 <xpath expr="//header/button[@name='print_quotation'][1]" position="replace">
                     <button name="print_quotation" string="Print" type="object" class="btn-primary"

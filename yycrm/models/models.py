@@ -19,6 +19,13 @@ class Trade(models.Model):
     name = fields.Char(string='description')
 
 
+class Competitor(models.Model):
+    _name = 'yycrm.competitor'
+
+    name = fields.Char('Product Name', required=True)
+    brand = fields.Char('Brand', required=True)
+
+
 class ProjectChannels(models.Model):
     _name = 'yycrm.channel'
     _inherit = ['mail.thread']
@@ -27,7 +34,7 @@ class ProjectChannels(models.Model):
     image = fields.Binary('Image')
     email = fields.Char('Email', track_visibility='onchange')
     phone = fields.Char('Phone', track_visibility='onchange')
-    lead_ids = fields.One2many('crm.lead', 'channel_id', string='Leads')
+    lead_ids = fields.Many2many('crm.lead', string='Leads')
     opportunity_count = fields.Integer(compute='_get_count', string='Opportunity Count')
 
     @api.depends('lead_ids')
@@ -282,7 +289,7 @@ class Partner(models.Model):
     _inherit = 'res.partner'
 
     department = fields.Char('Department')
-    trade = fields.Selection([
+    industry = fields.Selection([
         ('sp', u'运营商'),
         ('gov', u'政府'),
         ('finance', u'金融'),
@@ -290,7 +297,7 @@ class Partner(models.Model):
         ('health', u'医疗'),
         ('enterprise', u'企业'),
         ('others', u'其它')
-    ], string='Trade')
+    ], string='Industry')
 
     email = fields.Char('Email', track_visibility='onchange')
     mobile = fields.Char('Mobile', track_visibility='onchange')
@@ -300,7 +307,7 @@ class Partner(models.Model):
 class Leads(models.Model):
     _inherit = 'crm.lead'
 
-    trade = fields.Selection([
+    industry = fields.Selection([
         ('sp', u'运营商'),
         ('gov', u'政府'),
         ('finance', u'金融'),
@@ -308,11 +315,11 @@ class Leads(models.Model):
         ('health', u'医疗'),
         ('enterprise', u'企业'),
         ('others', u'其它')
-    ], string='Trade')
-    channel_id = fields.Many2one('yycrm.channel', string='Project Channel')
+    ], string='Industry')
+    channel_ids = fields.Many2many('yycrm.channel', string='Project Channel')
     solution_ids = fields.Many2many('yycrm.solution', string='Solution')
     product_ids = fields.Many2many('product.product', string='Products')
-    pre_sales_engineer_ids = fields.Many2many('res.users', string='Pre-sales Engineer')
+    pre_sales_engineer_ids = fields.Many2many('res.users', string='Pre-sales Engineers')
 
     forecast = fields.Selection([
         ('upside', 'Upside'),
@@ -320,11 +327,13 @@ class Leads(models.Model):
         ('closed', 'Closed'),
     ], string='Forecast', track_visibility='onchange')
 
+    competitor_ids = fields.Many2many('yycrm.competitor', string='Competitors')
+
     @api.multi
     def on_change_partner_id(self, partner_id):
         data = super(Leads, self).on_change_partner_id(partner_id)
         partner = self.env['res.partner'].browse([partner_id])
-        data['value']['trade'] = partner.trade or partner.parent_id.trade
+        data['value']['industry'] = partner.industry or partner.parent_id.industry
         return data
 
     def action_set_won(self, cr, uid, ids, context=None):
@@ -397,20 +406,21 @@ class CrmTeam(models.Model):
         })
         return action
 
+    # 取消“建立db时，自动建立sale team”的设置，改为手动建立。所以 yycrm.yycrm_sale_team_7 不存在了。
     # 重写改方法，将原来的默认第一个team，修改为默认 其它
-    def _get_default_team_id(self, cr, uid, context=None, user_id=None):
-        if context is None:
-            context = {}
-        if user_id is None:
-            user_id = uid
-        team_ids = self.search(cr, SUPERUSER_ID, ['|', ('user_id', '=', user_id), ('member_ids', 'in', user_id)],
-                               limit=1, context=context)
-        team_id = team_ids[0] if team_ids else False
-        if not team_id and context.get('default_team_id'):
-            team_id = context['default_team_id']
-        if not team_id:
-            team_id = self.pool['ir.model.data'].xmlid_to_res_id(cr, uid, 'yycrm.yycrm_sale_team_7')  # 就是这啦
-        return team_id
+    # def _get_default_team_id(self, cr, uid, context=None, user_id=None):
+    #     if context is None:
+    #         context = {}
+    #     if user_id is None:
+    #         user_id = uid
+    #     team_ids = self.search(cr, SUPERUSER_ID, ['|', ('user_id', '=', user_id), ('member_ids', 'in', user_id)],
+    #                            limit=1, context=context)
+    #     team_id = team_ids[0] if team_ids else False
+    #     if not team_id and context.get('default_team_id'):
+    #         team_id = context['default_team_id']
+    #     if not team_id:
+    #         team_id = self.pool['ir.model.data'].xmlid_to_res_id(cr, uid, 'yycrm.yycrm_sale_team_7')  # 就是这啦
+    #     return team_id
 
 
 class groups_view(models.Model):
