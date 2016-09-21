@@ -5,6 +5,7 @@ from dateutil.relativedelta import relativedelta
 
 from openerp import models, fields, api, osv, tools
 from openerp import SUPERUSER_ID
+from openerp.tools.translate import _
 
 
 class Department(models.Model):
@@ -319,7 +320,8 @@ class Leads(models.Model):
     channel_ids = fields.Many2many('yycrm.channel', string='Project Channel')
     solution_ids = fields.Many2many('yycrm.solution', string='Solution')
     product_ids = fields.Many2many('product.product', string='Products')
-    pre_sales_engineer_ids = fields.Many2many('res.users', string='Pre-sales Engineers')
+    pre_sales_engineer_ids = fields.Many2many('res.users', string='Pre-sales Engineers',
+                                              domain=lambda self: [('employee_ids.department_id', '=', '售前')])
 
     forecast = fields.Selection([
         ('upside', 'Upside'),
@@ -421,6 +423,49 @@ class CrmTeam(models.Model):
     #     if not team_id:
     #         team_id = self.pool['ir.model.data'].xmlid_to_res_id(cr, uid, 'yycrm.yycrm_sale_team_7')  # 就是这啦
     #     return team_id
+
+    def _get_default_stage_ids(self, cr, uid, context=None):
+        return [
+            (0, 0, {
+                'name': _('Prospect'),
+                'sequence': 1,
+                'probability': 25.0,
+                'on_change': True,
+                'fold': False,
+                'type': 'opportunity',
+            }),
+            (0, 0, {
+                'name': _('Qualification'),
+                'sequence': 2,
+                'probability': 50.0,
+                'on_change': True,
+                'fold': False,
+                'type': 'opportunity',
+            }),
+            (0, 0, {
+                'name': _('Proposal'),
+                'sequence': 3,
+                'probability': 75.0,
+                'on_change': True,
+                'fold': False,
+                'type': 'opportunity',
+            }),
+            (0, 0, {
+                'name': _('Agreement'),
+                'sequence': 4,
+                'probability': 99.0,
+                'on_change': True,
+                'fold': False,
+                'type': 'opportunity',
+            }),
+            (0, 0, {
+                'name': _('Closed'),
+                'sequence': 50,
+                'probability': 100.0,
+                'on_change': True,
+                'fold': True,
+                'type': 'opportunity',
+            })]
 
 
 class groups_view(models.Model):
