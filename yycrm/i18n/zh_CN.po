@@ -37,10 +37,6 @@ msgstr "客户同意购买"
 msgid "Pre-sales Engineer"
 msgstr "售前工程师"
 
-#. module: yycrm
-#: model:ir.model.fields,field_description:yycrm.field_crm_lead_channel_id
-msgid "Project Channel"
-msgstr "销售渠道"
 
 #. module: yycrm
 #: model:ir.model.fields,field_description:yycrm.field_crm_lead_product_ids
@@ -74,5 +70,1104 @@ msgstr "部门"
 #: model:ir.ui.menu,name:yycrm.yy_task_menu
 msgid "Task"
 msgstr "任务"
+
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/js/yykanban.js:29
+#: code:addons/yycrm/static/src/js/yykanban.js:31
+#, python-format
+msgid " records"
+msgstr " records"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:129
+#: code:addons/yycrm/static/src/xml/yycrm.xml:371
+#, python-format
+msgid "3 exp. closing"
+msgstr "3 exp. closing"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:166
+#: code:addons/yycrm/static/src/xml/yycrm.xml:409
+#, python-format
+msgid "78,140.03€"
+msgstr "78,140.03€"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:203
+#: code:addons/yycrm/static/src/xml/yycrm.xml:446
+#, python-format
+msgid "80.000€"
+msgstr "80.000€"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_menu_secondary
+msgid "<span>YouYun</span>"
+msgstr "<span>YouYun</span>"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:7
+#, python-format
+msgid "About Odoo"
+msgstr "About Odoo"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_res_groups
+msgid "Access Groups"
+msgstr "访问组"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_needaction
+msgid "Action Needed"
+msgstr "所需动作"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "Address"
+msgstr "地址"
+
+#. module: yycrm
+#: code:addons/yycrm/models/models.py:454
+#, python-format
+msgid "Agreement"
+msgstr "Agreement"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_pipeline_view
+msgid "Archive"
+msgstr "归档"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yykanban.xml:16
+#, python-format
+msgid "Archive Records"
+msgstr "Archive Records"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Archived"
+msgstr "归档"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_tree_inherited
+msgid "Avg. of Probability"
+msgstr "平均概率"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "Base Info"
+msgstr "基本信息"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_competitor_brand
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_form_inherited
+msgid "Brand"
+msgstr "品牌"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_sale_order_form_view_inherited
+msgid "Cancel"
+msgstr "取消"
+
+#. module: yycrm
+#: model:ir.ui.menu,name:yycrm.yy_channel_menu
+#: model:ir.ui.view,arch_db:yycrm.yy_channel_view_form
+msgid "Channel"
+msgstr "项目渠道"
+
+#. module: yycrm
+#: model:ir.actions.act_window,name:yycrm.yy_channel_act_window_action
+msgid "Channels"
+msgstr "项目渠道"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_city
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "City"
+msgstr "城市"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:180
+#: code:addons/yycrm/static/src/xml/yycrm.xml:184
+#: code:addons/yycrm/static/src/xml/yycrm.xml:195
+#: code:addons/yycrm/static/src/xml/yycrm.xml:199
+#: code:addons/yycrm/static/src/xml/yycrm.xml:423
+#: code:addons/yycrm/static/src/xml/yycrm.xml:427
+#: code:addons/yycrm/static/src/xml/yycrm.xml:438
+#: code:addons/yycrm/static/src/xml/yycrm.xml:442
+#, python-format
+msgid "Click to set"
+msgstr "点击设置"
+
+#. module: yycrm
+#: code:addons/yycrm/models/models.py:462
+#: selection:crm.lead,forecast:0
+#, python-format
+msgid "Closed"
+msgstr "Closed"
+
+#. module: yycrm
+#: selection:crm.lead,forecast:0
+msgid "Commit"
+msgstr "Commit"
+
+#. module: yycrm
+#: model:ir.ui.menu,name:yycrm.yycrm_customer_company
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Company"
+msgstr "公司"
+
+#. module: yycrm
+#: model:ir.actions.act_window,name:yycrm.yy_cus_cmp_action
+msgid "Company Customer"
+msgstr "Company Customer"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_crm_lead_competitor_ids
+msgid "Competitors"
+msgstr "竞争对手"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_form_inherited
+msgid "Competitors Info"
+msgstr "竞争对手信息"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_sale_order_form_view_inherited
+msgid "Confirm Sale"
+msgstr "确认销售"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "Country"
+msgstr "国家"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:233
+#: code:addons/yycrm/static/src/xml/yycrm.xml:476
+#, python-format
+msgid "Create a few opportunities to activate your dashboard."
+msgstr "点击创建一个新的商机，用以激活你的面板。"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_create_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_competitor_create_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_department_create_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_solution_create_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_create_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_trade_create_uid
+msgid "Created by"
+msgstr "创建者"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_create_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_competitor_create_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_department_create_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_solution_create_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_create_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_trade_create_date
+msgid "Created on"
+msgstr "创建时间"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Creation Month"
+msgstr "创建月份"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_customer_id
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_form_inherited
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_tree_inherited
+msgid "Customer"
+msgstr "客户"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_form
+msgid "Customer Info"
+msgstr "客户信息"
+
+#. module: yycrm
+#: model:ir.actions.act_window,name:yycrm.yy_cus_action
+msgid "Customers"
+msgstr "客户"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:293
+#, python-format
+msgid "Dashboard"
+msgstr "面板"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_date_deadline
+msgid "Date Deadline"
+msgstr "截止时间"
+
+#. module: yycrm
+#: model:ir.model.fields,help:yycrm.field_yycrm_channel_message_last_post
+msgid "Date of the last message posted on the record."
+msgstr "发布到记录上的最后消息的日期"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:254
+#: code:addons/yycrm/static/src/xml/yycrm.xml:498
+#, python-format
+msgid "Deadline:"
+msgstr "截止时间:"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yykanban.xml:13
+#: model:ir.ui.view,arch_db:yycrm.yycrm_pipeline_view
+#, python-format
+msgid "Delete"
+msgstr "刪除"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_res_partner_department
+#: model:ir.model.fields,field_description:yycrm.field_res_users_department
+msgid "Department"
+msgstr "部门"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_form
+msgid "Description"
+msgstr "说明"
+
+#. module: yycrm
+#: model:ir.actions.act_window,name:yycrm.res_users_discount_action
+#: model:ir.ui.menu,name:yycrm.res_users_discount_menu
+msgid "Discount"
+msgstr "折扣"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_display_name
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_competitor_display_name
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_department_display_name
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_solution_display_name
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_display_name
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_trade_display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_search
+msgid "Done"
+msgstr "完成"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_is_done
+msgid "Done?"
+msgstr "已完成"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yykanban.xml:12
+#: model:ir.ui.view,arch_db:yycrm.yycrm_pipeline_view
+#, python-format
+msgid "Edit"
+msgstr "编辑"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_email
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_email
+msgid "Email"
+msgstr "邮箱"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_yycrm_channel
+msgid "Email Thread"
+msgstr "Email线程"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Expected Closing"
+msgstr "预期结束"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_tree_inherited
+msgid "Expected Revenues"
+msgstr "预期收益"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yykanban.xml:10
+#, python-format
+msgid "Fold"
+msgstr "Fold"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_follower_ids
+msgid "Followers"
+msgstr "关注者"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_channel_ids
+msgid "Followers (Channels)"
+msgstr "关注者(频道)"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_partner_ids
+msgid "Followers (Partners)"
+msgstr "关注者（合作伙伴）"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_crm_lead_forecast
+msgid "Forecast"
+msgstr "项目预测状态"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:232
+#: code:addons/yycrm/static/src/xml/yycrm.xml:475
+#, python-format
+msgid "Great sales journeys start with a clean pipeline."
+msgstr "Great sales journeys start with a clean pipeline."
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Group By"
+msgstr "分组"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:231
+#: code:addons/yycrm/static/src/xml/yycrm.xml:474
+#, python-format
+msgid "Hi there!"
+msgstr "Hi there!"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_id
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_competitor_id
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_department_id
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_solution_id
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_id
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_trade_id
+msgid "ID"
+msgstr "ID"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_sale_order_form_view_inherited
+msgid "If a sale order is done, you cannot modify it manually anymore. However, you will still be able to invoice or deliver. This is used to freeze the sale order."
+msgstr "如果一个销售订单已完成，你就不能手动修改它。然而，你仍然可以开具发票或交付。这是用于冻结销售订单的。"
+
+#. module: yycrm
+#: model:ir.model.fields,help:yycrm.field_yycrm_channel_message_unread
+msgid "If checked new messages require your attention."
+msgstr "查看是否有需要留意的新信息。"
+
+#. module: yycrm
+#: model:ir.model.fields,help:yycrm.field_yycrm_channel_message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "确认后, 会出现新消息."
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_image
+msgid "Image"
+msgstr "图像"
+
+#. module: yycrm
+#: model:ir.ui.menu,name:yycrm.yycrm_customer_individual
+msgid "Individual"
+msgstr "个人"
+
+#. module: yycrm
+#: model:ir.actions.act_window,name:yycrm.yy_cus_ind_action
+msgid "Individual Customer"
+msgstr "个人客户"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_crm_lead_industry
+#: model:ir.model.fields,field_description:yycrm.field_res_partner_industry
+#: model:ir.model.fields,field_description:yycrm.field_res_users_industry
+msgid "Industry"
+msgstr "行业"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_form
+msgid "Info"
+msgstr "信息"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_is_follower
+msgid "Is Follower"
+msgstr "是否关注者"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_res_users_is_salesman
+msgid "Is salesman"
+msgstr "是否属于销售"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_last_post
+msgid "Last Message Date"
+msgstr "最后消息日期"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel___last_update
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_competitor___last_update
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_department___last_update
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_solution___last_update
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task___last_update
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_trade___last_update
+msgid "Last Modified on"
+msgstr "最后修改日"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:209
+#: code:addons/yycrm/static/src/xml/yycrm.xml:452
+#, python-format
+msgid "Last Month"
+msgstr "最近一个Mont"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_write_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_competitor_write_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_department_write_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_solution_write_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_write_uid
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_trade_write_uid
+msgid "Last Updated by"
+msgstr "最后更新人"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_write_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_competitor_write_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_department_write_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_solution_write_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_write_date
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_trade_write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "线索/商机"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_lead_ids
+msgid "Leads"
+msgstr "线索"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:45
+#, python-format
+msgid "Log a note. Followers will not be notified."
+msgstr "Log a note. Followers will not be notified."
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:45
+#, python-format
+msgid "Log an internal note"
+msgstr "留言"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:14
+#, python-format
+msgid "Log out"
+msgstr "退出"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Lost"
+msgstr "丢失"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Lost Reason"
+msgstr "失去的原因"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_login_layout
+msgid "Manage Databases"
+msgstr "管理数据库"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_form
+msgid "Mark Done"
+msgstr "标记完成"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_ids
+msgid "Messages"
+msgstr "消息"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_mobile
+msgid "Mobile"
+msgstr "手机"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "My Opportunities"
+msgstr "我的商机"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_name
+#: model:ir.ui.view,arch_db:yycrm.yy_channel_view_form
+msgid "Name"
+msgstr "名称"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_sale_order_need_ask
+msgid "Need ask"
+msgstr "Need ask"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:93
+#: code:addons/yycrm/static/src/xml/yycrm.xml:335
+#, python-format
+msgid "Next 7 days"
+msgstr "Next 7 days"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_name
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_form
+msgid "Next Task"
+msgstr "Next Task"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:80
+#: code:addons/yycrm/static/src/xml/yycrm.xml:322
+#, python-format
+msgid "Next Tasks"
+msgstr "Next Tasks"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "No salesperson"
+msgstr "没有销售员"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_search
+msgid "Not Done"
+msgstr "未完成"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_needaction_counter
+msgid "Number of Actions"
+msgstr "动作数量"
+
+#. module: yycrm
+#: model:ir.model.fields,help:yycrm.field_yycrm_channel_message_needaction_counter
+msgid "Number of messages which requires an action"
+msgstr "需要动作的消息编号"
+
+#. module: yycrm
+#: model:ir.model.fields,help:yycrm.field_yycrm_channel_message_unread_counter
+msgid "Number of unread messages"
+msgstr "未读的消息数量"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:23
+#, python-format
+msgid "Open Debug Menu"
+msgstr "Open Debug Menu"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_channel_view_form
+#: model:ir.ui.view,arch_db:yycrm.yy_channel_view_tree
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_tree_inherited
+msgid "Opportunities"
+msgstr "商机"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Opportunities that are assigned to me"
+msgstr "分配给我的商机"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_opportunity_id
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_tree_inherited
+msgid "Opportunity"
+msgstr "商机"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_opportunity_count
+msgid "Opportunity Count"
+msgstr "商机数目"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:260
+#: code:addons/yycrm/static/src/xml/yycrm.xml:504
+#, python-format
+msgid "Opportunity:"
+msgstr "商机:"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_search
+msgid "Overdue"
+msgstr "逾期"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_res_partner
+msgid "Partner"
+msgstr "业务伙伴"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:140
+#: code:addons/yycrm/static/src/xml/yycrm.xml:382
+#, python-format
+msgid "Performance"
+msgstr "Performance"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_phone
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_phone
+msgid "Phone"
+msgstr "电话"
+
+#. module: yycrm
+#: model:ir.actions.act_window,name:yycrm.yy_task_pivot_action
+msgid "Pivot Tasks"
+msgstr "Pivot Tasks"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_login_layout
+msgid "Powered by <span>YouYun</span>"
+msgstr "Powered by <span>YouYun</span>"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_crm_lead_pre_sales_engineer_ids
+#: model:ir.model.fields,field_description:yycrm.field_sale_order_pre_sales_engineer_ids
+msgid "Pre-sales Engineers"
+msgstr "售前工程师"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:11
+#, python-format
+msgid "Preferences"
+msgstr "Preferences"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_sale_order_form_view_inherited
+msgid "Print"
+msgstr "打印"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_competitor_name
+msgid "Product Name"
+msgstr "产品名称"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_crm_lead_product_ids
+msgid "Products"
+msgstr "产品"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_crm_lead_channel_ids
+msgid "Project Channel"
+msgstr "销售渠道"
+
+#. module: yycrm
+#: code:addons/yycrm/models/models.py:446
+#, python-format
+msgid "Proposal"
+msgstr "Proposal"
+
+#. module: yycrm
+#: code:addons/yycrm/models/models.py:430
+#, python-format
+msgid "Prospect"
+msgstr "Prospect"
+
+#. module: yycrm
+#: code:addons/yycrm/models/models.py:438
+#, python-format
+msgid "Qualification"
+msgstr "Qualification"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/js/yycrm.js:45
+#, python-format
+msgid "Quantity"
+msgstr "Quantity"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_sale_order
+msgid "Sales Order"
+msgstr "销售订单"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "销售订单行"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_crm_team
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Sales Team"
+msgstr "销售团队"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_cus_view_tree
+msgid "Salesman"
+msgstr "销售员"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Salesperson"
+msgstr "销售员"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Search Opportunities"
+msgstr "搜索商机"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_sale_order_form_view_inherited
+msgid "Send by Email"
+msgstr "以邮件发送"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_sale_order_form_view_inherited
+msgid "Set to Done"
+msgstr "设置为已完成"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_sale_order_form_view_inherited
+msgid "Set to Quotation"
+msgstr "设为报价单"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_crm_lead_solution_ids
+msgid "Solution"
+msgstr "解决方案"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Stage"
+msgstr "阶段"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "State"
+msgstr "状态"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_task_street
+msgid "Street"
+msgstr "街道"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "Street 2..."
+msgstr "街道２..."
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "Street..."
+msgstr "街道..."
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Tag"
+msgstr "标签"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:176
+#: code:addons/yycrm/static/src/xml/yycrm.xml:419
+#, python-format
+msgid "Target"
+msgstr "目标"
+
+#. module: yycrm
+#: model:ir.ui.menu,name:yycrm.yy_task_menu
+msgid "Task"
+msgstr "任务"
+
+#. module: yycrm
+#: model:ir.actions.act_window,name:yycrm.yy_task_act_window_action
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_pivot
+msgid "Tasks"
+msgstr "任务"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:154
+#: code:addons/yycrm/static/src/xml/yycrm.xml:397
+#, python-format
+msgid "Tasks Done"
+msgstr "Tasks Done"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:140
+#: code:addons/yycrm/static/src/xml/yycrm.xml:382
+#, python-format
+msgid "This Month"
+msgstr "这一个月"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_search
+msgid "This Weak"
+msgstr "这一周"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:94
+#: code:addons/yycrm/static/src/xml/yycrm.xml:110
+#: code:addons/yycrm/static/src/xml/yycrm.xml:336
+#: code:addons/yycrm/static/src/xml/yycrm.xml:352
+#, python-format
+msgid "To Activities"
+msgstr "To Activities"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:144
+#: code:addons/yycrm/static/src/xml/yycrm.xml:210
+#: code:addons/yycrm/static/src/xml/yycrm.xml:386
+#: code:addons/yycrm/static/src/xml/yycrm.xml:453
+#, python-format
+msgid "To Activity Report"
+msgstr "To Activity Report"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:242
+#: code:addons/yycrm/static/src/xml/yycrm.xml:485
+#, python-format
+msgid "To Do:"
+msgstr "To Do:"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:123
+#: code:addons/yycrm/static/src/xml/yycrm.xml:365
+#, python-format
+msgid "To Opportunities"
+msgstr "To Opportunities"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:159
+#: code:addons/yycrm/static/src/xml/yycrm.xml:215
+#: code:addons/yycrm/static/src/xml/yycrm.xml:402
+#: code:addons/yycrm/static/src/xml/yycrm.xml:459
+#, python-format
+msgid "To Opportunity Report"
+msgstr "To Opportunity Report"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:69
+#: code:addons/yycrm/static/src/xml/yycrm.xml:311
+#, python-format
+msgid "To Tasks"
+msgstr "To Tasks"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:66
+#: code:addons/yycrm/static/src/xml/yycrm.xml:308
+#, python-format
+msgid "To do"
+msgstr "To do"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:66
+#: code:addons/yycrm/static/src/xml/yycrm.xml:308
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_search
+#, python-format
+msgid "Today"
+msgstr "今天"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_pipeline_view
+msgid "Unarchive"
+msgstr "解压"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yykanban.xml:17
+#, python-format
+msgid "Unarchive Records"
+msgstr "Unarchive Records"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Unassigned"
+msgstr "未分配"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/js/yycrm.js:118
+#, python-format
+msgid "Undefined"
+msgstr "Undefined"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_unread
+#: model:ir.ui.view,arch_db:yycrm.yycrm_pipeline_view
+msgid "Unread Messages"
+msgstr "未读消息"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_channel_message_unread_counter
+msgid "Unread Messages Counter"
+msgstr "未读消息计数器"
+
+#. module: yycrm
+#: selection:crm.lead,forecast:0
+msgid "Upside"
+msgstr "Upside"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_res_users
+msgid "Users"
+msgstr "用户"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_oppor_view_search_inherited
+msgid "Won"
+msgstr "赢得"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:170
+#: code:addons/yycrm/static/src/xml/yycrm.xml:413
+#, python-format
+msgid "Won in Opportunities"
+msgstr "Won in Opportunities"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/js/yykanban.js:97
+#, python-format
+msgid "YYKanban"
+msgstr "YYKanban"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:234
+#, python-format
+msgid "Your\n"
+"                                Pipeline"
+msgstr "Your\n"
+"                                Pipeline"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:84
+#: code:addons/yycrm/static/src/xml/yycrm.xml:87
+#: code:addons/yycrm/static/src/xml/yycrm.xml:326
+#: code:addons/yycrm/static/src/xml/yycrm.xml:329
+#: code:addons/yycrm/static/src/xml/yycrm.xml:477
+#, python-format
+msgid "Your Pipeline"
+msgstr "Your Pipeline"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "ZIP"
+msgstr "邮编"
+
+#. module: yycrm
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_department_name
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_solution_name
+#: model:ir.model.fields,field_description:yycrm.field_yycrm_trade_name
+msgid "description"
+msgstr "简介"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "e.g. Sales Director"
+msgstr "例如：销售总监"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_res_partner_view_form_inherited
+msgid "e.g. www.cloudguarding.com"
+msgstr "e.g. www.cloudguarding.com"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yy_task_view_form
+msgid "e.g.上门拜访客户"
+msgstr "e.g.上门拜访客户"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:126
+#: code:addons/yycrm/static/src/xml/yycrm.xml:368
+#, python-format
+msgid "exp. closing"
+msgstr "exp. closing"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:281
+#, python-format
+msgid "hah"
+msgstr "hah"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_ir_ui_view
+msgid "ir.ui.view"
+msgstr "ir.ui.view"
+
+#. module: yycrm
+#: model:ir.ui.view,arch_db:yycrm.yycrm_pipeline_view
+msgid "oe_kanban_text_red"
+msgstr "oe_kanban_text_red"
+
+#. module: yycrm
+#. openerp-web
+#: code:addons/yycrm/static/src/xml/yycrm.xml:114
+#: code:addons/yycrm/static/src/xml/yycrm.xml:356
+#, python-format
+msgid "overdue"
+msgstr "overdue"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_yycrm_competitor
+msgid "yycrm.competitor"
+msgstr "yycrm.competitor"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_yycrm_department
+msgid "yycrm.department"
+msgstr "yycrm.department"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_yycrm_solution
+msgid "yycrm.solution"
+msgstr "yycrm.solution"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_yycrm_task
+msgid "yycrm.task"
+msgstr "yycrm.task"
+
+#. module: yycrm
+#: model:ir.model,name:yycrm.model_yycrm_trade
+msgid "yycrm.trade"
+msgstr "yycrm.trade"
 
 
